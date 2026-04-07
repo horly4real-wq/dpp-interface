@@ -16,13 +16,16 @@ body{background:#f0f0eb}
 .wrap{display:flex;justify-content:center;padding:1.5rem .75rem 2rem;min-height:100vh}
 .phone{width:100%;max-width:390px;background:#fff;border-radius:28px;overflow:hidden;border:.5px solid rgba(0,0,0,.12);display:flex;flex-direction:column}
 @media(max-width:520px){
-  body{background:#fff;overflow:hidden}
-  .wrap{padding:0;align-items:stretch}
-  .phone{max-width:100%;border-radius:0;border:none;min-height:100vh;min-height:100dvh;flex:1}
-  .scan-screen{min-height:100vh;min-height:100dvh}
-  .main-app.vis{min-height:100vh;min-height:100dvh}
-  .panels{flex:1;min-height:0}
-  .panel{height:100%}
+  html,body{height:100%;overflow:hidden;background:#fff}
+  .wrap{padding:0;align-items:stretch;height:100%;overflow:hidden}
+  .phone{max-width:100%;border-radius:0;border:none;height:100%;overflow:hidden;flex:1}
+  .scan-screen{height:100%;overflow:hidden}
+  .ss-body{overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+  .main-app.vis{height:100%;overflow:hidden}
+  .panels{flex:1;min-height:0;overflow:hidden}
+  .panel{height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+  .hdr-geo{display:none}
+  .hbody{padding:.85rem 1rem .75rem}
 }
 .scan-screen{display:flex;flex-direction:column;flex:1;overflow:hidden}
 .ss-top{background:#0B3D2E;padding:1.5rem 1.5rem 1.25rem;flex-shrink:0}
