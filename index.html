@@ -1,0 +1,757 @@
+<style>
+@import url('https://cdn.jsdelivr.net/npm/@fontsource/inter/400.css');
+@import url('https://cdn.jsdelivr.net/npm/@fontsource/inter/500.css');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Helvetica Neue',system-ui,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{background:var(--color-background-tertiary)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulseGlow{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes checkDraw{from{stroke-dashoffset:40}to{stroke-dashoffset:0}}
+.wrap{display:flex;justify-content:center;padding:1.5rem .75rem 2rem;min-height:700px}
+.phone{width:100%;max-width:390px;background:var(--color-background-primary);border-radius:28px;overflow:hidden;border:.5px solid var(--color-border-secondary);display:flex;flex-direction:column}
+.scan-screen{display:flex;flex-direction:column;flex:1;overflow:hidden}
+.ss-top{background:#0B3D2E;padding:1.5rem 1.5rem 1.25rem;flex-shrink:0}
+.ss-brand{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.38);font-weight:500;margin-bottom:10px}
+.ss-vrow{display:flex;align-items:center;gap:7px;margin-bottom:12px}
+.ss-vdot{width:16px;height:16px;border-radius:50%;background:#4DB380;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ss-vtxt{font-size:12px;color:rgba(255,255,255,.75)}
+.ss-pname{font-size:24px;font-weight:500;color:#fff;letter-spacing:-.02em;line-height:1.1;margin-bottom:3px}
+.ss-pmeta{font-size:13px;color:rgba(255,255,255,.45)}
+.ss-time{font-size:10px;color:rgba(255,255,255,.28);margin-top:8px;font-family:'SF Mono','Roboto Mono',monospace}
+.ss-body{flex:1;overflow-y:auto;padding:1.25rem}
+.ss-h{font-size:15px;font-weight:500;color:var(--color-text-primary);letter-spacing:-.01em;margin-bottom:4px}
+.ss-sub{font-size:12px;color:var(--color-text-secondary);line-height:1.55;margin-bottom:14px}
+.igrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.ibtn{padding:13px 11px;border-radius:14px;border:.5px solid var(--color-border-tertiary);background:var(--color-background-secondary);cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:5px}
+.ibtn-ic{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center}
+.ibtn-l{font-size:12px;font-weight:500;color:var(--color-text-primary);letter-spacing:-.01em;line-height:1.2}
+.ibtn-d{font-size:10px;color:var(--color-text-secondary);line-height:1.35}
+.ss-expl{background:var(--color-background-secondary);border:.5px solid var(--color-border-tertiary);border-radius:14px;padding:12px 13px;margin-bottom:14px}
+.ss-erow{display:flex;align-items:flex-start;gap:10px}
+.ss-eic{width:32px;height:32px;border-radius:9px;background:#E8F4EE;border:.5px solid #A8D5BC;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ss-etit{font-size:12px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px;letter-spacing:-.01em}
+.ss-etxt{font-size:11px;color:var(--color-text-secondary);line-height:1.6}
+.ss-cta{display:block;width:100%;padding:15px;background:#0B3D2E;border:none;cursor:pointer;font-size:13px;font-weight:500;color:#fff;letter-spacing:-.01em;text-align:center;flex-shrink:0;margin-top:auto}
+.main-app{display:none;flex-direction:column;flex:1;min-height:0;overflow:hidden}
+.main-app.vis{display:flex}
+.hdr{background:#0B3D2E;flex-shrink:0;position:relative;overflow:hidden}
+.hdr-geo{position:absolute;inset:0;pointer-events:none;opacity:.03}
+.scbar{display:flex;align-items:center;justify-content:space-between;background:rgba(77,179,128,.14);border-bottom:.5px solid rgba(77,179,128,.2);padding:7px 1.25rem;position:relative;z-index:1;flex-shrink:0}
+.scbar-l{display:flex;align-items:center;gap:7px}
+.scpulse{width:7px;height:7px;border-radius:50%;background:#4DB380;animation:pulseGlow 2s ease-in-out infinite;flex-shrink:0}
+.scbar-txt{font-size:11px;color:rgba(255,255,255,.72)}
+.scbar-t{font-size:10px;color:rgba(255,255,255,.35);letter-spacing:.02em}
+.hbody{padding:1rem 1.25rem .9rem;position:relative;z-index:1}
+.crow2{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px}
+.chip{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.09);border:.5px solid rgba(255,255,255,.17);border-radius:99px;padding:4px 11px;font-size:10px;color:rgba(255,255,255,.8)}
+.chip-d{width:14px;height:14px;border-radius:50%;background:#4DB380;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.gs1l{font-size:9px;letter-spacing:.09em;color:rgba(255,255,255,.28)}
+.prow{display:flex;gap:13px;align-items:center;margin-bottom:14px}
+.pthumb{width:60px;height:72px;border-radius:14px;background:rgba(255,255,255,.07);border:.5px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.pbrand{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.38);margin-bottom:3px;font-weight:500}
+.pname{font-size:21px;font-weight:500;color:#fff;line-height:1.1;letter-spacing:-.02em;margin-bottom:3px}
+.pmeta{font-size:12px;color:rgba(255,255,255,.42)}
+.pstyle{font-size:10px;color:rgba(255,255,255,.25);margin-top:2px}
+.sc2{background:rgba(255,255,255,.07);border:.5px solid rgba(255,255,255,.1);border-radius:18px;padding:13px 14px;display:flex;align-items:center;gap:14px}
+.rw{position:relative;width:66px;height:66px;flex-shrink:0}
+.rsvg{width:66px;height:66px}
+.rc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px}
+.rg{font-size:17px;font-weight:500;color:#fff;letter-spacing:-.01em;line-height:1}
+.rs{font-size:8px;color:rgba(255,255,255,.35);letter-spacing:.09em}
+.sr{flex:1}
+.sl{font-size:11px;color:rgba(255,255,255,.42);margin-bottom:3px}
+.sn{font-size:38px;font-weight:500;color:#fff;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.sd{font-size:14px;color:rgba(255,255,255,.32)}
+.sc3{font-size:11px;color:rgba(255,255,255,.48);margin-top:3px}
+.sb{height:3px;background:rgba(255,255,255,.1);border-radius:99px;overflow:hidden;margin-top:9px}
+.sf{height:100%;border-radius:99px;background:#4DB380;width:78%}
+.hid{font-size:9px;color:rgba(255,255,255,.2);text-align:center;padding:.55rem 0 .75rem;letter-spacing:.04em;position:relative;z-index:1;font-family:'SF Mono','Roboto Mono',monospace}
+
+/* Intent strip with visible thin scrollbar */
+.istrip{display:flex;gap:7px;overflow-x:auto;padding:10px 1rem 9px;border-bottom:.5px solid var(--color-border-tertiary);flex-shrink:0;background:var(--color-background-primary);scrollbar-width:thin;scrollbar-color:var(--color-border-secondary) transparent}
+.istrip::-webkit-scrollbar{height:3px}
+.istrip::-webkit-scrollbar-thumb{background:var(--color-border-secondary);border-radius:99px}
+.istrip::-webkit-scrollbar-track{background:transparent}
+
+.iq{flex-shrink:0;display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:99px;border:.5px solid var(--color-border-tertiary);font-size:11px;font-weight:500;color:var(--color-text-secondary);background:var(--color-background-secondary);cursor:pointer;white-space:nowrap;letter-spacing:.01em}
+.iq.on{background:#0B3D2E;color:#fff;border-color:#0B3D2E}
+.iqdot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.bnav{display:flex;border-top:.5px solid var(--color-border-tertiary);background:var(--color-background-primary);padding:6px 0 8px;flex-shrink:0}
+.nb{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 2px 4px;border:none;background:none;cursor:pointer;font-size:10px;font-weight:400;letter-spacing:.02em;color:var(--color-text-secondary);line-height:1}
+.nb.on{color:#0B3D2E;font-weight:500}
+.ndot{width:4px;height:4px;border-radius:50%;background:#0B3D2E;opacity:0;margin:0 auto}
+.nb.on .ndot{opacity:1}
+.panels{flex:1;min-height:0;overflow:hidden}
+.panel{display:none;overflow-y:auto;height:100%;padding:1.25rem 1rem 1.5rem}
+.panel.active{display:block}
+.sec{font-size:10px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--color-text-secondary);margin:18px 0 9px}
+.sec:first-child{margin-top:0}
+.card{background:var(--color-background-secondary);border-radius:16px;padding:13px 14px;margin-bottom:10px;border:.5px solid var(--color-border-tertiary)}
+.irow{display:flex;justify-content:space-between;align-items:baseline;padding:5px 0;border-bottom:.5px solid var(--color-border-tertiary);font-size:12px;line-height:1.35}
+.irow:last-child{border-bottom:none}
+.ik{color:var(--color-text-secondary)}
+.iv{color:var(--color-text-primary);font-weight:500;text-align:right;max-width:58%}
+.mg2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.mg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-bottom:10px}
+.mc{background:var(--color-background-secondary);border-radius:14px;padding:12px;border:.5px solid var(--color-border-tertiary)}
+.mcl{font-size:11px;color:var(--color-text-secondary);margin-bottom:4px}
+.mcv{font-size:20px;font-weight:500;line-height:1;letter-spacing:-.02em;margin-bottom:2px;font-variant-numeric:tabular-nums}
+.mcu{font-size:10px;font-weight:400}
+.mcn{font-size:11px}
+.cstrip{display:flex;gap:7px;overflow-x:auto;padding:1px 0 8px;scrollbar-width:none;margin-bottom:10px}
+.cstrip::-webkit-scrollbar{display:none}
+.cb{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:4px;padding:9px 10px;min-width:66px;border-radius:13px;background:var(--color-background-secondary);border:.5px solid var(--color-border-tertiary)}
+.cbchk{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:500}
+.cbn{font-size:10px;font-weight:500;color:var(--color-text-primary);text-align:center;line-height:1.2}
+.cbt{font-size:9px;color:var(--color-text-secondary);text-align:center}
+.mbar{display:flex;height:20px;border-radius:6px;overflow:hidden;margin-bottom:9px}
+.mseg{display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;color:rgba(255,255,255,.9)}
+.mleg{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.mli{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--color-text-secondary)}
+.mdot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.fcard{border-radius:14px;padding:12px 13px;margin-bottom:8px;border:.5px solid}
+.ftop{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px}
+.fn{font-size:13px;font-weight:500;letter-spacing:-.01em}
+.fp{font-size:24px;font-weight:500;line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.for{font-size:11px;margin-top:2px;opacity:.65}
+.fd{font-size:11px;line-height:1.6;margin-bottom:7px;opacity:.75}
+.sci{display:flex;gap:11px}
+.scil{display:flex;flex-direction:column;align-items:center;width:30px;flex-shrink:0}
+.scib{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;background:#E8F4EE;color:#0B3D2E;border:.5px solid #A8D5BC}
+.sciln{flex:1;width:1px;min-height:14px;margin:3px 0;background:var(--color-border-secondary)}
+.scir{flex:1;padding-bottom:14px;cursor:pointer}
+.scit{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.scis{font-size:13px;font-weight:500;color:var(--color-text-primary);letter-spacing:-.01em}
+.scilc{font-size:11px;color:var(--color-text-secondary);margin-top:1px}
+.scitg{font-size:9px;font-weight:500;padding:2px 8px;border-radius:99px;background:#E8F4EE;color:#1A5C42;border:.5px solid #A8D5BC;white-space:nowrap}
+.scia{font-size:11px;color:var(--color-text-secondary);margin-top:2px;transition:transform .2s}
+.scibd{display:none;margin-top:8px;padding:10px 11px;border-radius:10px;background:var(--color-background-secondary);border:.5px solid var(--color-border-tertiary)}
+.scibd.open{display:block}
+.scico{font-size:12px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px}
+.scidc{font-size:11px;color:var(--color-text-secondary);line-height:1.6}
+.wrow{display:flex;align-items:center;gap:9px;padding:6px 0;border-bottom:.5px solid var(--color-border-tertiary);font-size:12px;color:var(--color-text-primary)}
+.wrow:last-child{border-bottom:none}
+.wchk{width:17px;height:17px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:#E8F4EE;border:.5px solid #A8D5BC}
+.ibr{margin-bottom:16px}
+.ibrt{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px;gap:8px}
+.ibrl{font-size:12px;color:var(--color-text-secondary)}
+.ibrv{font-size:13px;font-weight:500;color:var(--color-text-primary);font-variant-numeric:tabular-nums}
+.ibrtr{height:10px;border-radius:5px;background:var(--color-background-secondary);border:.5px solid var(--color-border-tertiary);position:relative;overflow:hidden}
+.ibrf{height:100%;border-radius:5px}
+.ibrb{position:absolute;top:0;bottom:0;width:1.5px;background:rgba(0,0,0,.22)}
+.ibrft{display:flex;justify-content:space-between;margin-top:3px;font-size:10px;color:var(--color-text-secondary)}
+.ibrg{font-weight:500}
+.envb{display:flex;align-items:center;gap:13px;padding:13px 14px;border-radius:16px;margin-bottom:12px;background:#E8F4EE;border:.5px solid #A8D5BC}
+.envc{width:54px;height:54px;border-radius:50%;background:#0B3D2E;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0}
+.envg{font-size:20px;font-weight:500;color:#fff;letter-spacing:-.01em;line-height:1}
+.envs{font-size:8px;color:rgba(255,255,255,.45);letter-spacing:.07em;margin-top:1px}
+.acard{display:flex;align-items:flex-start;gap:12px;padding:13px;border-radius:14px;border:.5px solid var(--color-border-tertiary);margin-bottom:8px;background:var(--color-background-primary);cursor:pointer}
+.aic{width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.atit{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:2px;letter-spacing:-.01em}
+.adc{font-size:11px;color:var(--color-text-secondary);line-height:1.55}
+.carr{margin-left:auto;font-size:15px;color:var(--color-text-secondary);flex-shrink:0;margin-top:1px}
+.crow3{display:flex;align-items:flex-start;gap:9px;padding:7px 0;border-bottom:.5px solid var(--color-border-tertiary);font-size:12px;color:var(--color-text-primary);line-height:1.4}
+.crow3:last-child{border-bottom:none}
+.cok{width:16px;height:16px;border-radius:50%;background:#E8F4EE;border:.5px solid #A8D5BC;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.cno{width:16px;height:16px;border-radius:50%;background:#FCEBEB;border:.5px solid #F09595;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;opacity:.7}
+.alert{border-radius:14px;padding:11px 13px;font-size:12px;line-height:1.6;margin-bottom:10px}
+.altt{font-size:12px;font-weight:500;margin-bottom:2px;letter-spacing:-.01em}
+.ag{background:#E8F4EE;border:.5px solid #A8D5BC;color:#1A5C42}
+.ab{background:#E8F0F8;border:.5px solid #A0BDD8;color:#1E5A8E}
+.aa{background:#FDF4E3;border:.5px solid #D4B26A;color:#8A6B1E}
+.tag{display:inline-flex;align-items:center;gap:3px;border-radius:99px;padding:3px 9px;font-size:10px;font-weight:500;margin:3px 3px 3px 0;letter-spacing:.02em}
+.tg{background:#E8F4EE;color:#1A5C42;border:.5px solid #A8D5BC}
+.tb{background:#E8F0F8;color:#1E5A8E;border:.5px solid #A0BDD8}
+.ta{background:#FDF4E3;color:#8A6B1E;border:.5px solid #D4B26A}
+.mono{font-family:'SF Mono','Roboto Mono',monospace;font-size:10px}
+.bdc{border-radius:16px;border:.5px solid var(--color-border-tertiary);overflow:hidden;margin-bottom:10px;background:var(--color-background-primary)}
+.bdc-hd{display:flex;align-items:center;gap:10px;padding:11px 13px;border-bottom:.5px solid var(--color-border-tertiary)}
+.bdc-av{width:34px;height:34px;border-radius:50%;background:#0B3D2E;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;color:#fff;flex-shrink:0}
+.bdc-info{flex:1}
+.bdc-name{font-size:12px;font-weight:500;color:var(--color-text-primary);letter-spacing:-.01em;display:flex;align-items:center;gap:5px}
+.bdc-ver{font-size:9px;color:#1A5C42;background:#E8F4EE;border:.5px solid #A8D5BC;border-radius:99px;padding:1px 6px}
+.bdc-time{font-size:10px;color:var(--color-text-secondary);margin-top:1px}
+.bdc-live{display:flex;align-items:center;gap:4px;font-size:9px;font-weight:500;color:#1A5C42;letter-spacing:.04em}
+.bdc-livdot{width:7px;height:7px;border-radius:50%;background:#4DB380;animation:pulseGlow 1.5s ease-in-out infinite}
+.bdc-body{padding:12px 13px}
+.bdc-tag{font-size:9px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:#1A5C42;margin-bottom:5px}
+.bdc-title{font-size:14px;font-weight:500;color:var(--color-text-primary);letter-spacing:-.01em;margin-bottom:6px;line-height:1.3}
+.bdc-txt{font-size:11px;color:var(--color-text-secondary);line-height:1.6;margin-bottom:10px}
+.bdc-rel{background:#E8F4EE;border:.5px solid #A8D5BC;border-radius:10px;padding:8px 10px;margin-bottom:10px;font-size:11px;color:#1A5C42;line-height:1.5}
+.bdc-rel strong{font-weight:500;color:#0B3D2E}
+.bdc-prog-lbl{display:flex;justify-content:space-between;font-size:11px;color:var(--color-text-secondary);margin-bottom:4px}
+.bdc-prog-lbl span:last-child{font-weight:500;color:var(--color-text-primary)}
+.bdc-track{height:7px;border-radius:99px;background:var(--color-background-secondary);border:.5px solid var(--color-border-tertiary);overflow:hidden;margin-bottom:5px}
+.bdc-fill{height:100%;border-radius:99px;background:#2D7A55;width:40%}
+.bdc-note{font-size:10px;color:var(--color-text-secondary);margin-bottom:10px}
+.bdc-ft{display:flex;align-items:center;justify-content:space-between;padding-top:9px;border-top:.5px solid var(--color-border-tertiary)}
+.bdc-flw-ct{font-size:11px;color:var(--color-text-secondary);display:flex;align-items:center;gap:4px}
+.bdc-flw-btn{padding:6px 14px;border-radius:99px;font-size:11px;font-weight:500;cursor:pointer;border:.5px solid #0B3D2E;background:transparent;color:#0B3D2E;letter-spacing:.01em;font-family:inherit}
+.bdc-flw-btn.on{background:#0B3D2E;color:#fff}
+.comm{border-radius:16px;border:.5px solid var(--color-border-tertiary);overflow:hidden;margin-bottom:10px}
+.comm-hd{display:flex;align-items:center;justify-content:space-between;padding:11px 13px 9px;border-bottom:.5px solid var(--color-border-tertiary)}
+.comm-title{font-size:12px;font-weight:500;color:var(--color-text-primary);letter-spacing:-.01em}
+.comm-owners{font-size:11px;color:var(--color-text-secondary)}
+.comm-stats{display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:.5px solid var(--color-border-tertiary)}
+.comm-stat{text-align:center;padding:10px 8px}
+.comm-stat+.comm-stat{border-left:.5px solid var(--color-border-tertiary)}
+.comm-sv{font-size:14px;font-weight:500;color:var(--color-text-primary);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.comm-sl{font-size:9px;color:var(--color-text-secondary);margin-top:2px;line-height:1.3}
+.comm-body{padding:11px 13px}
+.comm-bl{font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--color-text-secondary);margin-bottom:8px}
+.comm-bar-row{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.comm-bar-lbl{font-size:10px;color:var(--color-text-secondary);width:60px;flex-shrink:0}
+.comm-bar-track{flex:1;height:6px;border-radius:99px;background:var(--color-background-secondary);border:.5px solid var(--color-border-tertiary);overflow:hidden}
+.comm-bar-fill{height:100%;border-radius:99px}
+.comm-bar-pct{font-size:10px;color:var(--color-text-secondary);width:30px;text-align:right;flex-shrink:0;font-variant-numeric:tabular-nums}
+
+/* Logger */
+.logger{border-radius:16px;border:.5px solid var(--color-border-tertiary);overflow:hidden;margin-bottom:10px}
+.logger-hd{padding:12px 13px;border-bottom:.5px solid var(--color-border-tertiary);background:var(--color-background-secondary)}
+.logger-title{font-size:13px;font-weight:500;color:var(--color-text-primary);letter-spacing:-.01em;margin-bottom:2px}
+.logger-sub{font-size:11px;color:var(--color-text-secondary);line-height:1.5}
+.logger-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px 13px}
+.lopt{padding:13px 11px;border-radius:12px;border:.5px solid var(--color-border-tertiary);background:var(--color-background-secondary);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+/* 5th option: spans full width, horizontal layout */
+.lopt5{grid-column:1/-1;flex-direction:row;align-items:center;justify-content:flex-start;gap:10px;padding:10px 12px;background:var(--color-background-primary);border-style:dashed;border-color:var(--color-border-tertiary)}
+.lopt5 .lopt-l{font-size:12px;font-weight:500;color:var(--color-text-secondary);letter-spacing:-.01em}
+.lopt5 .lopt-d{font-size:10px;color:var(--color-text-secondary)}
+.lopt-ic{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.lopt-l{font-size:12px;font-weight:500;color:var(--color-text-primary);letter-spacing:-.01em}
+.lopt-d{font-size:10px;color:var(--color-text-secondary)}
+.logger-done{display:none;padding:14px 13px;animation:fadeUp .4s ease}
+.logger-done.show{display:block}
+.ldone-top{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.ldone-chk{width:36px;height:36px;border-radius:50%;background:#E8F4EE;border:.5px solid #A8D5BC;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ldone-chk.warn{background:#FDF4E3;border-color:#D4B26A}
+.ldone-msg{font-size:13px;font-weight:500;color:var(--color-text-primary);letter-spacing:-.01em}
+.ldone-sub{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
+.ldone-impact{background:#E8F4EE;border:.5px solid #A8D5BC;border-radius:12px;padding:11px 13px;margin-bottom:10px}
+.ldone-impact.warn{background:#FDF4E3;border-color:#D4B26A}
+.ldone-impact-row{display:flex;align-items:baseline;gap:6px;margin-bottom:2px}
+.ldone-n{font-size:28px;font-weight:500;color:#0B3D2E;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.ldone-impact.warn .ldone-n{color:#854F0B}
+.ldone-u{font-size:12px;color:#1A5C42}
+.ldone-impact.warn .ldone-u{color:#854F0B}
+.ldone-eq{font-size:11px;color:#1A5C42;margin-top:3px}
+.ldone-impact.warn .ldone-eq{color:#854F0B}
+.ldone-comm{font-size:11px;color:var(--color-text-secondary);line-height:1.6;border-top:.5px solid var(--color-border-tertiary);padding-top:10px;margin-top:10px}
+.ldone-comm strong{font-weight:500;color:var(--color-text-primary)}
+/* Change selection button */
+.rl-btn{display:block;width:100%;padding:9px;background:none;border:.5px solid var(--color-border-tertiary);border-radius:10px;font-size:11px;color:var(--color-text-secondary);cursor:pointer;margin-top:8px;font-family:inherit;letter-spacing:.01em;text-align:center}
+
+/* Star rating */
+.rating-sec{border-radius:16px;border:.5px solid var(--color-border-tertiary);overflow:hidden;margin-bottom:10px}
+.rating-hd{padding:11px 13px;border-bottom:.5px solid var(--color-border-tertiary);background:var(--color-background-secondary)}
+.rating-title{font-size:13px;font-weight:500;color:var(--color-text-primary);letter-spacing:-.01em}
+.rating-sub{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
+.rating-rows{padding:4px 13px}
+.rrow{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:.5px solid var(--color-border-tertiary)}
+.rrow:last-child{border-bottom:none}
+.rrow-l{font-size:12px;color:var(--color-text-primary)}
+.stars{display:flex;gap:3px}
+.star{cursor:pointer;width:20px;height:20px;display:flex;align-items:center;justify-content:center}
+.fbsec{border-radius:16px;border:.5px solid var(--color-border-tertiary);overflow:hidden;margin-bottom:10px}
+.fbsec-hd{display:flex;align-items:center;justify-content:space-between;padding:12px 13px;cursor:pointer}
+.fbsec-title{font-size:13px;font-weight:500;color:var(--color-text-primary);letter-spacing:-.01em}
+.fbsec-ico{font-size:11px;color:var(--color-text-secondary);transition:transform .2s}
+.fbsec-ico.open{transform:rotate(180deg)}
+.fbsec-body{display:none;padding:0 13px 13px;border-top:.5px solid var(--color-border-tertiary)}
+.fbsec-body.open{display:block}
+.fbtxt{width:100%;border:.5px solid var(--color-border-tertiary);border-radius:10px;padding:10px 11px;font-size:12px;color:var(--color-text-primary);background:var(--color-background-secondary);resize:none;margin-top:10px;font-family:inherit;line-height:1.55}
+.fbtxt:focus{outline:none;border-color:var(--color-border-secondary)}
+.fb-anon{display:flex;align-items:center;justify-content:space-between;margin:9px 0;font-size:12px;color:var(--color-text-secondary)}
+.fb-toggle{width:36px;height:20px;border-radius:99px;background:var(--color-background-secondary);border:.5px solid var(--color-border-secondary);cursor:pointer;position:relative;transition:background .2s;flex-shrink:0}
+.fb-toggle.on{background:#0B3D2E}
+.fb-toggle::after{content:'';position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:#fff;transition:transform .2s}
+.fb-toggle.on::after{transform:translateX(16px)}
+.fb-send{width:100%;padding:11px;border-radius:10px;border:none;background:#0B3D2E;color:#fff;font-size:12px;font-weight:500;cursor:pointer;letter-spacing:.01em;font-family:inherit}
+.fb-sent{display:none;padding:10px;text-align:center;font-size:12px;color:#1A5C42;animation:fadeUp .3s ease}
+.fb-sent.show{display:block}
+.bi{border-radius:16px;overflow:hidden;margin-bottom:10px;border-left:3px solid #0B3D2E;border-top:.5px solid var(--color-border-tertiary);border-right:.5px solid var(--color-border-tertiary);border-bottom:.5px solid var(--color-border-tertiary)}
+.bi-hd{padding:11px 13px;border-bottom:.5px solid var(--color-border-tertiary);display:flex;align-items:center;gap:8px}
+.bi-av{width:28px;height:28px;border-radius:50%;background:#0B3D2E;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:500;color:#fff;flex-shrink:0}
+.bi-lbl{font-size:10px;font-weight:500;color:var(--color-text-secondary);letter-spacing:.04em;text-transform:uppercase}
+.bi-body{padding:11px 13px}
+.bi-title{font-size:13px;font-weight:500;color:var(--color-text-primary);letter-spacing:-.01em;margin-bottom:5px;line-height:1.3}
+.bi-txt{font-size:11px;color:var(--color-text-secondary);line-height:1.6;margin-bottom:10px}
+.bi-prog-row{display:flex;justify-content:space-between;font-size:10px;color:var(--color-text-secondary);margin-bottom:4px}
+.bi-track{height:6px;border-radius:99px;background:var(--color-background-secondary);border:.5px solid var(--color-border-tertiary);overflow:hidden;margin-bottom:9px}
+.bi-fill{height:100%;border-radius:99px;background:#0B3D2E}
+.bi-ft{display:flex;align-items:center;gap:8px}
+.bi-flw{padding:6px 14px;border-radius:99px;font-size:11px;font-weight:500;cursor:pointer;border:.5px solid #0B3D2E;background:transparent;color:#0B3D2E;font-family:inherit}
+.bi-flw.on{background:#0B3D2E;color:#fff}
+.bi-ft-ct{font-size:10px;color:var(--color-text-secondary)}
+.dfoot{padding:7px 14px;border-top:.5px solid var(--color-border-tertiary);background:var(--color-background-secondary);font-size:9px;color:var(--color-text-secondary);text-align:center;letter-spacing:.04em;flex-shrink:0;font-family:'SF Mono','Roboto Mono',monospace}
+</style>
+
+<div class="wrap"><div class="phone">
+
+<!-- SCAN SCREEN -->
+<div class="scan-screen" id="scan-screen">
+  <div class="ss-top">
+    <div class="ss-brand">Terranova World</div>
+    <div class="ss-vrow">
+      <div class="ss-vdot"><svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M2 4.5L3.8 6.3L7 3" stroke="#0B3D2E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <span class="ss-vtxt">Product verified, GS1 Digital Link</span>
+    </div>
+    <div class="ss-pname">Essential Tee</div>
+    <div class="ss-pmeta">Sage Green, Size M, Women's, SS25</div>
+    <div class="ss-time">Scanned just now, DPP-AU-2025-TX-00847261</div>
+  </div>
+  <div class="ss-body">
+    <div class="ss-h">What brings you here?</div>
+    <div class="ss-sub">Tap an option and we'll take you straight there, or explore the full passport below.</div>
+    <div class="igrid">
+      <button class="ibtn" onclick="enterApp('overview')">
+        <div class="ibtn-ic" style="background:#E8F4EE"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#1A5C42" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="5.5"/><path d="M8 5.5V8l1.5 1.5"/></svg></div>
+        <div class="ibtn-l">Thinking of buying</div><div class="ibtn-d">Check sustainability and materials</div>
+      </button>
+      <button class="ibtn" onclick="enterApp('materials')">
+        <div class="ibtn-ic" style="background:#E8F0F8"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#1E5A8E" stroke-width="1.4" stroke-linecap="round"><path d="M3 5h10M3 8h6M3 11h8"/></svg></div>
+        <div class="ibtn-l">Just bought it</div>        <div class="ibtn-d">What's it made of and how to care for it</div>
+      </button>
+      <button class="ibtn" onclick="enterApp('lifecycle')">
+        <div class="ibtn-ic" style="background:#FDF4E3"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#8A6B1E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8a4 4 0 01-4 4H5M4 8a4 4 0 014-4h3"/><path d="M5 11l-2.5 1 .5-2.5M11 2l2.5 1-.5 2.5"/></svg></div>
+        <div class="ibtn-l">Done with it</div><div class="ibtn-d">Recycle, donate or repair</div>
+      </button>
+      <button class="ibtn" onclick="enterApp('journey')">
+        <div class="ibtn-ic" style="background:#F3EEF8"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#6B3FA0" stroke-width="1.4" stroke-linecap="round"><circle cx="3.5" cy="4.5" r="1.2"/><circle cx="8" cy="8" r="1.2"/><circle cx="12.5" cy="11.5" r="1.2"/><path d="M4.7 5.4L6.8 7M9.2 9L11.3 10.6"/></svg></div>
+        <div class="ibtn-l">Where was it made</div><div class="ibtn-d">Trace the supply chain</div>
+      </button>
+    </div>
+    <div class="ss-expl">
+      <div class="ss-erow">
+        <div class="ss-eic"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#1A5C42" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="2" width="10" height="12" rx="2"/><path d="M6 6h4M6 9h3"/></svg></div>
+        <div>
+          <div class="ss-etit">What is a Digital Product Passport?</div>
+          <div class="ss-etxt">A verified record of everything about this garment: its fibres, where it was made, its environmental footprint, and how to care for or recycle it. Issued by Terranova World, independently verified by GS1 Australia.</div>
+        </div>
+      </div>
+    </div>
+    <button class="ss-cta" onclick="enterApp('overview')">View full passport &rarr;</button>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div class="main-app" id="main-app">
+  <div class="hdr">
+    <svg class="hdr-geo" viewBox="0 0 390 210" preserveAspectRatio="xMidYMid slice"><circle cx="340" cy="20" r="110" fill="white"/><circle cx="360" cy="190" r="80" fill="white"/><circle cx="10" cy="210" r="120" fill="white"/></svg>
+    <div class="scbar"><div class="scbar-l"><div class="scpulse"></div><span class="scbar-txt">Scan confirmed, GS1 verified product</span></div><span class="scbar-t">Just now</span></div>
+    <div class="hbody">
+      <div class="crow2">
+        <div class="chip"><div class="chip-d"><svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1.5 4L3.2 5.7L6.5 2.3" stroke="#0B3D2E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Verified Digital Product Passport</div>
+        <span class="gs1l">GS1 AU</span>
+      </div>
+      <div class="prow">
+        <div class="pthumb"><svg width="32" height="30" viewBox="0 0 32 30" fill="none"><path d="M0 8L7.5 4.5L10 9.5C11 11.5 13.2 13 16 13C18.8 13 21 11.5 22 9.5L24.5 4.5L32 8L29 17H23V30H9V17H3Z" fill="rgba(255,255,255,.45)"/></svg></div>
+        <div><div class="pbrand">Terranova World</div><div class="pname">Essential Tee</div><div class="pmeta">Sage Green, Size M, Women's</div><div class="pstyle">SS25, Style TW-024</div></div>
+      </div>
+      <div class="sc2">
+        <div class="rw"><svg class="rsvg" viewBox="0 0 66 66"><circle cx="33" cy="33" r="27" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="4.5"/><circle cx="33" cy="33" r="27" fill="none" stroke="#4DB380" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="169.6" stroke-dashoffset="37.3" transform="rotate(-90 33 33)"/></svg><div class="rc"><div class="rg">B+</div><div class="rs">GRADE</div></div></div>
+        <div class="sr"><div class="sl">Sustainability score</div><div><span class="sn">78</span><span class="sd"> /100</span></div><div class="sc3">Better than 73% of similar garments</div><div class="sb"><div class="sf"></div></div></div>
+      </div>
+    </div>
+    <div class="hid">DPP-AU-2025-TX-00847261, GTIN 9312345678901</div>
+  </div>
+
+  <div class="istrip">
+    <button class="iq on" data-p="overview" onclick="switchIntent(this,'overview')"><div class="iqdot" style="background:#4DB380"></div>All info</button>
+    <button class="iq" data-p="materials" onclick="switchIntent(this,'materials')"><div class="iqdot" style="background:#2B6CB0"></div>Materials</button>
+    <button class="iq" data-p="journey" onclick="switchIntent(this,'journey')"><div class="iqdot" style="background:#6B3FA0"></div>Where it's from</button>
+    <button class="iq" data-p="impact" onclick="switchIntent(this,'impact')"><div class="iqdot" style="background:#2D7A55"></div>Environment</button>
+    <button class="iq" data-p="lifecycle" onclick="switchIntent(this,'lifecycle')"><div class="iqdot" style="background:#B8860B"></div>End of life</button>
+  </div>
+
+  <div class="panels">
+
+    <!-- OVERVIEW -->
+    <div class="panel active" id="pan-overview">
+      <div class="sec">Key metrics</div>
+      <div class="mg2">
+        <div class="mc"><div class="mcl">Carbon footprint</div><div class="mcv" style="color:#1A5C42">3.2<span class="mcu"> kg CO&#x2082;e</span></div><div class="mcn" style="color:#1A5C42">62% below avg</div></div>
+        <div class="mc"><div class="mcl">Water usage</div><div class="mcv" style="color:#1E5A8E">1,840<span class="mcu"> L</span></div><div class="mcn" style="color:#1E5A8E">56% below avg</div></div>
+        <div class="mc"><div class="mcl">Recycled content</div><div class="mcv" style="color:#8A6B1E">35%</div><div class="mcn" style="color:#8A6B1E">Recycled polyester</div></div>
+        <div class="mc"><div class="mcl">Organic content</div><div class="mcv" style="color:#1A5C42">60%</div><div class="mcn" style="color:#1A5C42">GOTS certified</div></div>
+      </div>
+      <div class="sec">Certifications</div>
+      <div class="cstrip">
+        <div class="cb"><div class="cbchk" style="background:#E8F4EE;border:.5px solid #A8D5BC;color:#1A5C42">&#10003;</div><div class="cbn">GOTS</div><div class="cbt">Organic</div></div>
+        <div class="cb"><div class="cbchk" style="background:#E8F4EE;border:.5px solid #A8D5BC;color:#1A5C42">&#10003;</div><div class="cbn">GRS</div><div class="cbt">Recycled</div></div>
+        <div class="cb"><div class="cbchk" style="background:#E8F0F8;border:.5px solid #A0BDD8;color:#1E5A8E">&#10003;</div><div class="cbn">OEKO-TEX</div><div class="cbt">Chemical</div></div>
+        <div class="cb"><div class="cbchk" style="background:#E8F0F8;border:.5px solid #A0BDD8;color:#1E5A8E">&#10003;</div><div class="cbn">SA8000</div><div class="cbt">Social</div></div>
+        <div class="cb"><div class="cbchk" style="background:#E8F4EE;border:.5px solid #A8D5BC;color:#1A5C42">&#10003;</div><div class="cbn">bluesign</div><div class="cbt">Process</div></div>
+        <div class="cb"><div class="cbchk" style="background:#FDF4E3;border:.5px solid #D4B26A;color:#8A6B1E">&#10003;</div><div class="cbn">Carbon</div><div class="cbt">Neutral Ship</div></div>
+      </div>
+      <div class="sec">From the brand</div>
+      <div class="bdc">
+        <div class="bdc-hd">
+          <div class="bdc-av">TW</div>
+          <div class="bdc-info"><div class="bdc-name">Terranova World <span class="bdc-ver">&#10003; Verified</span></div><div class="bdc-time">Sustainability Dispatch, 2 hours ago</div></div>
+          <div class="bdc-live"><div class="bdc-livdot"></div>LIVE</div>
+        </div>
+        <div class="bdc-body">
+          <div class="bdc-tag">New Initiative, Synthetics</div>
+          <div class="bdc-title">Eliminating virgin elastane from all products by 2026</div>
+          <div class="bdc-txt">We are trialling three bio-based and recycled elastane suppliers to replace the 100% virgin synthetics currently used across our core range. This directly affects garments like yours.</div>
+          <div class="bdc-rel"><strong>Relevant to your garment:</strong> The 5% elastane in this tee is currently virgin synthetic. When this initiative reaches scale, future versions will use certified recycled or bio-based alternatives.</div>
+          <div class="bdc-prog-lbl"><span>Progress to goal</span><span>40%</span></div>
+          <div class="bdc-track"><div class="bdc-fill"></div></div>
+          <div class="bdc-note">Supplier trials complete, full rollout targeted Q2 2026</div>
+          <div class="bdc-ft">
+            <div class="bdc-flw-ct"><svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 10.5C6.5 10.5 1.5 7.5 1.5 4.5a2.5 2.5 0 015 0 2.5 2.5 0 015 0c0 3-5 6-5 6z"/></svg>&nbsp;<span id="flw-ct">847 following</span></div>
+            <button class="bdc-flw-btn" id="flw-btn" onclick="toggleFollow(this,'flw-ct',847)">Follow</button>
+          </div>
+        </div>
+      </div>
+      <div class="sec">Community impact</div>
+      <div class="comm">
+        <div class="comm-hd"><span class="comm-title">Owners of this garment</span><span class="comm-owners">2,847 people</span></div>
+        <div class="comm-stats">
+          <div class="comm-stat"><div class="comm-sv">9.2t</div><div class="comm-sl">CO&#x2082; prevented together</div></div>
+          <div class="comm-stat"><div class="comm-sv">2,847</div><div class="comm-sl">garments from landfill</div></div>
+          <div class="comm-stat"><div class="comm-sv">5.2M</div><div class="comm-sl">litres water preserved</div></div>
+        </div>
+        <div class="comm-body">
+          <div class="comm-bl">What owners did</div>
+          <div class="comm-bar-row"><span class="comm-bar-lbl">Recycled</span><div class="comm-bar-track"><div class="comm-bar-fill" style="width:68%;background:#2D7A55"></div></div><span class="comm-bar-pct">68%</span></div>
+          <div class="comm-bar-row"><span class="comm-bar-lbl">Donated</span><div class="comm-bar-track"><div class="comm-bar-fill" style="width:16%;background:#2B6CB0"></div></div><span class="comm-bar-pct">16%</span></div>
+          <div class="comm-bar-row"><span class="comm-bar-lbl">Resold</span><div class="comm-bar-track"><div class="comm-bar-fill" style="width:9%;background:#B8860B"></div></div><span class="comm-bar-pct">9%</span></div>
+          <div class="comm-bar-row"><span class="comm-bar-lbl">Landfill</span><div class="comm-bar-track"><div class="comm-bar-fill" style="width:7%;background:#A32D2D"></div></div><span class="comm-bar-pct">7%</span></div>
+        </div>
+      </div>
+      <div class="sec">Countries of production</div>
+      <div class="card">
+        <div class="irow"><span class="ik">Raw material</span><span class="iv">Maharashtra, India</span></div>
+        <div class="irow"><span class="ik">Spinning and weaving</span><span class="iv">Gujarat, India</span></div>
+        <div class="irow"><span class="ik">Dyeing and finishing</span><span class="iv">Ho Chi Minh City, Vietnam</span></div>
+        <div class="irow"><span class="ik">Cut, make and trim</span><span class="iv">Ho Chi Minh City, Vietnam</span></div>
+        <div class="irow"><span class="ik">Distribution</span><span class="iv">Melbourne, Australia</span></div>
+      </div>
+      <div class="sec">Passport details</div>
+      <div class="card">
+        <div class="irow"><span class="ik">DPP ID</span><span class="iv mono">DPP-AU-2025-TX-00847261</span></div>
+        <div class="irow"><span class="ik">GTIN (GS1)</span><span class="iv mono">9312345678901</span></div>
+        <div class="irow"><span class="ik">Issued</span><span class="iv">January 2025</span></div>
+        <div class="irow"><span class="ik">Last verified</span><span class="iv">March 2025</span></div>
+        <div class="irow"><span class="ik">Standard</span><span class="iv">GS1 Digital Link, EPCIS 2.0</span></div>
+      </div>
+    </div>
+
+    <!-- MATERIALS -->
+    <div class="panel" id="pan-materials">
+      <div class="sec">Fibre composition</div>
+      <div class="mbar" id="matbar"></div>
+      <div class="mleg" id="matleg"></div>
+
+      <div class="sec">Care instructions</div>
+      <div class="card">
+        <div class="crow3"><div class="cok"><svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1 4l2 2 4-4" stroke="#1A5C42" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div>Machine wash cold (30&#176;C), saving up to 40% energy</div></div>
+        <div class="crow3"><div class="cok"><svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1 4l2 2 4-4" stroke="#1A5C42" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div>Gentle cycle, air dry flat</div></div>
+        <div class="crow3"><div class="cok"><svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1 4l2 2 4-4" stroke="#1A5C42" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div>Cool iron if needed (max 110&#176;C)</div></div>
+        <div class="crow3"><div class="cno"><svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M2 2l4 4M6 2L2 6" stroke="#A32D2D" stroke-width="1.2" stroke-linecap="round"/></svg></div><div style="opacity:.6">No bleach or dry cleaning</div></div>
+      </div>
+
+      <div class="sec">Fibre breakdown</div>
+      <div id="matcards"></div>
+      <div class="sec">Chemical use and treatments</div>
+      <div class="card">
+        <div class="irow"><span class="ik">Dye type</span><span class="iv">Low-impact reactive dyes</span></div>
+        <div class="irow"><span class="ik">Surface finishes</span><span class="iv">Anti-wrinkle, PFAS-free</span></div>
+        <div class="irow"><span class="ik">Softener</span><span class="iv">Silicone-free</span></div>
+        <div class="irow"><span class="ik">Restricted substances</span><span class="iv" style="color:#1A5C42">None detected</span></div>
+        <div class="irow"><span class="ik">Microplastic risk</span><span class="iv" style="color:#1A5C42">Low, under 1% shedding</span></div>
+        <div class="irow"><span class="ik">PFAS / PFOS</span><span class="iv" style="color:#1A5C42">Absent</span></div>
+      </div>
+      <div><span class="tag tg">&#10003; OEKO-TEX STANDARD 100</span><span class="tag tb">&#10003; bluesign certified</span></div>
+    </div>
+
+    <!-- JOURNEY -->
+    <div class="panel" id="pan-journey">
+      <div style="font-size:11px;color:var(--color-text-secondary);margin-bottom:14px;line-height:1.5">Tap any stage to view facility details and audit records.</div>
+      <div id="scsteps"></div>
+      <div class="sec">Worker welfare</div>
+      <div class="card">
+        <div class="wrow"><div class="wchk"><svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="#1A5C42" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Living wage paid to all production workers</span></div>
+        <div class="wrow"><div class="wchk"><svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="#1A5C42" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Safe and healthy working conditions verified</span></div>
+        <div class="wrow"><div class="wchk"><svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="#1A5C42" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>No child labour or forced labour</span></div>
+        <div class="wrow"><div class="wchk"><svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="#1A5C42" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Freedom of association and collective bargaining</span></div>
+        <div class="wrow"><div class="wchk"><svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="#1A5C42" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Annual independent social audit conducted</span></div>
+      </div>
+      <div style="font-size:11px;color:var(--color-text-secondary);text-align:center">Bureau Veritas, March 2025, SA8000</div>
+    </div>
+
+    <!-- IMPACT -->
+    <div class="panel" id="pan-impact">
+      <div class="envb">
+        <div class="envc"><div class="envg">B+</div><div class="envs">RATING</div></div>
+        <div><div style="font-size:13px;font-weight:500;color:#0B3D2E;margin-bottom:3px;letter-spacing:-.01em">Above-average environmental rating</div><div style="font-size:11px;color:#1A5C42;line-height:1.6">Outperforms industry benchmarks on carbon, water, chemicals, and circular material content. ESPR-aligned LCA verified.</div></div>
+      </div>
+      <div class="sec">Carbon and water footprint</div>
+      <div id="ibars"></div>
+      <div class="sec">Material profile</div>
+      <div class="card">
+        <div class="irow"><span class="ik">Organic fibre</span><span class="iv" style="color:#1A5C42">60%</span></div>
+        <div class="irow"><span class="ik">Recycled fibre</span><span class="iv" style="color:#8A6B1E">35%</span></div>
+        <div class="irow"><span class="ik">Chemical risk</span><span class="iv" style="color:#1A5C42">Low</span></div>
+        <div class="irow"><span class="ik">PFAS present</span><span class="iv" style="color:#1A5C42">No</span></div>
+      </div>
+      <div class="alert ab"><div class="altt">About this data</div>Carbon from Higg MSI. Water from the Water Footprint Network. Benchmark is a conventional cotton t-shirt.</div>
+    </div>
+
+    <!-- END OF LIFE -->
+    <div class="panel" id="pan-lifecycle">
+      <div class="mg3">
+        <div class="mc" style="padding:10px"><div class="mcl">Recyclability</div><div style="font-size:13px;font-weight:500;color:#1A5C42;margin-top:3px">High</div></div>
+        <div class="mc" style="padding:10px"><div class="mcl">Durability</div><div style="font-size:13px;font-weight:500;margin-top:3px;font-variant-numeric:tabular-nums">8 / 10</div></div>
+        <div class="mc" style="padding:10px"><div class="mcl">Repairability</div><div style="font-size:13px;font-weight:500;color:#1E5A8E;margin-top:3px">Easy</div></div>
+      </div>
+      <div class="alert aa"><span style="font-weight:500">Expected lifespan:</span> 3 to 5 years with proper care. Designed for 80+ wash cycles.</div>
+      <div class="sec">When you're done with this garment</div>
+      <div id="eolcards"></div>
+      <div class="alert ag"><div class="altt">Take-back program</div>Return to any Terranova World store for certified textile-to-textile recycling at no cost. Receive 10% off your next purchase.</div>
+
+      <!-- LOGGER -->
+      <div class="sec">Record what happened</div>
+      <div class="logger">
+        <div class="logger-hd">
+          <div class="logger-title">What did you do with this garment?</div>
+          <div class="logger-sub">Help us track the real-world lifecycle of our products. Your data shapes our sustainability strategy.</div>
+        </div>
+        <div class="logger-grid" id="logger-grid">
+          <div class="lopt" onclick="logAction('recycle')">
+            <div class="lopt-ic" style="background:#E8F4EE"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#1A5C42" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 9a4.5 4.5 0 01-4.5 4.5H6M4.5 9A4.5 4.5 0 019 4.5h3"/><path d="M6 12l-3 1.5.5-3M12 1.5l3 1.5-.5 3"/></svg></div>
+            <div class="lopt-l">Recycled</div><div class="lopt-d">Returned to store</div>
+          </div>
+          <div class="lopt" onclick="logAction('donate')">
+            <div class="lopt-ic" style="background:#E8F0F8"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#1E5A8E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 13.5C9 13.5 3 10 3 6.5a3 3 0 016 0 3 3 0 016 0c0 3.5-6 7-6 7z"/></svg></div>
+            <div class="lopt-l">Donated</div><div class="lopt-d">Seamless drop-off</div>
+          </div>
+          <div class="lopt" onclick="logAction('resell')">
+            <div class="lopt-ic" style="background:#FDF4E3"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#8A6B1E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h10M9 4l5 5-5 5"/></svg></div>
+            <div class="lopt-l">Resold</div><div class="lopt-d">Depop or marketplace</div>
+          </div>
+          <div class="lopt" onclick="logAction('repair')">
+            <div class="lopt-ic" style="background:#F3EEF8"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#6B3FA0" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 4.5l-9 9M4.5 9L9 4.5M9 13.5l4.5-4.5"/></svg></div>
+            <div class="lopt-l">Repaired</div><div class="lopt-d">Extended its life</div>
+          </div>
+          <!-- 5th option: full width, dashed, secondary -->
+          <div class="lopt lopt5" onclick="logAction('landfill')">
+            <div class="lopt-ic" style="background:var(--color-background-secondary);width:30px;height:30px;border-radius:8px"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="var(--color-text-secondary)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 4.5h10l-1 8H3.5l-1-8z"/><path d="M2 4.5h11"/><path d="M5.5 4.5v-2h4v2"/></svg></div>
+            <div><div class="lopt-l">Threw it away</div><div class="lopt-d">Sent to general waste or landfill</div></div>
+          </div>
+        </div>
+        <div class="logger-done" id="logger-done">
+          <div class="ldone-top">
+            <div class="ldone-chk" id="done-chk"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 9l4 4 7-7" stroke="#1A5C42" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="40" stroke-dashoffset="40" style="animation:checkDraw .5s ease forwards .1s"/></svg></div>
+            <div><div class="ldone-msg" id="done-msg">Thank you for recycling!</div><div class="ldone-sub" id="done-sub">Your action has been recorded.</div></div>
+          </div>
+          <div class="ldone-impact" id="done-impact">
+            <div class="ldone-impact-row"><span class="ldone-n" id="done-n">2.1</span><span class="ldone-u" id="done-u">kg CO&#x2082; saved</span></div>
+            <div class="ldone-eq" id="done-eq">Equivalent to 18 km not driven</div>
+            <div class="ldone-comm" id="done-comm">Together with <strong>848 other owners</strong>, this community has now prevented <strong>9.2 tonnes CO&#x2082;</strong> and kept 2,848 garments from landfill.</div>
+          </div>
+          <button class="rl-btn" onclick="resetLogger()">Change my selection</button>
+        </div>
+      </div>
+
+      <!-- RATING -->
+      <div class="rating-sec" id="rating-sec" style="display:none">
+        <div class="rating-hd"><div class="rating-title">How was this garment?</div><div class="rating-sub">Your ratings help us improve future products.</div></div>
+        <div class="rating-rows">
+          <div class="rrow"><span class="rrow-l">Overall quality</span><div class="stars" id="stars-quality" data-cat="quality"></div></div>
+          <div class="rrow"><span class="rrow-l">Sustainability</span><div class="stars" id="stars-sust" data-cat="sust"></div></div>
+          <div class="rrow"><span class="rrow-l">Claims accuracy</span><div class="stars" id="stars-claims" data-cat="claims"></div></div>
+          <div class="rrow"><span class="rrow-l">Durability</span><div class="stars" id="stars-dur" data-cat="dur"></div></div>
+        </div>
+      </div>
+
+      <!-- FEEDBACK -->
+      <div class="fbsec" id="fb-sec" style="display:none">
+        <div class="fbsec-hd" onclick="toggleFB(this)"><span class="fbsec-title">Share feedback with the brand</span><span class="fbsec-ico">&#9660;</span></div>
+        <div class="fbsec-body" id="fb-body">
+          <textarea class="fbtxt" id="fb-txt" rows="3" placeholder="Tell Terranova World what you loved, what could be better, or flag any concerns about sustainability claims..."></textarea>
+          <div class="fb-anon"><span>Submit anonymously</span><div class="fb-toggle" id="anon-toggle" onclick="this.classList.toggle('on')"></div></div>
+          <button class="fb-send" onclick="submitFeedback()">Send to brand &rarr;</button>
+          <div class="fb-sent" id="fb-sent">Thank you. Terranova World will review your feedback and may respond in the brand dispatch.</div>
+        </div>
+      </div>
+
+      <!-- BRAND PLEDGE -->
+      <div class="sec">Brand sustainability pledge</div>
+      <div class="bi">
+        <div class="bi-hd"><div class="bi-av">TW</div><div class="bi-lbl">Pledge, Synthetics, Active</div></div>
+        <div class="bi-body">
+          <div class="bi-title">100% bio-based or recycled elastane across all core styles by 2026</div>
+          <div class="bi-txt">Elastane is one of the hardest fibres to replace sustainably. We are currently in supplier trials with three certified alternatives and expect full transition by mid-2026. Garments produced after this date will carry updated DPP data reflecting the change.</div>
+          <div class="bi-prog-row"><span>Goal progress</span><span>40%, supplier trials complete</span></div>
+          <div class="bi-track"><div class="bi-fill" style="width:40%"></div></div>
+          <div class="bi-ft">
+            <button class="bi-flw" id="bi-flw" onclick="toggleFollow(this,'bi-ct',312)">Follow pledge</button>
+            <span class="bi-ft-ct" id="bi-ct">312 owners following</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="bnav">
+    <button class="nb on" data-p="overview" onclick="switchNav(this)"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="12" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="12" width="7" height="7" rx="1.5"/><rect x="12" y="12" width="7" height="7" rx="1.5"/></svg><span>Overview</span><div class="ndot"></div></button>
+    <button class="nb" data-p="materials" onclick="switchNav(this)"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 7h14M4 11h9M4 15h11"/></svg><span>Materials</span><div class="ndot"></div></button>
+    <button class="nb" data-p="journey" onclick="switchNav(this)"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="4.5" cy="6" r="1.5"/><circle cx="11" cy="11" r="1.5"/><circle cx="17.5" cy="16" r="1.5"/><path d="M6 7L9.5 10M12.5 12L16 15"/></svg><span>Journey</span><div class="ndot"></div></button>
+    <button class="nb" data-p="impact" onclick="switchNav(this)"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17L8 10L12 13L18 5"/><path d="M18 5h-3.5M18 5v3.5"/></svg><span>Impact</span><div class="ndot"></div></button>
+    <button class="nb" data-p="lifecycle" onclick="switchNav(this)"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 11a6.5 6.5 0 01-6.5 6.5H8M4.5 11A6.5 6.5 0 0111 4.5h3.5"/><path d="M8 14.5L4.5 17.5L8 20M14.5 2L18 5L14.5 8"/></svg><span>End of Life</span><div class="ndot"></div></button>
+  </div>
+  <div class="dfoot">GS1 Digital Link, EPCIS 2.0, GDSN, DPP-AU-2025-TX-00847261</div>
+</div>
+
+</div></div>
+
+<script>
+function enterApp(tab){
+  document.getElementById('scan-screen').style.display='none';
+  document.getElementById('main-app').classList.add('vis');
+  switchPanel(tab);syncStrip(tab);syncNav(tab);
+}
+function switchNav(btn){const p=btn.dataset.p;document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));btn.classList.add('on');switchPanel(p);syncStrip(p);}
+function switchIntent(btn,p){document.querySelectorAll('.iq').forEach(b=>b.classList.remove('on'));btn.classList.add('on');switchPanel(p);syncNav(p);}
+function switchPanel(p){document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));const el=document.getElementById('pan-'+p);if(el)el.classList.add('active');}
+function syncStrip(p){document.querySelectorAll('.iq').forEach(b=>b.classList.toggle('on',b.dataset.p===p))}
+function syncNav(p){document.querySelectorAll('.nb').forEach(b=>b.classList.toggle('on',b.dataset.p===p))}
+
+// Materials
+const mats=[
+  {name:'Organic Cotton',pct:60,origin:'Maharashtra, India',cert:'GOTS Certified',ctag:'tg',color:'#2D7A55',bg:'#E8F4EE',border:'#A8D5BC',tc:'#0B3D2E',detail:'GOTS-certified organic cotton grown without synthetic pesticides or fertilisers. Sourced from a fair-trade cooperative of 2,400 smallholder farmers. Annual crop and chain-of-custody audits by Control Union Certifications.'},
+  {name:'Recycled Polyester',pct:35,origin:'Taiwan',cert:'GRS Certified',ctag:'tb',color:'#2B6CB0',bg:'#E8F0F8',border:'#A0BDD8',tc:'#1E3A5F',detail:'Produced from post-consumer PET plastic bottles. GRS certified. Reduces reliance on virgin petrochemicals by 59% and diverts plastic waste from landfill.'},
+  {name:'Elastane',pct:5,origin:'Germany',cert:'OEKO-TEX 100',ctag:'ta',color:'#B8860B',bg:'#FDF4E3',border:'#D4B26A',tc:'#5A3E0A',detail:'Provides shape retention and comfort stretch. Synthetically produced, with no animal derivatives. OEKO-TEX STANDARD 100 certified against 100+ harmful substances. Subject to the brand sustainability pledge in the End of Life tab.'},
+];
+mats.forEach(m=>{
+  const s=document.createElement('div');s.className='mseg';s.style.cssText='width:'+m.pct+'%;background:'+m.color;s.textContent=m.pct>=15?m.pct+'%':'';document.getElementById('matbar').appendChild(s);
+  const l=document.createElement('div');l.className='mli';l.innerHTML='<div class="mdot" style="background:'+m.color+'"></div>'+m.name+' ('+m.pct+'%)';document.getElementById('matleg').appendChild(l);
+  const c=document.createElement('div');c.className='fcard';c.style.cssText='background:'+m.bg+';border-color:'+m.border;
+  c.innerHTML='<div class="ftop"><div><div class="fn" style="color:'+m.tc+'">'+m.name+'</div><div class="for" style="color:'+m.tc+'">Origin: '+m.origin+'</div></div><div class="fp" style="color:'+m.tc+'">'+m.pct+'%</div></div><div class="fd" style="color:'+m.tc+'">'+m.detail+'</div><span class="tag '+m.ctag+'">&#10003; '+m.cert+'</span>';
+  document.getElementById('matcards').appendChild(c);
+});
+
+// Supply chain
+const sc=[
+  {stage:'Raw Material',loc:'Maharashtra, India',date:'Aug 2024',cert:'GOTS',company:'Chetna Organic Farms',detail:'Organic cotton grown without synthetic pesticides. Fair-trade cooperative of 2,400 smallholder farmers. Annual crop and chain-of-custody audits by Control Union Certifications.'},
+  {stage:'Spinning and Weaving',loc:'Gujarat, India',date:'Sep 2024',cert:'OCS',company:'Arvind Mills Ltd.',detail:'Ring-spun yarn for superior durability. Closed-loop water recycling reduces consumption by 60%. ISO 14001:2015 certified. OCS chain-of-custody verified.'},
+  {stage:'Dyeing and Finishing',loc:'Ho Chi Minh City, Vietnam',date:'Oct 2024',cert:'OEKO-TEX',company:'EcoColour Co.',detail:'Low-impact reactive dyes. PFAS-free anti-wrinkle finish. On-site wastewater treatment processes all effluent to drinking-water standards.'},
+  {stage:'Cut, Make and Trim',loc:'Ho Chi Minh City, Vietnam',date:'Nov 2024',cert:'SA8000',company:'Green Stitch Apparel',detail:'Living wage paid to all 1,240 workers. 87% female workforce. SA8000 certified since 2019. Annual audit by Bureau Veritas.'},
+  {stage:'Distribution',loc:'Melbourne, Australia',date:'Dec 2024',cert:'Carbon Neutral',company:'Pacific Eco Logistics',detail:'Sea freight only, with approximately 95% fewer emissions than air freight for this route. Transport emissions: 0.41 kg CO\u2082e per unit. Carbon offset via GreenFleet QLD reforestation, ISO 14064 verified.'},
+];
+sc.forEach((s,i)=>{
+  const last=i===sc.length-1;
+  const d=document.createElement('div');d.className='sci';
+  d.innerHTML='<div class="scil"><div class="scib">'+(i+1)+'</div>'+(!last?'<div class="sciln"></div>':'')+'</div><div class="scir" onclick="tSC(this)"><div class="scit"><div><div class="scis">'+s.stage+'</div><div class="scilc">'+s.loc+', '+s.date+'</div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px"><span class="scitg">'+s.cert+'</span><span class="scia">&#9660;</span></div></div><div class="scibd"><div class="scico">'+s.company+'</div><div class="scidc">'+s.detail+'</div></div></div>';
+  document.getElementById('scsteps').appendChild(d);
+});
+function tSC(el){const b=el.querySelector('.scibd'),a=el.querySelector('.scia');b.classList.toggle('open');a.style.transform=b.classList.contains('open')?'rotate(180deg)':'';}
+
+// Impact bars
+const bars=[
+  {l:'Carbon footprint',v:3.2,max:12,u:'kg CO\u2082e',bench:8.5,bl:'Industry avg: 8.5',good:'62% below avg',color:'#2D7A55',gc:'#1A5C42'},
+  {l:'Water consumption',v:1840,max:6000,u:'litres',bench:4200,bl:'Industry avg: 4,200 L',good:'56% below avg',color:'#2B6CB0',gc:'#1E5A8E'},
+];
+bars.forEach(b=>{
+  const pct=Math.round((b.v/b.max)*100),bpct=Math.round((b.bench/b.max)*100),dv=b.v<100?b.v.toFixed(1):b.v.toLocaleString();
+  const d=document.createElement('div');d.className='ibr';
+  d.innerHTML='<div class="ibrt"><span class="ibrl">'+b.l+'</span><span class="ibrv">'+dv+' '+b.u+'</span></div><div class="ibrtr"><div class="ibrf" style="width:'+pct+'%;background:'+b.color+'"></div><div class="ibrb" style="left:'+bpct+'%"></div></div><div class="ibrft"><span>'+b.bl+'</span><span class="ibrg" style="color:'+b.gc+'">'+b.good+'</span></div>';
+  document.getElementById('ibars').appendChild(d);
+});
+
+// EOL cards
+const eol=[
+  {abbr:'RS',ibg:'#E8F4EE',ic:'#1A5C42',title:'Resell',desc:'This garment is in resale condition. List on Depop, Vestiaire Collective or Facebook Marketplace. Reselling extends its life by an average of 2.2 years.'},
+  {abbr:'DN',ibg:'#E8F0F8',ic:'#1E5A8E',title:'Donate',desc:'Drop off at 1,200+ Seamless collection points across Australia. All conditions accepted.'},
+  {abbr:'RP',ibg:'#FDF4E3',ic:'#8A6B1E',title:'Repair',desc:'Rated Easy to repair. Common repairs: seam reinforcement, hem, minor snags. Full guide at terranovaworld.com/repair'},
+  {abbr:'RC',ibg:'#E8F4EE',ic:'#0B3D2E',title:'Recycle',desc:'Return in-store via our free take-back program for certified textile-to-textile recycling. No landfill.'},
+];
+eol.forEach(o=>{
+  const d=document.createElement('div');d.className='acard';
+  d.innerHTML='<div class="aic" style="background:'+o.ibg+'"><span style="font-size:11px;font-weight:500;color:'+o.ic+'">'+o.abbr+'</span></div><div style="flex:1"><div class="atit">'+o.title+'</div><div class="adc">'+o.desc+'</div></div><div class="carr">&#8250;</div>';
+  document.getElementById('eolcards').appendChild(d);
+});
+
+// Action logger
+const actions={
+  recycle:{msg:'Thank you for recycling!',sub:'Your action has been recorded and added to the community total.',n:'2.1',u:'kg CO\u2082 saved',eq:'Equivalent to 18 km not driven',comm:'Together with <strong>848 other owners</strong>, this community has now prevented <strong>9.2 tonnes CO\u2082</strong> and kept 2,848 garments from landfill.',warn:false},
+  donate:{msg:'Thank you for donating!',sub:'Your action has been recorded and added to the community total.',n:'1.4',u:'kg CO\u2082 avoided',eq:'Equivalent to 12 km not driven',comm:'Together with <strong>848 other owners</strong>, this community has now prevented <strong>9.2 tonnes CO\u2082</strong> and kept 2,848 garments from landfill.',warn:false},
+  resell:{msg:'Great. You resold it!',sub:'Your action has been recorded and added to the community total.',n:'1.8',u:'kg CO\u2082 avoided',eq:'2.2 additional years of product life',comm:'Together with <strong>848 other owners</strong>, this community has now prevented <strong>9.2 tonnes CO\u2082</strong> and kept 2,848 garments from landfill.',warn:false},
+  repair:{msg:'Nice work repairing it!',sub:'Your action has been recorded and added to the community total.',n:'0.8',u:'kg CO\u2082 saved',eq:'One more year of product life',comm:'Together with <strong>848 other owners</strong>, this community has now prevented <strong>9.2 tonnes CO\u2082</strong> and kept 2,848 garments from landfill.',warn:false},
+  landfill:{msg:'Thanks for telling us.',sub:'Every data point helps us improve our take-back schemes and durability targets.',n:'1.8',u:'kg CO\u2082 released',eq:'This garment could have been recycled or donated instead.',comm:'73% of owners chose to recycle or donate. Our free in-store take-back accepts garments in any condition, no questions asked.',warn:true},
+};
+function logAction(action){
+  const a=actions[action];if(!a)return;
+  document.getElementById('logger-grid').style.display='none';
+  const done=document.getElementById('logger-done');
+  done.classList.add('show');
+  document.getElementById('done-msg').textContent=a.msg;
+  document.getElementById('done-sub').textContent=a.sub;
+  document.getElementById('done-n').textContent=a.n;
+  document.getElementById('done-u').textContent=a.u;
+  document.getElementById('done-eq').textContent=a.eq;
+  document.getElementById('done-comm').innerHTML=a.comm;
+  const imp=document.getElementById('done-impact');
+  const chk=document.getElementById('done-chk');
+  imp.className=a.warn?'ldone-impact warn':'ldone-impact';
+  chk.className=a.warn?'ldone-chk warn':'ldone-chk';
+  setTimeout(()=>{
+    const rs=document.getElementById('rating-sec');rs.style.display='block';rs.style.animation='fadeUp .4s ease';
+    buildStars();
+    setTimeout(()=>{const fb=document.getElementById('fb-sec');fb.style.display='block';fb.style.animation='fadeUp .4s ease';},400);
+  },800);
+}
+function resetLogger(){
+  document.getElementById('logger-grid').style.display='grid';
+  document.getElementById('logger-done').classList.remove('show');
+  document.getElementById('rating-sec').style.display='none';
+  document.getElementById('fb-sec').style.display='none';
+  const txt=document.getElementById('fb-txt');if(txt){txt.style.display='';txt.value='';}
+  const anon=document.querySelector('.fb-anon');if(anon)anon.style.display='';
+  const send=document.querySelector('.fb-send');if(send)send.style.display='';
+  const sent=document.getElementById('fb-sent');if(sent)sent.classList.remove('show');
+  document.getElementById('fb-body').classList.remove('open');
+  document.querySelector('.fbsec-ico').classList.remove('open');
+}
+
+// Stars
+const starCats=[{id:'stars-quality',cat:'quality',def:4},{id:'stars-sust',cat:'sust',def:5},{id:'stars-claims',cat:'claims',def:4},{id:'stars-dur',cat:'dur',def:3}];
+const ratings={};
+function buildStars(){
+  starCats.forEach(c=>{ratings[c.cat]=c.def;const el=document.getElementById(c.id);renderStars(el,c.cat,c.def);});
+}
+function renderStars(el,cat,val){
+  el.innerHTML='';
+  for(let i=1;i<=5;i++){
+    const btn=document.createElement('div');btn.className='star';
+    const f=i<=val;
+    btn.innerHTML='<svg width="18" height="18" viewBox="0 0 18 18"><path d="M9 2l1.9 3.8 4.2.6-3 3 .7 4.2L9 11.5l-3.8 2.1.7-4.2-3-3 4.2-.6z" fill="'+(f?'#C19A3C':'none')+'" stroke="'+(f?'#C19A3C':'#D0D0D0')+'" stroke-width="1.2" stroke-linejoin="round"/></svg>';
+    btn.onclick=(()=>{const v=i;return()=>{ratings[cat]=v;renderStars(el,cat,v);};})();
+    el.appendChild(btn);
+  }
+}
+
+// Feedback
+function toggleFB(hd){const b=document.getElementById('fb-body'),ic=hd.querySelector('.fbsec-ico');b.classList.toggle('open');ic.classList.toggle('open');}
+function submitFeedback(){
+  const txt=document.getElementById('fb-txt');if(!txt.value.trim())return;
+  txt.style.display='none';document.querySelector('.fb-anon').style.display='none';document.querySelector('.fb-send').style.display='none';
+  document.getElementById('fb-sent').classList.add('show');
+}
+
+// Follow toggle
+function toggleFollow(btn,ctId,baseCount){
+  const ct=document.getElementById(ctId);
+  const on=btn.classList.contains('on')||btn.classList.contains('bdc-flw-btn')&&btn.textContent.includes('Following');
+  if(btn.classList.contains('on')){
+    btn.classList.remove('on');btn.textContent=btn.id==='bi-flw'?'Follow pledge':'Follow';
+    ct.textContent=baseCount+' '+(btn.id==='bi-flw'?'owners following':'following');
+  } else {
+    btn.classList.add('on');btn.textContent='Following \u2713';
+    ct.textContent=(baseCount+1)+' '+(btn.id==='bi-flw'?'owners following':'following');
+  }
+}
+</script>
