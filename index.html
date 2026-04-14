@@ -3,696 +3,946 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Digital Product Passport — Terranova World</title>
+<title>Digital Product Passport</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/inter/400.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/inter/500.css" rel="stylesheet">
 <style>
-@import url('https://cdn.jsdelivr.net/npm/@fontsource/inter/400.css');
-@import url('https://cdn.jsdelivr.net/npm/@fontsource/inter/500.css');
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Helvetica Neue',system-ui,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
-html,body{height:100%}
-body{background:#f0f0eb}
-@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-@keyframes pulseGlow{0%,100%{opacity:1}50%{opacity:.4}}
-@keyframes checkDraw{from{stroke-dashoffset:40}to{stroke-dashoffset:0}}
-.wrap{display:flex;justify-content:center;padding:1.5rem .75rem 2rem;min-height:100vh}
-.phone{width:100%;max-width:390px;background:#fff;border-radius:28px;overflow:hidden;border:.5px solid rgba(0,0,0,.12);display:flex;flex-direction:column}
-@media(max-width:520px){
-  html,body{height:100%;overflow:hidden;background:#fff}
-  .wrap{padding:0;align-items:stretch;height:100%;overflow:hidden}
-  .phone{max-width:100%;border-radius:0;border:none;height:100%;overflow:hidden;flex:1}
-  .scan-screen{height:100%;overflow:hidden}
-  .ss-body{overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
-  .main-app.vis{height:100%;overflow:hidden}
-  .panels{flex:1;min-height:0;overflow:hidden}
-  .panel{height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
-  .hdr-geo{display:none}
-  .hbody{padding:.85rem 1rem .75rem}
+:root{
+  --green:#0B3D2E;--green-mid:#1A5C42;--green-lt:#EEF7F2;--green-bd:#C8E6D5;
+  --blue-lt:#EEF3FB;--blue-bd:#C3D9F5;--blue:#1E5A8E;
+  --amber-lt:#FDF4E3;--amber-bd:#EDD59A;--amber:#8A6B1E;
+  --red-lt:#FFF1F1;--red-bd:#FECACA;--red:#DC2626;
+  --ink:#111;--ink2:#555;--ink3:#888;--ink4:#BBB;
+  --line:#F0F0F0;--line2:#E8E8E8;--bg:#FAFAFA;--white:#fff;
+  --r-sm:10px;--r-md:14px;--r-lg:18px;--r-xl:24px;
 }
-.scan-screen{display:flex;flex-direction:column;flex:1;overflow:hidden}
-.ss-top{background:#0B3D2E;padding:1.5rem 1.5rem 1.25rem;flex-shrink:0}
-.ss-brand{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.38);font-weight:500;margin-bottom:10px}
-.ss-vrow{display:flex;align-items:center;gap:7px;margin-bottom:12px}
-.ss-vdot{width:16px;height:16px;border-radius:50%;background:#4DB380;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.ss-vtxt{font-size:12px;color:rgba(255,255,255,.75)}
-.ss-pname{font-size:24px;font-weight:500;color:#fff;letter-spacing:-.02em;line-height:1.1;margin-bottom:3px}
-.ss-pmeta{font-size:13px;color:rgba(255,255,255,.45)}
-.ss-time{font-size:10px;color:rgba(255,255,255,.28);margin-top:8px;font-family:'SF Mono','Roboto Mono',monospace}
-.ss-body{flex:1;overflow-y:auto;padding:1.25rem}
-.ss-h{font-size:15px;font-weight:500;color:#1a1a1a;letter-spacing:-.01em;margin-bottom:4px}
-.ss-sub{font-size:12px;color:#666;line-height:1.55;margin-bottom:14px}
-.igrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
-.ibtn{padding:13px 11px;border-radius:14px;border:.5px solid #e0e0e0;background:#f7f7f5;cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:5px}
-.ibtn-ic{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center}
-.ibtn-l{font-size:12px;font-weight:500;color:#1a1a1a;letter-spacing:-.01em;line-height:1.2}
-.ibtn-d{font-size:10px;color:#666;line-height:1.35}
-.ss-expl{background:#f7f7f5;border:.5px solid #e0e0e0;border-radius:14px;padding:12px 13px;margin-bottom:14px}
-.ss-erow{display:flex;align-items:flex-start;gap:10px}
-.ss-eic{width:32px;height:32px;border-radius:9px;background:#E8F4EE;border:.5px solid #A8D5BC;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.ss-etit{font-size:12px;font-weight:500;color:#1a1a1a;margin-bottom:3px;letter-spacing:-.01em}
-.ss-etxt{font-size:11px;color:#666;line-height:1.6}
-.ss-cta{display:block;width:100%;padding:15px;background:#0B3D2E;border:none;cursor:pointer;font-size:13px;font-weight:500;color:#fff;letter-spacing:-.01em;text-align:center;flex-shrink:0;margin-top:auto;font-family:inherit}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  -webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
+
+/* ── ANIMATIONS ── */
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+@keyframes up{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes draw{from{stroke-dashoffset:40}to{stroke-dashoffset:0}}
+@keyframes pop{0%{transform:scale(.95)}60%{transform:scale(1.03)}100%{transform:scale(1)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes slideDown{from{max-height:0;opacity:0}to{max-height:600px;opacity:1}}
+
+/* ── LAYOUT ── */
+.wrap{display:flex;justify-content:center;align-items:flex-start;padding:2rem 1rem 2rem;min-height:100vh}
+.phone{width:100%;max-width:375px;background:var(--white);border-radius:36px;overflow:hidden;
+  box-shadow:0 20px 80px rgba(0,0,0,.15),0 2px 8px rgba(0,0,0,.06);
+  display:flex;flex-direction:column;position:relative}
+
+@media(max-width:520px){
+  html,body{overflow:hidden;background:var(--white)}
+  .wrap{padding:0;display:block}
+  .phone{max-width:100%;border-radius:0;box-shadow:none;
+    height:100vh;height:100dvh;overflow:hidden}
+  .panel,.ss-body{-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+  .bnav{padding-bottom:calc(10px + env(safe-area-inset-bottom))}
+}
+
+/* ── SCAN SCREEN ── */
+.scan-screen{display:flex;flex-direction:column;flex:1;min-height:0;overflow:hidden}
+.ss-hero{background:var(--green);padding:2.25rem 1.5rem 1.5rem;flex-shrink:0;position:relative;overflow:hidden}
+.ss-hero::after{content:'';position:absolute;right:-60px;top:-60px;width:220px;height:220px;
+  border-radius:50%;background:rgba(255,255,255,.04);pointer-events:none}
+.ss-vrow{display:flex;align-items:center;gap:6px;margin-bottom:1.25rem}
+.ss-vdot{width:7px;height:7px;border-radius:50%;background:#4DB380;animation:pulse 2.5s ease-in-out infinite}
+.ss-vtext{font-size:11px;color:rgba(255,255,255,.5);letter-spacing:.03em}
+.ss-pname{font-size:32px;font-weight:500;color:#fff;letter-spacing:-.04em;line-height:1;margin-bottom:5px}
+.ss-pmeta{font-size:14px;color:rgba(255,255,255,.42);letter-spacing:-.01em}
+.ss-gtin{font-size:9px;color:rgba(255,255,255,.15);margin-top:12px;
+  font-family:'SF Mono','Roboto Mono',monospace;letter-spacing:.05em}
+
+.ss-body{flex:1;overflow-y:auto;padding:1.5rem 1.5rem 1rem}
+.ss-q{font-size:18px;font-weight:500;color:var(--ink);letter-spacing:-.03em;margin-bottom:4px}
+.ss-qs{font-size:13px;color:var(--ink3);margin-bottom:1.25rem;line-height:1.55}
+.igrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1.25rem}
+.ibtn{padding:16px 14px;border-radius:var(--r-lg);border:1.5px solid var(--line2);
+  background:var(--bg);cursor:pointer;text-align:left;
+  display:flex;flex-direction:column;gap:7px;font-family:inherit;
+  transition:border-color .15s,transform .1s,background .15s;min-height:96px}
+.ibtn:active{transform:scale(.97);border-color:var(--green);background:var(--green-lt)}
+.ibtn-ic{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ibtn-l{font-size:13px;font-weight:500;color:var(--ink);letter-spacing:-.01em;line-height:1.2}
+.ibtn-d{font-size:11px;color:var(--ink3);line-height:1.35}
+
+.ss-note{background:var(--green-lt);border:1px solid var(--green-bd);
+  border-radius:var(--r-md);padding:13px 14px;margin-bottom:1.25rem;
+  display:flex;gap:10px;align-items:flex-start}
+.ss-note-ic{width:28px;height:28px;border-radius:8px;background:var(--green);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.ss-note-t{font-size:12px;font-weight:500;color:var(--green-mid);margin-bottom:3px}
+.ss-note-b{font-size:11px;color:#2D6B4A;line-height:1.6}
+
+.ss-cta{display:block;width:100%;padding:17px;background:var(--green);border:none;cursor:pointer;
+  font-size:14px;font-weight:500;color:#fff;letter-spacing:-.01em;text-align:center;
+  flex-shrink:0;font-family:inherit;transition:background .15s}
+.ss-cta:active{background:#082E22}
+
+/* ── MAIN APP ── */
 .main-app{display:none;flex-direction:column;flex:1;min-height:0;overflow:hidden}
 .main-app.vis{display:flex}
-.hdr{background:#0B3D2E;flex-shrink:0;position:relative;overflow:hidden}
-.hdr-geo{position:absolute;inset:0;pointer-events:none;opacity:.03}
-.scbar{display:flex;align-items:center;justify-content:space-between;background:rgba(77,179,128,.14);border-bottom:.5px solid rgba(77,179,128,.2);padding:7px 1.25rem;position:relative;z-index:1;flex-shrink:0}
-.scbar-l{display:flex;align-items:center;gap:7px}
-.scpulse{width:7px;height:7px;border-radius:50%;background:#4DB380;animation:pulseGlow 2s ease-in-out infinite;flex-shrink:0}
-.scbar-txt{font-size:11px;color:rgba(255,255,255,.72)}
-.scbar-t{font-size:10px;color:rgba(255,255,255,.35);letter-spacing:.02em}
-.hbody{padding:1rem 1.25rem .9rem;position:relative;z-index:1}
-.crow2{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px}
-.chip{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.09);border:.5px solid rgba(255,255,255,.17);border-radius:99px;padding:4px 11px;font-size:10px;color:rgba(255,255,255,.8)}
-.chip-d{width:14px;height:14px;border-radius:50%;background:#4DB380;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.gs1l{font-size:9px;letter-spacing:.09em;color:rgba(255,255,255,.28)}
-.prow{display:flex;gap:13px;align-items:center;margin-bottom:14px}
-.pthumb{width:60px;height:72px;border-radius:14px;background:rgba(255,255,255,.07);border:.5px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.pbrand{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.38);margin-bottom:3px;font-weight:500}
-.pname{font-size:21px;font-weight:500;color:#fff;line-height:1.1;letter-spacing:-.02em;margin-bottom:3px}
-.pmeta{font-size:12px;color:rgba(255,255,255,.42)}
-.pstyle{font-size:10px;color:rgba(255,255,255,.25);margin-top:2px}
-.sc2{background:rgba(255,255,255,.07);border:.5px solid rgba(255,255,255,.1);border-radius:18px;padding:13px 14px;display:flex;align-items:center;gap:14px}
-.rw{position:relative;width:66px;height:66px;flex-shrink:0}
-.rsvg{width:66px;height:66px}
-.rc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px}
-.rg{font-size:17px;font-weight:500;color:#fff;letter-spacing:-.01em;line-height:1}
-.rs{font-size:8px;color:rgba(255,255,255,.35);letter-spacing:.09em}
-.sr{flex:1}
-.sl{font-size:11px;color:rgba(255,255,255,.42);margin-bottom:3px}
-.sn{font-size:38px;font-weight:500;color:#fff;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
-.sd{font-size:14px;color:rgba(255,255,255,.32)}
-.sc3{font-size:11px;color:rgba(255,255,255,.48);margin-top:3px}
-.sb{height:3px;background:rgba(255,255,255,.1);border-radius:99px;overflow:hidden;margin-top:9px}
-.sf{height:100%;border-radius:99px;background:#4DB380;width:78%}
-.hid{font-size:9px;color:rgba(255,255,255,.2);text-align:center;padding:.55rem 0 .75rem;letter-spacing:.04em;position:relative;z-index:1;font-family:'SF Mono','Roboto Mono',monospace}
-.istrip{display:flex;gap:7px;overflow-x:auto;padding:10px 1rem 9px;border-bottom:.5px solid #e8e8e8;flex-shrink:0;background:#fff;scrollbar-width:thin;scrollbar-color:#ccc transparent}
-.istrip::-webkit-scrollbar{height:3px}
-.istrip::-webkit-scrollbar-thumb{background:#ccc;border-radius:99px}
-.istrip::-webkit-scrollbar-track{background:transparent}
-.iq{flex-shrink:0;display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:99px;border:.5px solid #e0e0e0;font-size:11px;font-weight:500;color:#666;background:#f7f7f5;cursor:pointer;white-space:nowrap;letter-spacing:.01em;font-family:inherit}
-.iq.on{background:#0B3D2E;color:#fff;border-color:#0B3D2E}
-.iqdot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
-.bnav{display:flex;border-top:.5px solid #e8e8e8;background:#fff;padding:6px 0 8px;flex-shrink:0}
-.nb{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 2px 4px;border:none;background:none;cursor:pointer;font-size:10px;font-weight:400;letter-spacing:.02em;color:#888;line-height:1;font-family:inherit}
-.nb.on{color:#0B3D2E;font-weight:500}
-.ndot{width:4px;height:4px;border-radius:50%;background:#0B3D2E;opacity:0;margin:0 auto}
-.nb.on .ndot{opacity:1}
+
+.vbar{display:flex;align-items:center;justify-content:space-between;
+  background:var(--green);padding:9px 1.25rem;flex-shrink:0}
+.vbar-l{display:flex;align-items:center;gap:7px}
+.vbar-p{width:7px;height:7px;border-radius:50%;background:#4DB380;
+  animation:pulse 2.5s ease-in-out infinite;flex-shrink:0}
+.vbar-t{font-size:11px;color:rgba(255,255,255,.55);letter-spacing:.01em}
+.vbar-brand{font-size:10px;font-weight:500;color:rgba(255,255,255,.28);
+  letter-spacing:.1em;text-transform:uppercase}
+
 .panels{flex:1;min-height:0;overflow:hidden}
-.panel{display:none;overflow-y:auto;height:100%;padding:1.25rem 1rem 1.5rem}
-.panel.active{display:block}
-.sec{font-size:10px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:#888;margin:18px 0 9px}
-.sec:first-child{margin-top:0}
-.card{background:#f7f7f5;border-radius:16px;padding:13px 14px;margin-bottom:10px;border:.5px solid #e8e8e8}
-.irow{display:flex;justify-content:space-between;align-items:baseline;padding:5px 0;border-bottom:.5px solid #e8e8e8;font-size:12px;line-height:1.35}
-.irow:last-child{border-bottom:none}
-.ik{color:#888}
-.iv{color:#1a1a1a;font-weight:500;text-align:right;max-width:58%}
-.mg2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
-.mg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-bottom:10px}
-.mc{background:#f7f7f5;border-radius:14px;padding:12px;border:.5px solid #e8e8e8}
-.mcl{font-size:11px;color:#888;margin-bottom:4px}
-.mcv{font-size:20px;font-weight:500;line-height:1;letter-spacing:-.02em;margin-bottom:2px;font-variant-numeric:tabular-nums}
-.mcu{font-size:10px;font-weight:400}
-.mcn{font-size:11px}
-.cstrip{display:flex;gap:7px;overflow-x:auto;padding:1px 0 8px;scrollbar-width:none;margin-bottom:10px}
-.cstrip::-webkit-scrollbar{display:none}
-.cb{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:4px;padding:9px 10px;min-width:66px;border-radius:13px;background:#f7f7f5;border:.5px solid #e8e8e8}
-.cbchk{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:500}
-.cbn{font-size:10px;font-weight:500;color:#1a1a1a;text-align:center;line-height:1.2}
-.cbt{font-size:9px;color:#888;text-align:center}
-.mbar{display:flex;height:20px;border-radius:6px;overflow:hidden;margin-bottom:9px}
-.mseg{display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;color:rgba(255,255,255,.9)}
-.mleg{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
-.mli{display:flex;align-items:center;gap:5px;font-size:11px;color:#888}
-.mdot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.fcard{border-radius:14px;padding:12px 13px;margin-bottom:8px;border:.5px solid}
-.ftop{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px}
-.fn{font-size:13px;font-weight:500;letter-spacing:-.01em}
-.fp{font-size:24px;font-weight:500;line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
-.for{font-size:11px;margin-top:2px;opacity:.65}
-.fd{font-size:11px;line-height:1.6;margin-bottom:7px;opacity:.75}
-.sci{display:flex;gap:11px}
-.scil{display:flex;flex-direction:column;align-items:center;width:30px;flex-shrink:0}
-.scib{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;background:#E8F4EE;color:#0B3D2E;border:.5px solid #A8D5BC}
-.sciln{flex:1;width:1px;min-height:14px;margin:3px 0;background:#e0e0e0}
-.scir{flex:1;padding-bottom:14px;cursor:pointer}
-.scit{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
-.scis{font-size:13px;font-weight:500;color:#1a1a1a;letter-spacing:-.01em}
-.scilc{font-size:11px;color:#888;margin-top:1px}
-.scitg{font-size:9px;font-weight:500;padding:2px 8px;border-radius:99px;background:#E8F4EE;color:#1A5C42;border:.5px solid #A8D5BC;white-space:nowrap}
-.scia{font-size:11px;color:#888;margin-top:2px;transition:transform .2s}
-.scibd{display:none;margin-top:8px;padding:10px 11px;border-radius:10px;background:#f7f7f5;border:.5px solid #e8e8e8}
-.scibd.open{display:block}
-.scico{font-size:12px;font-weight:500;color:#1a1a1a;margin-bottom:4px}
-.scidc{font-size:11px;color:#888;line-height:1.6}
-.wrow{display:flex;align-items:center;gap:9px;padding:6px 0;border-bottom:.5px solid #e8e8e8;font-size:12px;color:#1a1a1a}
-.wrow:last-child{border-bottom:none}
-.wchk{width:17px;height:17px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:#E8F4EE;border:.5px solid #A8D5BC}
-.ibr{margin-bottom:16px}
-.ibrt{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px;gap:8px}
-.ibrl{font-size:12px;color:#888}
-.ibrv{font-size:13px;font-weight:500;color:#1a1a1a;font-variant-numeric:tabular-nums}
-.ibrtr{height:10px;border-radius:5px;background:#f7f7f5;border:.5px solid #e8e8e8;position:relative;overflow:hidden}
-.ibrf{height:100%;border-radius:5px}
-.ibrb{position:absolute;top:0;bottom:0;width:1.5px;background:rgba(0,0,0,.22)}
-.ibrft{display:flex;justify-content:space-between;margin-top:3px;font-size:10px;color:#888}
-.ibrg{font-weight:500}
-.envb{display:flex;align-items:center;gap:13px;padding:13px 14px;border-radius:16px;margin-bottom:12px;background:#E8F4EE;border:.5px solid #A8D5BC}
-.envc{width:54px;height:54px;border-radius:50%;background:#0B3D2E;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0}
-.envg{font-size:20px;font-weight:500;color:#fff;letter-spacing:-.01em;line-height:1}
-.envs{font-size:8px;color:rgba(255,255,255,.45);letter-spacing:.07em;margin-top:1px}
-.acard{display:flex;align-items:flex-start;gap:12px;padding:13px;border-radius:14px;border:.5px solid #e8e8e8;margin-bottom:8px;background:#fff;cursor:pointer}
-.aic{width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.atit{font-size:13px;font-weight:500;color:#1a1a1a;margin-bottom:2px;letter-spacing:-.01em}
-.adc{font-size:11px;color:#888;line-height:1.55}
-.carr{margin-left:auto;font-size:15px;color:#888;flex-shrink:0;margin-top:1px}
-.crow3{display:flex;align-items:flex-start;gap:9px;padding:7px 0;border-bottom:.5px solid #e8e8e8;font-size:12px;color:#1a1a1a;line-height:1.4}
-.crow3:last-child{border-bottom:none}
-.cok{width:16px;height:16px;border-radius:50%;background:#E8F4EE;border:.5px solid #A8D5BC;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
-.cno{width:16px;height:16px;border-radius:50%;background:#FCEBEB;border:.5px solid #F09595;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;opacity:.7}
-.alert{border-radius:14px;padding:11px 13px;font-size:12px;line-height:1.6;margin-bottom:10px}
-.altt{font-size:12px;font-weight:500;margin-bottom:2px;letter-spacing:-.01em}
-.ag{background:#E8F4EE;border:.5px solid #A8D5BC;color:#1A5C42}
-.ab{background:#E8F0F8;border:.5px solid #A0BDD8;color:#1E5A8E}
-.aa{background:#FDF4E3;border:.5px solid #D4B26A;color:#8A6B1E}
-.tag{display:inline-flex;align-items:center;gap:3px;border-radius:99px;padding:3px 9px;font-size:10px;font-weight:500;margin:3px 3px 3px 0;letter-spacing:.02em}
-.tg{background:#E8F4EE;color:#1A5C42;border:.5px solid #A8D5BC}
-.tb{background:#E8F0F8;color:#1E5A8E;border:.5px solid #A0BDD8}
-.ta{background:#FDF4E3;color:#8A6B1E;border:.5px solid #D4B26A}
-.mono{font-family:'SF Mono','Roboto Mono',monospace;font-size:10px}
-.bdc{border-radius:16px;border:.5px solid #e8e8e8;overflow:hidden;margin-bottom:10px;background:#fff}
-.bdc-hd{display:flex;align-items:center;gap:10px;padding:11px 13px;border-bottom:.5px solid #e8e8e8}
-.bdc-av{width:34px;height:34px;border-radius:50%;background:#0B3D2E;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;color:#fff;flex-shrink:0}
-.bdc-info{flex:1}
-.bdc-name{font-size:12px;font-weight:500;color:#1a1a1a;letter-spacing:-.01em;display:flex;align-items:center;gap:5px}
-.bdc-ver{font-size:9px;color:#1A5C42;background:#E8F4EE;border:.5px solid #A8D5BC;border-radius:99px;padding:1px 6px}
-.bdc-time{font-size:10px;color:#888;margin-top:1px}
-.bdc-live{display:flex;align-items:center;gap:4px;font-size:9px;font-weight:500;color:#1A5C42;letter-spacing:.04em}
-.bdc-livdot{width:7px;height:7px;border-radius:50%;background:#4DB380;animation:pulseGlow 1.5s ease-in-out infinite}
-.bdc-body{padding:12px 13px}
-.bdc-tag{font-size:9px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:#1A5C42;margin-bottom:5px}
-.bdc-title{font-size:14px;font-weight:500;color:#1a1a1a;letter-spacing:-.01em;margin-bottom:6px;line-height:1.3}
-.bdc-txt{font-size:11px;color:#888;line-height:1.6;margin-bottom:10px}
-.bdc-rel{background:#E8F4EE;border:.5px solid #A8D5BC;border-radius:10px;padding:8px 10px;margin-bottom:10px;font-size:11px;color:#1A5C42;line-height:1.5}
-.bdc-rel strong{font-weight:500;color:#0B3D2E}
-.bdc-prog-lbl{display:flex;justify-content:space-between;font-size:11px;color:#888;margin-bottom:4px}
-.bdc-prog-lbl span:last-child{font-weight:500;color:#1a1a1a}
-.bdc-track{height:7px;border-radius:99px;background:#f7f7f5;border:.5px solid #e8e8e8;overflow:hidden;margin-bottom:5px}
-.bdc-fill{height:100%;border-radius:99px;background:#2D7A55;width:40%}
-.bdc-note{font-size:10px;color:#888;margin-bottom:10px}
-.bdc-ft{display:flex;align-items:center;justify-content:space-between;padding-top:9px;border-top:.5px solid #e8e8e8}
-.bdc-flw-ct{font-size:11px;color:#888;display:flex;align-items:center;gap:4px}
-.bdc-flw-btn{padding:6px 14px;border-radius:99px;font-size:11px;font-weight:500;cursor:pointer;border:.5px solid #0B3D2E;background:transparent;color:#0B3D2E;letter-spacing:.01em;font-family:inherit}
-.bdc-flw-btn.on{background:#0B3D2E;color:#fff}
-.comm{border-radius:16px;border:.5px solid #e8e8e8;overflow:hidden;margin-bottom:10px}
-.comm-hd{display:flex;align-items:center;justify-content:space-between;padding:11px 13px 9px;border-bottom:.5px solid #e8e8e8}
-.comm-title{font-size:12px;font-weight:500;color:#1a1a1a;letter-spacing:-.01em}
-.comm-owners{font-size:11px;color:#888}
-.comm-stats{display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:.5px solid #e8e8e8}
-.comm-stat{text-align:center;padding:10px 8px}
-.comm-stat+.comm-stat{border-left:.5px solid #e8e8e8}
-.comm-sv{font-size:14px;font-weight:500;color:#1a1a1a;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
-.comm-sl{font-size:9px;color:#888;margin-top:2px;line-height:1.3}
-.comm-body{padding:11px 13px}
-.comm-bl{font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:#888;margin-bottom:8px}
-.comm-bar-row{display:flex;align-items:center;gap:8px;margin-bottom:5px}
-.comm-bar-lbl{font-size:10px;color:#888;width:60px;flex-shrink:0}
-.comm-bar-track{flex:1;height:6px;border-radius:99px;background:#f7f7f5;border:.5px solid #e8e8e8;overflow:hidden}
-.comm-bar-fill{height:100%;border-radius:99px}
-.comm-bar-pct{font-size:10px;color:#888;width:30px;text-align:right;flex-shrink:0;font-variant-numeric:tabular-nums}
-.logger{border-radius:16px;border:.5px solid #e8e8e8;overflow:hidden;margin-bottom:10px}
-.logger-hd{padding:12px 13px;border-bottom:.5px solid #e8e8e8;background:#f7f7f5}
-.logger-title{font-size:13px;font-weight:500;color:#1a1a1a;letter-spacing:-.01em;margin-bottom:2px}
-.logger-sub{font-size:11px;color:#888;line-height:1.5}
-.logger-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px 13px}
-.lopt{padding:13px 11px;border-radius:12px;border:.5px solid #e8e8e8;background:#f7f7f5;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;font-family:inherit}
-.lopt5{grid-column:1/-1;flex-direction:row;align-items:center;justify-content:flex-start;gap:10px;padding:10px 12px;background:#fff;border-style:dashed}
-.lopt5 .lopt-l{font-size:12px;font-weight:500;color:#888;letter-spacing:-.01em}
-.lopt5 .lopt-d{font-size:10px;color:#888}
-.lopt-ic{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.lopt-l{font-size:12px;font-weight:500;color:#1a1a1a;letter-spacing:-.01em}
-.lopt-d{font-size:10px;color:#888}
-.logger-done{display:none;padding:14px 13px;animation:fadeUp .4s ease}
-.logger-done.show{display:block}
-.ldone-top{display:flex;align-items:center;gap:10px;margin-bottom:12px}
-.ldone-chk{width:36px;height:36px;border-radius:50%;background:#E8F4EE;border:.5px solid #A8D5BC;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.ldone-chk.warn{background:#FDF4E3;border-color:#D4B26A}
-.ldone-msg{font-size:13px;font-weight:500;color:#1a1a1a;letter-spacing:-.01em}
-.ldone-sub{font-size:11px;color:#888;margin-top:2px}
-.ldone-impact{background:#E8F4EE;border:.5px solid #A8D5BC;border-radius:12px;padding:11px 13px;margin-bottom:10px}
-.ldone-impact.warn{background:#FDF4E3;border-color:#D4B26A}
-.ldone-impact-row{display:flex;align-items:baseline;gap:6px;margin-bottom:2px}
-.ldone-n{font-size:28px;font-weight:500;color:#0B3D2E;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
-.ldone-impact.warn .ldone-n{color:#854F0B}
-.ldone-u{font-size:12px;color:#1A5C42}
-.ldone-impact.warn .ldone-u{color:#854F0B}
-.ldone-eq{font-size:11px;color:#1A5C42;margin-top:3px}
-.ldone-impact.warn .ldone-eq{color:#854F0B}
-.ldone-comm{font-size:11px;color:#888;line-height:1.6;border-top:.5px solid #e8e8e8;padding-top:10px;margin-top:10px}
-.ldone-comm strong{font-weight:500;color:#1a1a1a}
-.rl-btn{display:block;width:100%;padding:9px;background:none;border:.5px solid #e8e8e8;border-radius:10px;font-size:11px;color:#888;cursor:pointer;margin-top:8px;font-family:inherit;letter-spacing:.01em;text-align:center}
-.rating-sec{border-radius:16px;border:.5px solid #e8e8e8;overflow:hidden;margin-bottom:10px}
-.rating-hd{padding:11px 13px;border-bottom:.5px solid #e8e8e8;background:#f7f7f5}
-.rating-title{font-size:13px;font-weight:500;color:#1a1a1a;letter-spacing:-.01em}
-.rating-sub{font-size:11px;color:#888;margin-top:2px}
-.rating-rows{padding:4px 13px}
-.rrow{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:.5px solid #e8e8e8}
-.rrow:last-child{border-bottom:none}
-.rrow-l{font-size:12px;color:#1a1a1a}
-.stars{display:flex;gap:3px}
-.star{cursor:pointer;width:20px;height:20px;display:flex;align-items:center;justify-content:center}
-.fbsec{border-radius:16px;border:.5px solid #e8e8e8;overflow:hidden;margin-bottom:10px}
-.fbsec-hd{display:flex;align-items:center;justify-content:space-between;padding:12px 13px;cursor:pointer}
-.fbsec-title{font-size:13px;font-weight:500;color:#1a1a1a;letter-spacing:-.01em}
-.fbsec-ico{font-size:11px;color:#888;transition:transform .2s}
-.fbsec-ico.open{transform:rotate(180deg)}
-.fbsec-body{display:none;padding:0 13px 13px;border-top:.5px solid #e8e8e8}
-.fbsec-body.open{display:block}
-.fbtxt{width:100%;border:.5px solid #e8e8e8;border-radius:10px;padding:10px 11px;font-size:12px;color:#1a1a1a;background:#f7f7f5;resize:none;margin-top:10px;font-family:inherit;line-height:1.55}
-.fbtxt:focus{outline:none;border-color:#bbb}
-.fb-anon{display:flex;align-items:center;justify-content:space-between;margin:9px 0;font-size:12px;color:#888}
-.fb-toggle{width:36px;height:20px;border-radius:99px;background:#f7f7f5;border:.5px solid #ccc;cursor:pointer;position:relative;transition:background .2s;flex-shrink:0}
-.fb-toggle.on{background:#0B3D2E}
-.fb-toggle::after{content:'';position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:#fff;transition:transform .2s}
-.fb-toggle.on::after{transform:translateX(16px)}
-.fb-send{width:100%;padding:11px;border-radius:10px;border:none;background:#0B3D2E;color:#fff;font-size:12px;font-weight:500;cursor:pointer;letter-spacing:.01em;font-family:inherit}
-.fb-sent{display:none;padding:10px;text-align:center;font-size:12px;color:#1A5C42;animation:fadeUp .3s ease}
-.fb-sent.show{display:block}
-.bi{border-radius:16px;overflow:hidden;margin-bottom:10px;border-left:3px solid #0B3D2E;border-top:.5px solid #e8e8e8;border-right:.5px solid #e8e8e8;border-bottom:.5px solid #e8e8e8}
-.bi-hd{padding:11px 13px;border-bottom:.5px solid #e8e8e8;display:flex;align-items:center;gap:8px}
-.bi-av{width:28px;height:28px;border-radius:50%;background:#0B3D2E;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:500;color:#fff;flex-shrink:0}
-.bi-lbl{font-size:10px;font-weight:500;color:#888;letter-spacing:.04em;text-transform:uppercase}
-.bi-body{padding:11px 13px}
-.bi-title{font-size:13px;font-weight:500;color:#1a1a1a;letter-spacing:-.01em;margin-bottom:5px;line-height:1.3}
-.bi-txt{font-size:11px;color:#888;line-height:1.6;margin-bottom:10px}
-.bi-prog-row{display:flex;justify-content:space-between;font-size:10px;color:#888;margin-bottom:4px}
-.bi-track{height:6px;border-radius:99px;background:#f7f7f5;border:.5px solid #e8e8e8;overflow:hidden;margin-bottom:9px}
-.bi-fill{height:100%;border-radius:99px;background:#0B3D2E}
-.bi-ft{display:flex;align-items:center;gap:8px}
-.bi-flw{padding:6px 14px;border-radius:99px;font-size:11px;font-weight:500;cursor:pointer;border:.5px solid #0B3D2E;background:transparent;color:#0B3D2E;font-family:inherit}
-.bi-flw.on{background:#0B3D2E;color:#fff}
-.bi-ft-ct{font-size:10px;color:#888}
-.dfoot{padding:7px 14px;border-top:.5px solid #e8e8e8;background:#f7f7f5;font-size:9px;color:#888;text-align:center;letter-spacing:.04em;flex-shrink:0;font-family:'SF Mono','Roboto Mono',monospace}
+.panel{display:none;overflow-y:auto;height:100%;scroll-behavior:smooth}
+.panel.active{display:block;animation:up .22s ease}
+
+/* ── BOTTOM NAV ── */
+.bnav{display:flex;border-top:1px solid var(--line);background:var(--white);
+  padding:8px 0 10px;flex-shrink:0}
+.nb{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;
+  padding:7px 4px 5px;border:none;background:none;cursor:pointer;
+  font-size:10px;font-weight:400;color:var(--ink4);line-height:1;
+  font-family:inherit;letter-spacing:.01em;transition:color .15s;min-width:44px}
+.nb.on{color:var(--green);font-weight:500}
+.nb:active{opacity:.65}
+.nb svg{display:block;flex-shrink:0}
+.nbdot{width:4px;height:4px;border-radius:50%;background:var(--green);opacity:0;margin:0 auto}
+.nb.on .nbdot{opacity:1}
+
+/* ── SHARED ATOMS ── */
+.slbl{display:block;font-size:10px;font-weight:500;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink4);
+  padding:0 1.5rem;margin-top:1.75rem;margin-bottom:.85rem}
+.slbl:first-child{margin-top:1.5rem}
+
+/* Accordion */
+.acc{border-top:1px solid var(--line)}
+.acc-row{display:flex;align-items:center;justify-content:space-between;
+  padding:16px 1.5rem;cursor:pointer;gap:12px;min-height:52px;
+  transition:background .12s}
+.acc-row:active{background:var(--bg)}
+.acc-l{flex:1;min-width:0}
+.acc-t{font-size:13px;font-weight:500;color:var(--ink);letter-spacing:-.01em}
+.acc-s{font-size:12px;color:var(--ink3);margin-top:2px}
+.acc-ch{width:20px;height:20px;border-radius:50%;background:var(--bg);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  font-size:9px;color:var(--ink4);transition:transform .25s;border:1px solid var(--line2)}
+.acc-ch.open{transform:rotate(180deg)}
+.acc-body{display:none;padding:2px 1.5rem 16px;animation:up .2s ease}
+.acc-body.open{display:block}
+.kv{display:flex;justify-content:space-between;align-items:baseline;
+  padding:8px 0;border-bottom:1px solid var(--line);font-size:12px;gap:12px}
+.kv:last-child{border-bottom:none}
+.kk{color:var(--ink3);flex-shrink:0}
+.kv-v{font-weight:500;color:var(--ink);text-align:right}
+.kv-g{font-weight:500;color:var(--green-mid)}
+.bsp{height:1.5rem}
+
+/* ── OVERVIEW ── */
+.ov-hero{padding:1.75rem 1.5rem 1.25rem;display:flex;
+  align-items:flex-start;justify-content:space-between;gap:1rem}
+.ov-pname{font-size:26px;font-weight:500;color:var(--ink);
+  letter-spacing:-.03em;line-height:1.05;margin-bottom:5px}
+.ov-meta{font-size:13px;color:var(--ink3);letter-spacing:-.01em}
+.ov-ring-wrap{position:relative;width:76px;height:76px;flex-shrink:0}
+.ov-ring-c{position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:1px}
+.ov-grade{font-size:20px;font-weight:500;color:var(--green);letter-spacing:-.02em;line-height:1}
+.ov-grade-s{font-size:8px;color:var(--ink4);letter-spacing:.1em}
+
+.ov-score{margin:0 1.5rem 1.5rem;background:var(--green-lt);
+  border:1px solid var(--green-bd);border-radius:var(--r-xl);padding:1.5rem}
+.ov-score-row{display:flex;align-items:baseline;gap:4px}
+.ov-score-n{font-size:58px;font-weight:500;color:var(--green);
+  letter-spacing:-.06em;line-height:1;font-variant-numeric:tabular-nums}
+.ov-score-d{font-size:22px;color:#4DB380;font-weight:400}
+.ov-score-lbl{font-size:12px;color:var(--green-mid);margin-top:5px}
+.ov-score-track{height:4px;background:rgba(0,0,0,.07);
+  border-radius:99px;overflow:hidden;margin-top:14px}
+.ov-score-fill{height:100%;border-radius:99px;background:#4DB380;width:78%;
+  transition:width 1s cubic-bezier(.4,0,.2,1)}
+
+/* Certifications — horizontal scroll, touch-friendly */
+.cert-outer{position:relative}
+.cert-strip{
+  display:flex;gap:8px;
+  overflow-x:auto;overflow-y:visible;
+  padding:0 1.5rem 1rem;
+  scroll-padding:1.5rem;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior-x:contain;
+  scrollbar-width:none;
+  cursor:grab
+}
+.cert-strip::-webkit-scrollbar{display:none}
+.cert-strip:active{cursor:grabbing}
+.cpill{flex-shrink:0;display:flex;align-items:center;gap:6px;
+  padding:8px 14px;border-radius:99px;
+  background:var(--white);border:1.5px solid var(--line2);
+  font-size:12px;font-weight:500;color:var(--ink2);
+  white-space:nowrap;
+  transition:border-color .15s,background .15s;
+  cursor:pointer;min-height:36px}
+.cpill:active{background:var(--bg);border-color:var(--ink4)}
+.cpill-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+.comm-bar{margin:0 1.5rem 0;padding:13px 16px;
+  background:var(--bg);border-radius:var(--r-md);
+  display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink3)}
+.comm-n{font-weight:500;color:var(--green-mid);font-size:13px}
+.comm-sep{width:3px;height:3px;border-radius:50%;background:var(--line2)}
+
+/* ── MADE (Materials + Journey) ── */
+.fibre-hero{padding:1.5rem 1.5rem .5rem}
+.fibre-hl{font-size:14px;font-weight:500;color:var(--ink);
+  letter-spacing:-.02em;line-height:1.5;margin-bottom:14px}
+.fbar{display:flex;height:10px;border-radius:99px;overflow:hidden;gap:2px}
+.fseg{height:100%;border-radius:99px;transition:flex .4s}
+.flist{padding:0 1.5rem}
+.f-row{display:flex;align-items:center;gap:12px;
+  padding:14px 0;border-bottom:1px solid var(--line);
+  cursor:pointer;transition:opacity .15s;min-height:56px}
+.f-row:last-of-type{border-bottom:none}
+.f-row:active{opacity:.65}
+.f-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.f-info{flex:1;min-width:0}
+.f-name{font-size:14px;font-weight:500;color:var(--ink);letter-spacing:-.01em}
+.f-sub{font-size:11px;color:var(--ink3);margin-top:2px}
+.f-pct{font-size:24px;font-weight:500;color:var(--ink);
+  letter-spacing:-.03em;font-variant-numeric:tabular-nums;flex-shrink:0}
+.f-ch{width:20px;height:20px;border-radius:50%;background:var(--bg);
+  display:flex;align-items:center;justify-content:center;
+  font-size:9px;color:var(--ink4);transition:transform .25s;
+  flex-shrink:0;border:1px solid var(--line2)}
+.f-ch.open{transform:rotate(180deg)}
+.f-detail{display:none;padding:10px 22px 14px;
+  background:var(--bg);border-radius:var(--r-sm);margin-bottom:4px}
+.f-detail.open{display:block;animation:up .2s ease}
+.f-detail-txt{font-size:12px;color:var(--ink2);line-height:1.7}
+.f-origin{font-size:11px;color:var(--ink3);margin-top:4px;
+  display:flex;align-items:center;gap:4px}
+.f-cert-tag{font-size:10px;font-weight:500;color:var(--green-mid);
+  background:var(--green-lt);border:1px solid var(--green-bd);
+  border-radius:99px;padding:2px 8px;display:inline-block;margin-top:6px}
+
+/* Journey timeline */
+.jlist{padding:0 1.5rem}
+.j-item{display:flex;gap:14px}
+.j-l{display:flex;flex-direction:column;align-items:center;width:20px;flex-shrink:0}
+.j-dot{width:10px;height:10px;border-radius:50%;background:var(--green);
+  flex-shrink:0;margin-top:5px;box-shadow:0 0 0 3px var(--green-lt)}
+.j-line{flex:1;width:1.5px;background:var(--line2);margin:4px 0;min-height:14px}
+.j-r{flex:1;padding-bottom:18px;cursor:pointer;min-height:52px;
+  transition:opacity .15s}
+.j-r:active{opacity:.65}
+.j-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.j-stage{font-size:13px;font-weight:500;color:var(--ink);letter-spacing:-.01em}
+.j-loc{font-size:11px;color:var(--ink3);margin-top:2px}
+.j-cert{font-size:10px;font-weight:500;color:var(--green-mid);
+  background:var(--green-lt);border:1px solid var(--green-bd);
+  border-radius:99px;padding:3px 9px;white-space:nowrap;flex-shrink:0}
+.j-ch{width:18px;height:18px;border-radius:50%;background:var(--bg);
+  display:flex;align-items:center;justify-content:center;
+  font-size:8px;color:var(--ink4);transition:transform .25s;
+  flex-shrink:0;margin-top:2px;border:1px solid var(--line2)}
+.j-ch.open{transform:rotate(180deg)}
+.j-detail{display:none;margin-top:10px;padding:12px 14px;
+  background:var(--bg);border-radius:var(--r-sm)}
+.j-detail.open{display:block;animation:up .2s ease}
+.j-company{font-size:12px;font-weight:500;color:var(--ink);margin-bottom:5px}
+.j-desc{font-size:11px;color:var(--ink2);line-height:1.65}
+
+.w-row{display:flex;align-items:flex-start;gap:10px;
+  padding:10px 1.5rem;font-size:13px;color:var(--ink);line-height:1.45}
+.w-chk{width:20px;height:20px;border-radius:50%;background:var(--green-lt);
+  border:1.5px solid var(--green-bd);display:flex;align-items:center;
+  justify-content:center;flex-shrink:0;margin-top:1px}
+
+/* ── IMPACT ── */
+.stat-block{margin:0 1.5rem .25rem;border-radius:var(--r-xl);
+  padding:1.5rem 1.75rem;border:1px solid var(--line2);background:var(--bg)}
+.stat-n{font-size:64px;font-weight:500;line-height:1;
+  letter-spacing:-.06em;font-variant-numeric:tabular-nums}
+.stat-u{font-size:18px;font-weight:400}
+.stat-lbl{font-size:13px;color:var(--ink3);margin-top:5px}
+.stat-delta{display:inline-flex;align-items:center;gap:5px;
+  margin-top:14px;border-radius:99px;padding:5px 14px;
+  font-size:12px;font-weight:500}
+.grade-band{margin:0 1.5rem .25rem;display:flex;align-items:center;gap:14px;
+  padding:16px 18px;border-radius:var(--r-lg);
+  background:var(--green-lt);border:1px solid var(--green-bd)}
+.grade-c{width:54px;height:54px;border-radius:50%;background:var(--green);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0}
+.grade-l{font-size:20px;font-weight:500;color:#fff;letter-spacing:-.02em;line-height:1}
+.grade-ss{font-size:8px;color:rgba(255,255,255,.4);letter-spacing:.09em;margin-top:2px}
+.grade-tit{font-size:13px;font-weight:500;color:var(--green);margin-bottom:4px;letter-spacing:-.01em}
+.grade-desc{font-size:12px;color:var(--green-mid);line-height:1.55}
+
+/* ── EOL ── */
+.care-grid{display:grid;grid-template-columns:repeat(4,1fr);
+  gap:8px;padding:0 1.5rem;margin-bottom:.5rem}
+.care-card{display:flex;flex-direction:column;align-items:center;gap:6px;
+  padding:13px 6px;border-radius:var(--r-sm);
+  border:1px solid var(--line2);background:var(--bg);
+  transition:border-color .15s;cursor:default}
+.care-card.no{border-color:var(--red-bd);background:var(--red-lt)}
+.care-ic{width:38px;height:38px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center}
+.care-lbl{font-size:10px;color:var(--ink2);text-align:center;
+  line-height:1.3;font-weight:400}
+.care-lbl.no{color:var(--red)}
+
+.eol-list{padding:0 1.5rem}
+.eol-row{display:flex;align-items:center;gap:14px;
+  padding:14px 0;border-bottom:1px solid var(--line);
+  cursor:pointer;transition:opacity .15s;min-height:60px}
+.eol-row:last-child{border-bottom:none}
+.eol-row:active{opacity:.65}
+.eol-ic{width:44px;height:44px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.eol-t{font-size:14px;font-weight:500;color:var(--ink);
+  letter-spacing:-.01em;margin-bottom:3px}
+.eol-d{font-size:12px;color:var(--ink3);line-height:1.4}
+.eol-arr{margin-left:auto;font-size:20px;color:var(--ink4);flex-shrink:0;line-height:1}
+
+.takeback-btn{display:block;margin:1rem 1.5rem;
+  background:var(--green);color:#fff;border:none;cursor:pointer;
+  border-radius:var(--r-md);padding:17px;
+  font-size:14px;font-weight:500;letter-spacing:-.01em;
+  text-align:center;width:calc(100% - 3rem);font-family:inherit;
+  transition:background .15s,transform .1s}
+.takeback-btn:active{background:#082E22;transform:scale(.98)}
+.takeback-btn.done{background:var(--green-mid)}
+
+/* Logger */
+.log-wrap{padding:0 1.5rem}
+.log-s{font-size:12px;color:var(--ink3);margin-bottom:12px;line-height:1.55}
+.log-pills{display:flex;flex-wrap:wrap;gap:8px}
+.lpill{padding:10px 16px;border-radius:99px;
+  border:1.5px solid var(--line2);background:var(--bg);
+  font-size:12px;font-weight:500;color:var(--ink2);
+  cursor:pointer;font-family:inherit;
+  transition:border-color .15s,background .15s,color .15s,transform .1s;
+  min-height:40px}
+.lpill:active{transform:scale(.96)}
+.lpill.sel{background:var(--green);border-color:var(--green);color:#fff;
+  animation:pop .25s ease}
+.lpill.lf{border-style:dashed;color:var(--ink4)}
+.lpill.lf.sel{background:#8A6B1E;border-color:#8A6B1E;color:#fff;border-style:solid}
+
+.log-result{display:none;margin-top:12px;padding:16px;
+  background:var(--green-lt);border:1px solid var(--green-bd);border-radius:var(--r-md)}
+.log-result.warn{background:var(--amber-lt);border-color:var(--amber-bd)}
+.log-result.show{display:block;animation:up .25s ease}
+.log-rn{font-size:30px;font-weight:500;color:var(--green);
+  letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.log-result.warn .log-rn{color:var(--amber)}
+.log-ru{font-size:13px;color:var(--green-mid)}
+.log-result.warn .log-ru{color:var(--amber)}
+.log-req{font-size:12px;color:var(--green-mid);margin-top:4px;line-height:1.45}
+.log-result.warn .log-req{color:var(--amber)}
+.log-change{font-size:11px;color:var(--ink4);margin-top:12px;
+  cursor:pointer;display:inline-flex;align-items:center;gap:4px;
+  border:none;background:none;font-family:inherit;padding:0;text-decoration:underline}
+
+/* Star rating */
+.star-section{padding:0 1.5rem}
+.star-row{display:flex;align-items:center;justify-content:space-between;
+  padding:12px 0;border-bottom:1px solid var(--line);min-height:48px}
+.star-row:last-child{border-bottom:none}
+.star-lbl{font-size:13px;color:var(--ink);font-weight:400}
+.stars-g{display:flex;gap:5px}
+.star-btn{cursor:pointer;width:28px;height:28px;
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .12s;flex-shrink:0}
+.star-btn:active{transform:scale(1.25)}
+
+/* Feedback */
+.fb-acc{border-top:1px solid var(--line)}
+.fb-head{display:flex;align-items:center;justify-content:space-between;
+  padding:16px 1.5rem;cursor:pointer;min-height:52px;transition:background .12s}
+.fb-head:active{background:var(--bg)}
+.fb-hl{font-size:13px;font-weight:500;color:var(--ink);letter-spacing:-.01em}
+.fb-hch{width:20px;height:20px;border-radius:50%;background:var(--bg);
+  display:flex;align-items:center;justify-content:center;
+  font-size:9px;color:var(--ink4);transition:transform .25s;border:1px solid var(--line2)}
+.fb-hch.open{transform:rotate(180deg)}
+.fb-bd{display:none;padding:0 1.5rem 1.5rem}
+.fb-bd.open{display:block;animation:up .2s ease}
+.fb-ta{width:100%;border:1.5px solid var(--line2);border-radius:var(--r-md);
+  padding:13px 14px;font-size:13px;color:var(--ink);
+  background:var(--bg);resize:none;font-family:inherit;
+  line-height:1.55;margin-bottom:10px;min-height:100px}
+.fb-ta:focus{outline:none;border-color:var(--green)}
+.fb-count{font-size:10px;color:var(--ink4);text-align:right;margin:-6px 0 10px}
+.fb-arow{display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:12px;font-size:13px;color:var(--ink2)}
+.ftoggle{width:42px;height:24px;border-radius:99px;background:var(--line2);
+  position:relative;cursor:pointer;transition:background .2s;flex-shrink:0}
+.ftoggle.on{background:var(--green)}
+.ftoggle::after{content:'';position:absolute;top:3px;left:3px;
+  width:18px;height:18px;border-radius:50%;background:#fff;
+  transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.ftoggle.on::after{transform:translateX(18px)}
+.fb-submit{width:100%;padding:15px;border-radius:var(--r-md);border:none;
+  background:var(--ink);color:#fff;font-size:14px;font-weight:500;
+  cursor:pointer;font-family:inherit;letter-spacing:-.01em;
+  transition:background .15s,transform .1s}
+.fb-submit:active{background:#333;transform:scale(.99)}
+.fb-submit:disabled{background:var(--line2);color:var(--ink4);cursor:default;transform:none}
+.fb-ok{display:none;font-size:13px;color:var(--green-mid);
+  text-align:center;padding:12px 0;line-height:1.5}
+.fb-ok.show{display:block;animation:up .3s ease}
 </style>
 </head>
 <body>
-
 <div class="wrap"><div class="phone">
 
-<!-- SCAN SCREEN -->
+<!-- ══ SCAN SCREEN ══ -->
 <div class="scan-screen" id="scan-screen">
-  <div class="ss-top">
-    <div class="ss-brand">Terranova World</div>
+  <div class="ss-hero">
     <div class="ss-vrow">
-      <div class="ss-vdot"><svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M2 4.5L3.8 6.3L7 3" stroke="#0B3D2E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <span class="ss-vtxt">Product verified, GS1 Digital Link</span>
+      <div class="ss-vdot"></div>
+      <span class="ss-vtext">GS1 Digital Link · Verified product</span>
     </div>
     <div class="ss-pname">Essential Tee</div>
-    <div class="ss-pmeta">Sage Green, Size M, Women's, SS25</div>
-    <div class="ss-time">Scanned just now, DPP-AU-2025-TX-00847261</div>
+    <div class="ss-pmeta">Sage Green · Size M · Women's · SS25</div>
+    <div class="ss-gtin">DPP-AU-2025-TX-00847261 · GTIN 9312345678901</div>
   </div>
   <div class="ss-body">
-    <div class="ss-h">What brings you here?</div>
-    <div class="ss-sub">Tap an option and we'll take you straight there, or explore the full passport below.</div>
+    <div class="ss-q">What brings you here?</div>
+    <div class="ss-qs">We'll take you straight to what you need.</div>
     <div class="igrid">
       <button class="ibtn" onclick="enterApp('overview')">
-        <div class="ibtn-ic" style="background:#E8F4EE"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#1A5C42" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="5.5"/><path d="M8 5.5V8l1.5 1.5"/></svg></div>
-        <div class="ibtn-l">Thinking of buying</div><div class="ibtn-d">Check sustainability and materials</div>
+        <div class="ibtn-ic" style="background:#EEF7F2">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#1A5C42" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="5.5"/><path d="M8 5.5V8l1.5 1.5"/></svg>
+        </div>
+        <div class="ibtn-l">Thinking of buying</div>
+        <div class="ibtn-d">Sustainability and certifications</div>
       </button>
-      <button class="ibtn" onclick="enterApp('materials')">
-        <div class="ibtn-ic" style="background:#E8F0F8"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#1E5A8E" stroke-width="1.4" stroke-linecap="round"><path d="M3 5h10M3 8h6M3 11h8"/></svg></div>
-        <div class="ibtn-l">Just bought it</div><div class="ibtn-d">What's it made of and how to care for it</div>
+      <button class="ibtn" onclick="enterApp('made')">
+        <div class="ibtn-ic" style="background:#EEF3FB">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#1E5A8E" stroke-width="1.5" stroke-linecap="round"><path d="M3 5h10M3 8h6M3 11h8"/></svg>
+        </div>
+        <div class="ibtn-l">Just bought it</div>
+        <div class="ibtn-d">Materials and care guide</div>
       </button>
-      <button class="ibtn" onclick="enterApp('lifecycle')">
-        <div class="ibtn-ic" style="background:#FDF4E3"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#8A6B1E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8a4 4 0 01-4 4H5M4 8a4 4 0 014-4h3"/><path d="M5 11l-2.5 1 .5-2.5M11 2l2.5 1-.5 2.5"/></svg></div>
-        <div class="ibtn-l">Done with it</div><div class="ibtn-d">Recycle, donate or repair</div>
+      <button class="ibtn" onclick="enterApp('eol')">
+        <div class="ibtn-ic" style="background:#FDF4E3">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#8A6B1E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8a4 4 0 01-4 4H5M4 8a4 4 0 014-4h3"/><path d="M5 11l-2.5 1 .5-2.5M11 2l2.5 1-.5 2.5"/></svg>
+        </div>
+        <div class="ibtn-l">Done with it</div>
+        <div class="ibtn-d">Recycle, donate or repair</div>
       </button>
-      <button class="ibtn" onclick="enterApp('journey')">
-        <div class="ibtn-ic" style="background:#F3EEF8"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#6B3FA0" stroke-width="1.4" stroke-linecap="round"><circle cx="3.5" cy="4.5" r="1.2"/><circle cx="8" cy="8" r="1.2"/><circle cx="12.5" cy="11.5" r="1.2"/><path d="M4.7 5.4L6.8 7M9.2 9L11.3 10.6"/></svg></div>
-        <div class="ibtn-l">Where was it made</div><div class="ibtn-d">Trace the supply chain</div>
+      <button class="ibtn" onclick="enterApp('impact')">
+        <div class="ibtn-ic" style="background:#EEF3FB">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#1E5A8E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12L6 7l3 3 5-7"/></svg>
+        </div>
+        <div class="ibtn-l">Environmental impact</div>
+        <div class="ibtn-d">Carbon, water, benchmarks</div>
       </button>
     </div>
-    <div class="ss-expl">
-      <div class="ss-erow">
-        <div class="ss-eic"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#1A5C42" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="2" width="10" height="12" rx="2"/><path d="M6 6h4M6 9h3"/></svg></div>
-        <div>
-          <div class="ss-etit">What is a Digital Product Passport?</div>
-          <div class="ss-etxt">A verified record of everything about this garment: its fibres, where it was made, its environmental footprint, and how to care for or recycle it. Issued by Terranova World, independently verified by GS1 Australia.</div>
-        </div>
+    <div class="ss-note">
+      <div class="ss-note-ic">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="rgba(255,255,255,.8)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="1.5" width="10" height="11" rx="2"/><path d="M5 5.5h4M5 8h3"/></svg>
+      </div>
+      <div>
+        <div class="ss-note-t">What is a Digital Product Passport?</div>
+        <div class="ss-note-b">A verified, independently audited record of this garment's materials, origins, environmental footprint, and end-of-life options. Issued by Terranova World and verified by GS1 Australia.</div>
       </div>
     </div>
-    <button class="ss-cta" onclick="enterApp('overview')">View full passport &rarr;</button>
   </div>
+  <button class="ss-cta" onclick="enterApp('overview')">View full passport &rarr;</button>
 </div>
 
-<!-- MAIN APP -->
+<!-- ══ MAIN APP ══ -->
 <div class="main-app" id="main-app">
-  <div class="hdr">
-    <svg class="hdr-geo" viewBox="0 0 390 210" preserveAspectRatio="xMidYMid slice"><circle cx="340" cy="20" r="110" fill="white"/><circle cx="360" cy="190" r="80" fill="white"/><circle cx="10" cy="210" r="120" fill="white"/></svg>
-    <div class="scbar"><div class="scbar-l"><div class="scpulse"></div><span class="scbar-txt">Scan confirmed, GS1 verified product</span></div><span class="scbar-t">Just now</span></div>
-    <div class="hbody">
-      <div class="crow2">
-        <div class="chip"><div class="chip-d"><svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1.5 4L3.2 5.7L6.5 2.3" stroke="#0B3D2E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Verified Digital Product Passport</div>
-        <span class="gs1l">GS1 AU</span>
-      </div>
-      <div class="prow">
-        <div class="pthumb"><svg width="32" height="30" viewBox="0 0 32 30" fill="none"><path d="M0 8L7.5 4.5L10 9.5C11 11.5 13.2 13 16 13C18.8 13 21 11.5 22 9.5L24.5 4.5L32 8L29 17H23V30H9V17H3Z" fill="rgba(255,255,255,.45)"/></svg></div>
-        <div><div class="pbrand">Terranova World</div><div class="pname">Essential Tee</div><div class="pmeta">Sage Green, Size M, Women's</div><div class="pstyle">SS25, Style TW-024</div></div>
-      </div>
-      <div class="sc2">
-        <div class="rw"><svg class="rsvg" viewBox="0 0 66 66"><circle cx="33" cy="33" r="27" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="4.5"/><circle cx="33" cy="33" r="27" fill="none" stroke="#4DB380" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="169.6" stroke-dashoffset="37.3" transform="rotate(-90 33 33)"/></svg><div class="rc"><div class="rg">B+</div><div class="rs">GRADE</div></div></div>
-        <div class="sr"><div class="sl">Sustainability score</div><div><span class="sn">78</span><span class="sd"> /100</span></div><div class="sc3">Better than 73% of similar garments</div><div class="sb"><div class="sf"></div></div></div>
-      </div>
+  <div class="vbar">
+    <div class="vbar-l">
+      <div class="vbar-p"></div>
+      <span class="vbar-t">Scan confirmed · GS1 verified</span>
     </div>
-    <div class="hid">DPP-AU-2025-TX-00847261, GTIN 9312345678901</div>
-  </div>
-
-  <div class="istrip">
-    <button class="iq on" data-p="overview" onclick="switchIntent(this,'overview')"><div class="iqdot" style="background:#4DB380"></div>All info</button>
-    <button class="iq" data-p="materials" onclick="switchIntent(this,'materials')"><div class="iqdot" style="background:#2B6CB0"></div>Materials</button>
-    <button class="iq" data-p="journey" onclick="switchIntent(this,'journey')"><div class="iqdot" style="background:#6B3FA0"></div>Where it's from</button>
-    <button class="iq" data-p="impact" onclick="switchIntent(this,'impact')"><div class="iqdot" style="background:#2D7A55"></div>Environment</button>
-    <button class="iq" data-p="lifecycle" onclick="switchIntent(this,'lifecycle')"><div class="iqdot" style="background:#B8860B"></div>End of life</button>
+    <span class="vbar-brand">Terranova World</span>
   </div>
 
   <div class="panels">
 
-    <!-- OVERVIEW -->
+    <!-- ─ OVERVIEW ─ -->
     <div class="panel active" id="pan-overview">
-      <div class="sec">Key metrics</div>
-      <div class="mg2">
-        <div class="mc"><div class="mcl">Carbon footprint</div><div class="mcv" style="color:#1A5C42">3.2<span class="mcu"> kg CO&#x2082;e</span></div><div class="mcn" style="color:#1A5C42">62% below avg</div></div>
-        <div class="mc"><div class="mcl">Water usage</div><div class="mcv" style="color:#1E5A8E">1,840<span class="mcu"> L</span></div><div class="mcn" style="color:#1E5A8E">56% below avg</div></div>
-        <div class="mc"><div class="mcl">Recycled content</div><div class="mcv" style="color:#8A6B1E">35%</div><div class="mcn" style="color:#8A6B1E">Recycled polyester</div></div>
-        <div class="mc"><div class="mcl">Organic content</div><div class="mcv" style="color:#1A5C42">60%</div><div class="mcn" style="color:#1A5C42">GOTS certified</div></div>
-      </div>
-      <div class="sec">Certifications</div>
-      <div class="cstrip">
-        <div class="cb"><div class="cbchk" style="background:#E8F4EE;border:.5px solid #A8D5BC;color:#1A5C42">&#10003;</div><div class="cbn">GOTS</div><div class="cbt">Organic</div></div>
-        <div class="cb"><div class="cbchk" style="background:#E8F4EE;border:.5px solid #A8D5BC;color:#1A5C42">&#10003;</div><div class="cbn">GRS</div><div class="cbt">Recycled</div></div>
-        <div class="cb"><div class="cbchk" style="background:#E8F0F8;border:.5px solid #A0BDD8;color:#1E5A8E">&#10003;</div><div class="cbn">OEKO-TEX</div><div class="cbt">Chemical</div></div>
-        <div class="cb"><div class="cbchk" style="background:#E8F0F8;border:.5px solid #A0BDD8;color:#1E5A8E">&#10003;</div><div class="cbn">SA8000</div><div class="cbt">Social</div></div>
-        <div class="cb"><div class="cbchk" style="background:#E8F4EE;border:.5px solid #A8D5BC;color:#1A5C42">&#10003;</div><div class="cbn">bluesign</div><div class="cbt">Process</div></div>
-        <div class="cb"><div class="cbchk" style="background:#FDF4E3;border:.5px solid #D4B26A;color:#8A6B1E">&#10003;</div><div class="cbn">Carbon</div><div class="cbt">Neutral Ship</div></div>
-      </div>
-      <div class="sec">From the brand</div>
-      <div class="bdc">
-        <div class="bdc-hd"><div class="bdc-av">TW</div><div class="bdc-info"><div class="bdc-name">Terranova World <span class="bdc-ver">&#10003; Verified</span></div><div class="bdc-time">Sustainability Dispatch, 2 hours ago</div></div><div class="bdc-live"><div class="bdc-livdot"></div>LIVE</div></div>
-        <div class="bdc-body">
-          <div class="bdc-tag">New Initiative, Synthetics</div>
-          <div class="bdc-title">Eliminating virgin elastane from all products by 2026</div>
-          <div class="bdc-txt">We are trialling three bio-based and recycled elastane suppliers to replace the 100% virgin synthetics currently used across our core range. This directly affects garments like yours.</div>
-          <div class="bdc-rel"><strong>Relevant to your garment:</strong> The 5% elastane in this tee is currently virgin synthetic. When this initiative reaches scale, future versions will use certified recycled or bio-based alternatives.</div>
-          <div class="bdc-prog-lbl"><span>Progress to goal</span><span>40%</span></div>
-          <div class="bdc-track"><div class="bdc-fill"></div></div>
-          <div class="bdc-note">Supplier trials complete, full rollout targeted Q2 2026</div>
-          <div class="bdc-ft"><div class="bdc-flw-ct"><svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 10.5C6.5 10.5 1.5 7.5 1.5 4.5a2.5 2.5 0 015 0 2.5 2.5 0 015 0c0 3-5 6-5 6z"/></svg>&nbsp;<span id="flw-ct">847 following</span></div><button class="bdc-flw-btn" id="flw-btn" onclick="toggleFollow(this,'flw-ct',847)">Follow</button></div>
+      <div class="ov-hero">
+        <div>
+          <div class="ov-pname">Essential Tee</div>
+          <div class="ov-meta">Sage Green · Size M · Women's</div>
+        </div>
+        <div class="ov-ring-wrap">
+          <svg width="76" height="76" viewBox="0 0 76 76">
+            <circle cx="38" cy="38" r="31" fill="none" stroke="#E8E8E8" stroke-width="5.5"/>
+            <circle cx="38" cy="38" r="31" fill="none" stroke="#4DB380" stroke-width="5.5"
+              stroke-linecap="round" stroke-dasharray="194.8" stroke-dashoffset="42.9"
+              transform="rotate(-90 38 38)"/>
+          </svg>
+          <div class="ov-ring-c">
+            <div class="ov-grade">B+</div>
+            <div class="ov-grade-s">GRADE</div>
+          </div>
         </div>
       </div>
-      <div class="sec">Community impact</div>
-      <div class="comm">
-        <div class="comm-hd"><span class="comm-title">Owners of this garment</span><span class="comm-owners">2,847 people</span></div>
-        <div class="comm-stats">
-          <div class="comm-stat"><div class="comm-sv">9.2t</div><div class="comm-sl">CO&#x2082; prevented together</div></div>
-          <div class="comm-stat"><div class="comm-sv">2,847</div><div class="comm-sl">garments from landfill</div></div>
-          <div class="comm-stat"><div class="comm-sv">5.2M</div><div class="comm-sl">litres water preserved</div></div>
+
+      <div class="ov-score">
+        <div class="ov-score-row">
+          <span class="ov-score-n">78</span><span class="ov-score-d">/100</span>
         </div>
-        <div class="comm-body">
-          <div class="comm-bl">What owners did</div>
-          <div class="comm-bar-row"><span class="comm-bar-lbl">Recycled</span><div class="comm-bar-track"><div class="comm-bar-fill" style="width:68%;background:#2D7A55"></div></div><span class="comm-bar-pct">68%</span></div>
-          <div class="comm-bar-row"><span class="comm-bar-lbl">Donated</span><div class="comm-bar-track"><div class="comm-bar-fill" style="width:16%;background:#2B6CB0"></div></div><span class="comm-bar-pct">16%</span></div>
-          <div class="comm-bar-row"><span class="comm-bar-lbl">Resold</span><div class="comm-bar-track"><div class="comm-bar-fill" style="width:9%;background:#B8860B"></div></div><span class="comm-bar-pct">9%</span></div>
-          <div class="comm-bar-row"><span class="comm-bar-lbl">Landfill</span><div class="comm-bar-track"><div class="comm-bar-fill" style="width:7%;background:#A32D2D"></div></div><span class="comm-bar-pct">7%</span></div>
+        <div class="ov-score-lbl">Better than 73% of similar garments</div>
+        <div class="ov-score-track"><div class="ov-score-fill"></div></div>
+      </div>
+
+      <span class="slbl">Certifications — swipe to see all</span>
+      <div class="cert-strip" id="cert-strip">
+        <div class="cpill"><div class="cpill-dot" style="background:#2D7A55"></div>GOTS · Organic</div>
+        <div class="cpill"><div class="cpill-dot" style="background:#2B6CB0"></div>GRS · Recycled</div>
+        <div class="cpill"><div class="cpill-dot" style="background:#555"></div>OEKO-TEX 100</div>
+        <div class="cpill"><div class="cpill-dot" style="background:#6B3FA0"></div>SA8000 · Social</div>
+        <div class="cpill"><div class="cpill-dot" style="background:#1E5A8E"></div>bluesign</div>
+        <div class="cpill"><div class="cpill-dot" style="background:#B8860B"></div>Carbon Neutral Ship</div>
+      </div>
+
+      <div class="comm-bar">
+        <span class="comm-n">2,847 owners</span>
+        <div class="comm-sep"></div>
+        <span>9.2t CO&#x2082; prevented together</span>
+      </div>
+
+      <!-- Brand update -->
+      <div class="acc">
+        <div class="acc-row" onclick="toggleAcc(this)">
+          <div class="acc-l">
+            <div class="acc-t">Brand update</div>
+            <div class="acc-s">Eliminating virgin elastane by 2026</div>
+          </div>
+          <div class="acc-ch">&#9660;</div>
+        </div>
+        <div class="acc-body">
+          <div style="font-size:13px;font-weight:500;color:var(--ink);margin-bottom:7px;letter-spacing:-.01em">Eliminating virgin elastane across all products by 2026</div>
+          <div style="font-size:12px;color:var(--ink2);line-height:1.65;margin-bottom:14px">We are trialling three bio-based and recycled elastane suppliers to replace the 100% virgin synthetics across our core range. The 5% elastane in this tee is currently virgin synthetic. Future versions will use certified alternatives.</div>
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--ink3);margin-bottom:6px"><span>Progress to goal</span><span style="font-weight:500;color:var(--ink)">40%</span></div>
+          <div style="height:6px;background:var(--line2);border-radius:99px;overflow:hidden;margin-bottom:5px"><div style="height:100%;width:40%;background:var(--green);border-radius:99px"></div></div>
+          <div style="font-size:10px;color:var(--ink4);margin-bottom:14px">Supplier trials complete · Full rollout targeted Q2 2026</div>
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <span style="font-size:12px;color:var(--ink3)" id="flw-ct">847 following</span>
+            <button style="padding:7px 16px;border-radius:99px;border:1.5px solid var(--green);background:transparent;color:var(--green);font-size:12px;font-weight:500;cursor:pointer;font-family:inherit;transition:background .15s,color .15s" id="flw-btn" onclick="toggleFlw(this,'flw-ct',847)">Follow</button>
+          </div>
         </div>
       </div>
-      <div class="sec">Countries of production</div>
-      <div class="card">
-        <div class="irow"><span class="ik">Raw material</span><span class="iv">Maharashtra, India</span></div>
-        <div class="irow"><span class="ik">Spinning and weaving</span><span class="iv">Gujarat, India</span></div>
-        <div class="irow"><span class="ik">Dyeing and finishing</span><span class="iv">Ho Chi Minh City, Vietnam</span></div>
-        <div class="irow"><span class="ik">Cut, make and trim</span><span class="iv">Ho Chi Minh City, Vietnam</span></div>
-        <div class="irow"><span class="ik">Distribution</span><span class="iv">Melbourne, Australia</span></div>
+
+      <!-- Passport details -->
+      <div class="acc">
+        <div class="acc-row" onclick="toggleAcc(this)">
+          <div class="acc-l">
+            <div class="acc-t">Passport details</div>
+            <div class="acc-s">GS1 Digital Link · EPCIS 2.0 · GDSN</div>
+          </div>
+          <div class="acc-ch">&#9660;</div>
+        </div>
+        <div class="acc-body">
+          <div class="kv"><span class="kk">DPP ID</span><span class="kv-v" style="font-family:monospace;font-size:10px">DPP-AU-2025-TX-00847261</span></div>
+          <div class="kv"><span class="kk">GTIN</span><span class="kv-v" style="font-family:monospace;font-size:10px">9312345678901</span></div>
+          <div class="kv"><span class="kk">Issued</span><span class="kv-v">January 2025</span></div>
+          <div class="kv"><span class="kk">Last verified</span><span class="kv-v">March 2025</span></div>
+          <div class="kv"><span class="kk">Standard</span><span class="kv-v">GS1 Digital Link, EPCIS 2.0</span></div>
+        </div>
       </div>
-      <div class="sec">Passport details</div>
-      <div class="card">
-        <div class="irow"><span class="ik">DPP ID</span><span class="iv mono">DPP-AU-2025-TX-00847261</span></div>
-        <div class="irow"><span class="ik">GTIN (GS1)</span><span class="iv mono">9312345678901</span></div>
-        <div class="irow"><span class="ik">Issued</span><span class="iv">January 2025</span></div>
-        <div class="irow"><span class="ik">Last verified</span><span class="iv">March 2025</span></div>
-        <div class="irow"><span class="ik">Standard</span><span class="iv">GS1 Digital Link, EPCIS 2.0</span></div>
-      </div>
+      <div class="bsp"></div>
     </div>
 
-    <!-- MATERIALS -->
-    <div class="panel" id="pan-materials">
-      <div class="sec">Care instructions</div>
-      <div class="card">
-        <div class="crow3"><div class="cok"><svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1 4l2 2 4-4" stroke="#1A5C42" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div>Machine wash cold (30&#176;C), saving up to 40% energy</div></div>
-        <div class="crow3"><div class="cok"><svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1 4l2 2 4-4" stroke="#1A5C42" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div>Gentle cycle, air dry flat</div></div>
-        <div class="crow3"><div class="cok"><svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1 4l2 2 4-4" stroke="#1A5C42" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div>Cool iron if needed (max 110&#176;C)</div></div>
-        <div class="crow3"><div class="cno"><svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M2 2l4 4M6 2L2 6" stroke="#A32D2D" stroke-width="1.2" stroke-linecap="round"/></svg></div><div style="opacity:.6">No bleach or dry cleaning</div></div>
+    <!-- ─ MADE ─ -->
+    <div class="panel" id="pan-made">
+      <span class="slbl">Composition</span>
+      <div class="fibre-hero">
+        <div class="fibre-hl">60% Organic Cotton · 35% Recycled Polyester · 5% Elastane</div>
+        <div class="fbar">
+          <div class="fseg" style="flex:60;background:#2D7A55"></div>
+          <div class="fseg" style="flex:35;background:#2B6CB0"></div>
+          <div class="fseg" style="flex:5;background:#B8860B"></div>
+        </div>
       </div>
-      <div class="sec">Fibre composition</div>
-      <div class="mbar" id="matbar"></div>
-      <div class="mleg" id="matleg"></div>
-      <div class="sec">Fibre breakdown</div>
-      <div id="matcards"></div>
-      <div class="sec">Chemical use and treatments</div>
-      <div class="card">
-        <div class="irow"><span class="ik">Dye type</span><span class="iv">Low-impact reactive dyes</span></div>
-        <div class="irow"><span class="ik">Surface finishes</span><span class="iv">Anti-wrinkle, PFAS-free</span></div>
-        <div class="irow"><span class="ik">Softener</span><span class="iv">Silicone-free</span></div>
-        <div class="irow"><span class="ik">Restricted substances</span><span class="iv" style="color:#1A5C42">None detected</span></div>
-        <div class="irow"><span class="ik">Microplastic risk</span><span class="iv" style="color:#1A5C42">Low, under 1% shedding</span></div>
-        <div class="irow"><span class="ik">PFAS / PFOS</span><span class="iv" style="color:#1A5C42">Absent</span></div>
+      <div class="flist" id="flist"></div>
+
+      <!-- Dyes accordion -->
+      <div class="acc">
+        <div class="acc-row" onclick="toggleAcc(this)">
+          <div class="acc-l">
+            <div class="acc-t">Dyes and treatments</div>
+            <div class="acc-s">PFAS-free · No restricted substances</div>
+          </div>
+          <div class="acc-ch">&#9660;</div>
+        </div>
+        <div class="acc-body">
+          <div class="kv"><span class="kk">Dye type</span><span class="kv-v">Low-impact reactive dyes</span></div>
+          <div class="kv"><span class="kk">Surface finishes</span><span class="kv-v">Anti-wrinkle, PFAS-free</span></div>
+          <div class="kv"><span class="kk">Softener</span><span class="kv-v">Silicone-free</span></div>
+          <div class="kv"><span class="kk">Restricted substances</span><span class="kv-g">None detected</span></div>
+          <div class="kv"><span class="kk">Microplastic risk</span><span class="kv-g">Low, under 1%</span></div>
+          <div class="kv"><span class="kk">PFAS / PFOS</span><span class="kv-g">Absent</span></div>
+        </div>
       </div>
-      <div><span class="tag tg">&#10003; OEKO-TEX STANDARD 100</span><span class="tag tb">&#10003; bluesign certified</span></div>
+
+      <span class="slbl">Production Journey</span>
+      <div class="jlist" id="jlist"></div>
+
+      <span class="slbl">Worker Welfare</span>
+      <div class="w-row"><div class="w-chk"><svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="#1A5C42" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Living wage paid to all production workers</span></div>
+      <div class="w-row"><div class="w-chk"><svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="#1A5C42" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Safe and healthy working conditions verified</span></div>
+      <div class="w-row"><div class="w-chk"><svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="#1A5C42" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>No child labour or forced labour</span></div>
+      <div class="w-row"><div class="w-chk"><svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="#1A5C42" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Freedom of association and collective bargaining</span></div>
+      <div class="w-row"><div class="w-chk"><svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="#1A5C42" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Annual independent social audit conducted</span></div>
+      <div style="font-size:11px;color:var(--ink4);text-align:center;padding:12px 1.5rem">Bureau Veritas · March 2025 · SA8000</div>
+      <div class="bsp"></div>
     </div>
 
-    <!-- JOURNEY -->
-    <div class="panel" id="pan-journey">
-      <div style="font-size:11px;color:#888;margin-bottom:14px;line-height:1.5">Tap any stage to view facility details and audit records.</div>
-      <div id="scsteps"></div>
-      <div class="sec">Worker welfare</div>
-      <div class="card">
-        <div class="wrow"><div class="wchk"><svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="#1A5C42" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Living wage paid to all production workers</span></div>
-        <div class="wrow"><div class="wchk"><svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="#1A5C42" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Safe and healthy working conditions verified</span></div>
-        <div class="wrow"><div class="wchk"><svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="#1A5C42" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>No child labour or forced labour</span></div>
-        <div class="wrow"><div class="wchk"><svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="#1A5C42" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Freedom of association and collective bargaining</span></div>
-        <div class="wrow"><div class="wchk"><svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="#1A5C42" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Annual independent social audit conducted</span></div>
-      </div>
-      <div style="font-size:11px;color:#888;text-align:center">Bureau Veritas, March 2025, SA8000</div>
-    </div>
-
-    <!-- IMPACT -->
+    <!-- ─ IMPACT ─ -->
     <div class="panel" id="pan-impact">
-      <div class="envb">
-        <div class="envc"><div class="envg">B+</div><div class="envs">RATING</div></div>
-        <div><div style="font-size:13px;font-weight:500;color:#0B3D2E;margin-bottom:3px;letter-spacing:-.01em">Above-average environmental rating</div><div style="font-size:11px;color:#1A5C42;line-height:1.6">Outperforms industry benchmarks on carbon, water, chemicals, and circular content. ESPR-aligned LCA verified.</div></div>
+      <span class="slbl">Environmental Rating</span>
+      <div class="grade-band">
+        <div class="grade-c"><div class="grade-l">B+</div><div class="grade-ss">RATING</div></div>
+        <div>
+          <div class="grade-tit">Above-average performance</div>
+          <div class="grade-desc">Outperforms industry benchmarks on carbon, water, and circular content. ESPR-aligned lifecycle assessment.</div>
+        </div>
       </div>
-      <div class="sec">Carbon and water footprint</div>
-      <div id="ibars"></div>
-      <div class="sec">Material profile</div>
-      <div class="card">
-        <div class="irow"><span class="ik">Organic fibre</span><span class="iv" style="color:#1A5C42">60%</span></div>
-        <div class="irow"><span class="ik">Recycled fibre</span><span class="iv" style="color:#8A6B1E">35%</span></div>
-        <div class="irow"><span class="ik">Chemical risk</span><span class="iv" style="color:#1A5C42">Low</span></div>
-        <div class="irow"><span class="ik">PFAS present</span><span class="iv" style="color:#1A5C42">No</span></div>
+
+      <span class="slbl">Carbon Footprint</span>
+      <div class="stat-block">
+        <div><span class="stat-n" style="color:#2D7A55">3.2</span><span class="stat-u" style="color:#4DB380"> kg CO&#x2082;e</span></div>
+        <div class="stat-lbl">Lifecycle carbon footprint per garment</div>
+        <div class="stat-delta" style="background:#EEF7F2;color:#1A5C42">&#x2193; 62% below industry average</div>
       </div>
-      <div class="alert ab"><div class="altt">About this data</div>Carbon from Higg MSI. Water from the Water Footprint Network. Benchmark is a conventional cotton t-shirt.</div>
+
+      <span class="slbl">Water Usage</span>
+      <div class="stat-block">
+        <div><span class="stat-n" style="color:#1E5A8E">1,840</span><span class="stat-u" style="color:#2B6CB0"> L</span></div>
+        <div class="stat-lbl">Total water consumption per garment</div>
+        <div class="stat-delta" style="background:#EEF3FB;color:#1E5A8E">&#x2193; 56% below industry average</div>
+      </div>
+
+      <div class="acc">
+        <div class="acc-row" onclick="toggleAcc(this)">
+          <div class="acc-l">
+            <div class="acc-t">About this data</div>
+            <div class="acc-s">Methodology and benchmarks explained</div>
+          </div>
+          <div class="acc-ch">&#9660;</div>
+        </div>
+        <div class="acc-body">
+          <div style="font-size:12px;color:var(--ink2);line-height:1.75">Carbon benchmarks from the Higg Materials Sustainability Index. Water data calculated using the Water Footprint Network methodology. Compared against a conventional cotton t-shirt as the industry average. Lifecycle assessment conducted in alignment with ESPR requirements.</div>
+        </div>
+      </div>
+      <div class="bsp"></div>
     </div>
 
-    <!-- END OF LIFE -->
-    <div class="panel" id="pan-lifecycle">
-      <div class="mg3">
-        <div class="mc" style="padding:10px"><div class="mcl">Recyclability</div><div style="font-size:13px;font-weight:500;color:#1A5C42;margin-top:3px">High</div></div>
-        <div class="mc" style="padding:10px"><div class="mcl">Durability</div><div style="font-size:13px;font-weight:500;margin-top:3px;font-variant-numeric:tabular-nums">8 / 10</div></div>
-        <div class="mc" style="padding:10px"><div class="mcl">Repairability</div><div style="font-size:13px;font-weight:500;color:#1E5A8E;margin-top:3px">Easy</div></div>
-      </div>
-      <div class="alert aa"><span style="font-weight:500">Expected lifespan:</span> 3 to 5 years with proper care. Designed for 80+ wash cycles.</div>
-      <div class="sec">When you're done with this garment</div>
-      <div id="eolcards"></div>
-      <div class="alert ag"><div class="altt">Take-back program</div>Return to any Terranova World store for certified textile-to-textile recycling at no cost. Receive 10% off your next purchase.</div>
-      <div class="sec">Record what happened</div>
-      <div class="logger">
-        <div class="logger-hd"><div class="logger-title">What did you do with this garment?</div><div class="logger-sub">Help us track the real-world lifecycle of our products. Your data shapes our sustainability strategy.</div></div>
-        <div class="logger-grid" id="logger-grid">
-          <div class="lopt" onclick="logAction('recycle')"><div class="lopt-ic" style="background:#E8F4EE"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#1A5C42" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 9a4.5 4.5 0 01-4.5 4.5H6M4.5 9A4.5 4.5 0 019 4.5h3"/><path d="M6 12l-3 1.5.5-3M12 1.5l3 1.5-.5 3"/></svg></div><div class="lopt-l">Recycled</div><div class="lopt-d">Returned to store</div></div>
-          <div class="lopt" onclick="logAction('donate')"><div class="lopt-ic" style="background:#E8F0F8"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#1E5A8E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 13.5C9 13.5 3 10 3 6.5a3 3 0 016 0 3 3 0 016 0c0 3.5-6 7-6 7z"/></svg></div><div class="lopt-l">Donated</div><div class="lopt-d">Seamless drop-off</div></div>
-          <div class="lopt" onclick="logAction('resell')"><div class="lopt-ic" style="background:#FDF4E3"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#8A6B1E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h10M9 4l5 5-5 5"/></svg></div><div class="lopt-l">Resold</div><div class="lopt-d">Depop or marketplace</div></div>
-          <div class="lopt" onclick="logAction('repair')"><div class="lopt-ic" style="background:#F3EEF8"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#6B3FA0" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 4.5l-9 9M4.5 9L9 4.5M9 13.5l4.5-4.5"/></svg></div><div class="lopt-l">Repaired</div><div class="lopt-d">Extended its life</div></div>
-          <div class="lopt lopt5" onclick="logAction('landfill')"><div class="lopt-ic" style="background:#f7f7f5;width:30px;height:30px;border-radius:8px"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="#888" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 4.5h10l-1 8H3.5l-1-8z"/><path d="M2 4.5h11"/><path d="M5.5 4.5v-2h4v2"/></svg></div><div><div class="lopt-l">Threw it away</div><div class="lopt-d">Sent to general waste or landfill</div></div></div>
+    <!-- ─ END OF LIFE ─ -->
+    <div class="panel" id="pan-eol">
+      <span class="slbl">Care Instructions</span>
+      <div class="care-grid">
+        <div class="care-card">
+          <div class="care-ic" style="background:#EEF7F2">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#1A5C42" stroke-width="1.5" stroke-linecap="round"><path d="M4 8h12M4 8a6 6 0 0012 0"/><path d="M10 3v2"/></svg>
+          </div>
+          <div class="care-lbl">30°C cold wash</div>
         </div>
-        <div class="logger-done" id="logger-done">
-          <div class="ldone-top"><div class="ldone-chk" id="done-chk"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 9l4 4 7-7" stroke="#1A5C42" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="40" stroke-dashoffset="40" style="animation:checkDraw .5s ease forwards .1s"/></svg></div><div><div class="ldone-msg" id="done-msg">Thank you for recycling!</div><div class="ldone-sub" id="done-sub">Your action has been recorded.</div></div></div>
-          <div class="ldone-impact" id="done-impact"><div class="ldone-impact-row"><span class="ldone-n" id="done-n">2.1</span><span class="ldone-u" id="done-u">kg CO&#x2082; saved</span></div><div class="ldone-eq" id="done-eq">Equivalent to 18 km not driven</div><div class="ldone-comm" id="done-comm">Together with <strong>848 other owners</strong>, this community has now prevented <strong>9.2 tonnes CO&#x2082;</strong> and kept 2,848 garments from landfill.</div></div>
-          <button class="rl-btn" onclick="resetLogger()">Change my selection</button>
+        <div class="care-card">
+          <div class="care-ic" style="background:#EEF7F2">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#1A5C42" stroke-width="1.5" stroke-linecap="round"><path d="M6 10a4 4 0 008 0V6H6v4z"/></svg>
+          </div>
+          <div class="care-lbl">Gentle cycle</div>
         </div>
-      </div>
-      <div class="rating-sec" id="rating-sec" style="display:none">
-        <div class="rating-hd"><div class="rating-title">How was this garment?</div><div class="rating-sub">Your ratings help us improve future products.</div></div>
-        <div class="rating-rows">
-          <div class="rrow"><span class="rrow-l">Overall quality</span><div class="stars" id="stars-quality" data-cat="quality"></div></div>
-          <div class="rrow"><span class="rrow-l">Sustainability</span><div class="stars" id="stars-sust" data-cat="sust"></div></div>
-          <div class="rrow"><span class="rrow-l">Claims accuracy</span><div class="stars" id="stars-claims" data-cat="claims"></div></div>
-          <div class="rrow"><span class="rrow-l">Durability</span><div class="stars" id="stars-dur" data-cat="dur"></div></div>
+        <div class="care-card">
+          <div class="care-ic" style="background:#EEF7F2">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#1A5C42" stroke-width="1.5" stroke-linecap="round"><path d="M10 15V7M6 11l4-4 4 4"/><path d="M5 16h10"/></svg>
+          </div>
+          <div class="care-lbl">Air dry flat</div>
+        </div>
+        <div class="care-card no">
+          <div class="care-ic" style="background:#FEE2E2">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#DC2626" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l10 10M15 5L5 15"/></svg>
+          </div>
+          <div class="care-lbl no">No bleach</div>
         </div>
       </div>
-      <div class="fbsec" id="fb-sec" style="display:none">
-        <div class="fbsec-hd" onclick="toggleFB(this)"><span class="fbsec-title">Share feedback with the brand</span><span class="fbsec-ico">&#9660;</span></div>
-        <div class="fbsec-body" id="fb-body">
-          <textarea class="fbtxt" id="fb-txt" rows="3" placeholder="Tell Terranova World what you loved, what could be better, or flag any concerns about sustainability claims..."></textarea>
-          <div class="fb-anon"><span>Submit anonymously</span><div class="fb-toggle" id="anon-toggle" onclick="this.classList.toggle('on')"></div></div>
-          <button class="fb-send" onclick="submitFeedback()">Send to brand &rarr;</button>
-          <div class="fb-sent" id="fb-sent">Thank you. Terranova World will review your feedback and may respond in the brand dispatch.</div>
+      <div style="font-size:11px;color:var(--ink4);padding:4px 1.5rem 4px;line-height:1.6">Cool iron max 110°C if needed. No dry cleaning.</div>
+
+      <span class="slbl">When you're done with it</span>
+      <div class="eol-list" id="eollist"></div>
+
+      <button class="takeback-btn" id="tb-btn" onclick="bookTakeback(this)">Book free in-store take-back &rarr;</button>
+
+      <span class="slbl">Record your action</span>
+      <div class="log-wrap">
+        <div class="log-s">Help us track real-world garment lifecycles. Your data shapes our sustainability targets.</div>
+        <div class="log-pills" id="log-pills">
+          <button class="lpill" onclick="logA(this,'2.1 kg CO&#x2082; saved','Equivalent to 18 km not driven',false)">Recycled</button>
+          <button class="lpill" onclick="logA(this,'1.4 kg CO&#x2082; avoided','Equivalent to 12 km not driven',false)">Donated</button>
+          <button class="lpill" onclick="logA(this,'1.8 kg CO&#x2082; avoided','2.2 additional years of product life',false)">Resold</button>
+          <button class="lpill" onclick="logA(this,'0.8 kg CO&#x2082; saved','One more year of product life',false)">Repaired</button>
+          <button class="lpill lf" onclick="logA(this,'1.8 kg CO&#x2082; released','This garment could have been recycled instead',true)">Threw away</button>
+        </div>
+        <div class="log-result" id="log-res">
+          <div style="display:flex;align-items:baseline;gap:5px">
+            <span class="log-rn" id="log-n">2.1</span>
+            <span class="log-ru" id="log-u">kg CO&#x2082; saved</span>
+          </div>
+          <div class="log-req" id="log-eq"></div>
+          <button class="log-change" onclick="resetLog()">&#8592; Change selection</button>
         </div>
       </div>
-      <div class="sec">Brand sustainability pledge</div>
-      <div class="bi">
-        <div class="bi-hd"><div class="bi-av">TW</div><div class="bi-lbl">Pledge, Synthetics, Active</div></div>
-        <div class="bi-body">
-          <div class="bi-title">100% bio-based or recycled elastane across all core styles by 2026</div>
-          <div class="bi-txt">Elastane is one of the hardest fibres to replace sustainably. We are currently in supplier trials with three certified alternatives and expect full transition by mid-2026.</div>
-          <div class="bi-prog-row"><span>Goal progress</span><span>40%, supplier trials complete</span></div>
-          <div class="bi-track"><div class="bi-fill" style="width:40%"></div></div>
-          <div class="bi-ft"><button class="bi-flw" id="bi-flw" onclick="toggleFollow(this,'bi-ct',312)">Follow pledge</button><span class="bi-ft-ct" id="bi-ct">312 owners following</span></div>
+
+      <span class="slbl" id="rate-lbl" style="display:none">Rate this garment</span>
+      <div class="star-section" id="star-section" style="display:none"></div>
+
+      <div class="fb-acc" id="fb-acc" style="display:none">
+        <div class="fb-head" onclick="toggleFb(this)">
+          <span class="fb-hl">Share feedback with Terranova World</span>
+          <div class="fb-hch">&#9660;</div>
+        </div>
+        <div class="fb-bd" id="fb-bd">
+          <textarea class="fb-ta" id="fb-ta" rows="3" maxlength="500"
+            placeholder="What worked well, what could be better, or any concerns about the sustainability claims..."
+            oninput="updateCount(this)"></textarea>
+          <div class="fb-count" id="fb-count">0 / 500</div>
+          <div class="fb-arow">
+            <span>Submit anonymously</span>
+            <div class="ftoggle" onclick="this.classList.toggle('on')"></div>
+          </div>
+          <button class="fb-submit" id="fb-submit" onclick="sendFb()" disabled>Send feedback &rarr;</button>
+          <div class="fb-ok" id="fb-ok">
+            <svg width="20" height="20" viewBox="0 0 20 20" style="display:inline-block;vertical-align:middle;margin-right:5px"><circle cx="10" cy="10" r="9" fill="#EEF7F2" stroke="#A8D5BC" stroke-width="1"/><path d="M6 10l3 3 5-5" stroke="#1A5C42" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Thank you. The team will review your feedback.
+          </div>
         </div>
       </div>
+      <div class="bsp"></div>
     </div>
 
-  </div>
+  </div><!-- /panels -->
 
+  <!-- ── BOTTOM NAV ── -->
   <div class="bnav">
-    <button class="nb on" data-p="overview" onclick="switchNav(this)"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="12" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="12" width="7" height="7" rx="1.5"/><rect x="12" y="12" width="7" height="7" rx="1.5"/></svg><span>Overview</span><div class="ndot"></div></button>
-    <button class="nb" data-p="materials" onclick="switchNav(this)"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 7h14M4 11h9M4 15h11"/></svg><span>Materials</span><div class="ndot"></div></button>
-    <button class="nb" data-p="journey" onclick="switchNav(this)"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="4.5" cy="6" r="1.5"/><circle cx="11" cy="11" r="1.5"/><circle cx="17.5" cy="16" r="1.5"/><path d="M6 7L9.5 10M12.5 12L16 15"/></svg><span>Journey</span><div class="ndot"></div></button>
-    <button class="nb" data-p="impact" onclick="switchNav(this)"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17L8 10L12 13L18 5"/><path d="M18 5h-3.5M18 5v3.5"/></svg><span>Impact</span><div class="ndot"></div></button>
-    <button class="nb" data-p="lifecycle" onclick="switchNav(this)"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 11a6.5 6.5 0 01-6.5 6.5H8M4.5 11A6.5 6.5 0 0111 4.5h3.5"/><path d="M8 14.5L4.5 17.5L8 20M14.5 2L18 5L14.5 8"/></svg><span>End of Life</span><div class="ndot"></div></button>
+    <button class="nb on" data-p="overview" onclick="switchNav(this)">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="12" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="12" width="7" height="7" rx="1.5"/><rect x="12" y="12" width="7" height="7" rx="1.5"/></svg>
+      <span>Overview</span><div class="nbdot"></div>
+    </button>
+    <button class="nb" data-p="made" onclick="switchNav(this)">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 6h14M4 10h14M4 14h9M4 18h11"/></svg>
+      <span>Made</span><div class="nbdot"></div>
+    </button>
+    <button class="nb" data-p="impact" onclick="switchNav(this)">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17L8 10L12 13L18 4"/><path d="M18 4h-3.5M18 4v3.5"/></svg>
+      <span>Impact</span><div class="nbdot"></div>
+    </button>
+    <button class="nb" data-p="eol" onclick="switchNav(this)">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 11a6.5 6.5 0 01-6.5 6.5H8M4.5 11A6.5 6.5 0 0111 4.5h3.5"/><path d="M8 14.5L4.5 17.5L8 20M14.5 2L18 5L14.5 8"/></svg>
+      <span>End of Life</span><div class="nbdot"></div>
+    </button>
   </div>
-  <div class="dfoot">GS1 Digital Link, EPCIS 2.0, GDSN, DPP-AU-2025-TX-00847261</div>
-</div>
 
+</div><!-- /main-app -->
 </div></div>
 
 <script>
-function enterApp(t){document.getElementById('scan-screen').style.display='none';document.getElementById('main-app').classList.add('vis');switchPanel(t);syncStrip(t);syncNav(t);}
-function switchNav(b){const p=b.dataset.p;document.querySelectorAll('.nb').forEach(x=>x.classList.remove('on'));b.classList.add('on');switchPanel(p);syncStrip(p);}
-function switchIntent(b,p){document.querySelectorAll('.iq').forEach(x=>x.classList.remove('on'));b.classList.add('on');switchPanel(p);syncNav(p);}
-function switchPanel(p){document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));const e=document.getElementById('pan-'+p);if(e)e.classList.add('active');}
-function syncStrip(p){document.querySelectorAll('.iq').forEach(b=>b.classList.toggle('on',b.dataset.p===p));}
-function syncNav(p){document.querySelectorAll('.nb').forEach(b=>b.classList.toggle('on',b.dataset.p===p));}
+// ── Navigation ──
+function enterApp(t){
+  document.getElementById('scan-screen').style.display='none';
+  document.getElementById('main-app').classList.add('vis');
+  switchPanel(t);syncNav(t);
+}
+function switchNav(btn){
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  switchPanel(btn.dataset.p);
+}
+function switchPanel(p){
+  document.querySelectorAll('.panel').forEach(x=>{
+    x.classList.remove('active');
+    x.scrollTop=0;
+  });
+  document.getElementById('pan-'+p).classList.add('active');
+}
+function syncNav(p){
+  document.querySelectorAll('.nb').forEach(b=>b.classList.toggle('on',b.dataset.p===p));
+}
 
-const mats=[
-  {name:'Organic Cotton',pct:60,origin:'Maharashtra, India',cert:'GOTS Certified',ctag:'tg',color:'#2D7A55',bg:'#E8F4EE',border:'#A8D5BC',tc:'#0B3D2E',detail:'GOTS-certified organic cotton grown without synthetic pesticides or fertilisers. Sourced from a fair-trade cooperative of 2,400 smallholder farmers. Annual crop and chain-of-custody audits by Control Union Certifications.'},
-  {name:'Recycled Polyester',pct:35,origin:'Taiwan',cert:'GRS Certified',ctag:'tb',color:'#2B6CB0',bg:'#E8F0F8',border:'#A0BDD8',tc:'#1E3A5F',detail:'Produced from post-consumer PET plastic bottles. GRS certified. Reduces reliance on virgin petrochemicals by 59% and diverts plastic waste from landfill.'},
-  {name:'Elastane',pct:5,origin:'Germany',cert:'OEKO-TEX 100',ctag:'ta',color:'#B8860B',bg:'#FDF4E3',border:'#D4B26A',tc:'#5A3E0A',detail:'Provides shape retention and comfort stretch. Synthetically produced, with no animal derivatives. OEKO-TEX STANDARD 100 certified against 100+ harmful substances. Subject to the brand sustainability pledge in the End of Life tab.'},
+// ── Accordion ──
+function toggleAcc(row){
+  const b=row.nextElementSibling,c=row.querySelector('.acc-ch');
+  b.classList.toggle('open');c.classList.toggle('open');
+}
+
+// ── Cert strip: drag-to-scroll on desktop ──
+(function(){
+  const el=document.getElementById('cert-strip');
+  let isDown=false,sx=0,sl=0;
+  el.addEventListener('mousedown',e=>{isDown=true;el.classList.add('active');sx=e.pageX-el.offsetLeft;sl=el.scrollLeft;});
+  el.addEventListener('mouseleave',()=>{isDown=false;});
+  el.addEventListener('mouseup',()=>{isDown=false;});
+  el.addEventListener('mousemove',e=>{if(!isDown)return;e.preventDefault();const x=e.pageX-el.offsetLeft;el.scrollLeft=sl-(x-sx)*1.2;});
+})();
+
+// ── Fibres ──
+const fibres=[
+  {name:'Organic Cotton',pct:60,origin:'Maharashtra, India',cert:'GOTS Certified',color:'#2D7A55',
+   detail:'GOTS-certified organic cotton grown without synthetic pesticides or fertilisers. Sourced from a fair-trade cooperative of 2,400 smallholder farmers. Annual crop and chain-of-custody audits by Control Union Certifications.'},
+  {name:'Recycled Polyester',pct:35,origin:'Taiwan',cert:'GRS Certified',color:'#2B6CB0',
+   detail:'Produced from post-consumer PET plastic bottles. GRS certified. Reduces reliance on virgin petrochemicals by approximately 59% and diverts plastic waste from landfill.'},
+  {name:'Elastane',pct:5,origin:'Germany',cert:'OEKO-TEX 100',color:'#B8860B',
+   detail:'Provides shape retention and stretch. Synthetically produced with no animal derivatives. OEKO-TEX STANDARD 100 certified against 100+ harmful substances. Subject to brand transition pledge in Overview.'},
 ];
-mats.forEach(m=>{
-  const s=document.createElement('div');s.className='mseg';s.style.cssText='width:'+m.pct+'%;background:'+m.color;s.textContent=m.pct>=15?m.pct+'%':'';document.getElementById('matbar').appendChild(s);
-  const l=document.createElement('div');l.className='mli';l.innerHTML='<div class="mdot" style="background:'+m.color+'"></div>'+m.name+' ('+m.pct+'%)';document.getElementById('matleg').appendChild(l);
-  const c=document.createElement('div');c.className='fcard';c.style.cssText='background:'+m.bg+';border-color:'+m.border;
-  c.innerHTML='<div class="ftop"><div><div class="fn" style="color:'+m.tc+'">'+m.name+'</div><div class="for" style="color:'+m.tc+'">Origin: '+m.origin+'</div></div><div class="fp" style="color:'+m.tc+'">'+m.pct+'%</div></div><div class="fd" style="color:'+m.tc+'">'+m.detail+'</div><span class="tag '+m.ctag+'">&#10003; '+m.cert+'</span>';
-  document.getElementById('matcards').appendChild(c);
+const fl=document.getElementById('flist');
+fibres.forEach(f=>{
+  const wrap=document.createElement('div');
+  const row=document.createElement('div');row.className='f-row';
+  row.innerHTML=`<div class="f-dot" style="background:${f.color}"></div><div class="f-info"><div class="f-name">${f.name}</div><div class="f-sub">${f.cert} · ${f.origin}</div></div><div class="f-pct">${f.pct}%</div><div class="f-ch">&#9660;</div>`;
+  const det=document.createElement('div');det.className='f-detail';
+  det.innerHTML=`<div class="f-detail-txt">${f.detail}</div>`;
+  row.onclick=()=>{det.classList.toggle('open');row.querySelector('.f-ch').classList.toggle('open');};
+  wrap.appendChild(row);wrap.appendChild(det);
+  fl.appendChild(wrap);
 });
 
-const sc=[
-  {stage:'Raw Material',loc:'Maharashtra, India',date:'Aug 2024',cert:'GOTS',company:'Chetna Organic Farms',detail:'Organic cotton grown without synthetic pesticides. Fair-trade cooperative of 2,400 smallholder farmers. Annual crop and chain-of-custody audits by Control Union Certifications.'},
-  {stage:'Spinning and Weaving',loc:'Gujarat, India',date:'Sep 2024',cert:'OCS',company:'Arvind Mills Ltd.',detail:'Ring-spun yarn for superior durability. Closed-loop water recycling reduces consumption by 60%. ISO 14001:2015 certified. OCS chain-of-custody verified.'},
-  {stage:'Dyeing and Finishing',loc:'Ho Chi Minh City, Vietnam',date:'Oct 2024',cert:'OEKO-TEX',company:'EcoColour Co.',detail:'Low-impact reactive dyes. PFAS-free anti-wrinkle finish. On-site wastewater treatment processes all effluent to drinking-water standards.'},
-  {stage:'Cut, Make and Trim',loc:'Ho Chi Minh City, Vietnam',date:'Nov 2024',cert:'SA8000',company:'Green Stitch Apparel',detail:'Living wage paid to all 1,240 workers. 87% female workforce. SA8000 certified since 2019. Annual audit by Bureau Veritas.'},
-  {stage:'Distribution',loc:'Melbourne, Australia',date:'Dec 2024',cert:'Carbon Neutral',company:'Pacific Eco Logistics',detail:'Sea freight only, with approximately 95% fewer emissions than air freight for this route. Transport emissions: 0.41 kg CO\u2082e per unit. Carbon offset via GreenFleet QLD reforestation, ISO 14064 verified.'},
+// ── Journey ──
+const jd=[
+  {s:'Raw Material',l:'Maharashtra, India',d:'Aug 2024',c:'GOTS',co:'Chetna Organic Farms',desc:'Organic cotton grown without synthetic pesticides. Fair-trade cooperative of 2,400 smallholder farmers. Annual crop and chain-of-custody audits by Control Union Certifications.'},
+  {s:'Spinning and Weaving',l:'Gujarat, India',d:'Sep 2024',c:'OCS',co:'Arvind Mills Ltd.',desc:'Ring-spun yarn for superior durability. Closed-loop water recycling reduces freshwater consumption by 60%. ISO 14001:2015 certified.'},
+  {s:'Dyeing and Finishing',l:'Ho Chi Minh City, Vietnam',d:'Oct 2024',c:'OEKO-TEX',co:'EcoColour Co.',desc:'Low-impact reactive dyes. PFAS-free anti-wrinkle finish. On-site wastewater treatment to drinking-water standards before discharge.'},
+  {s:'Cut, Make and Trim',l:'Ho Chi Minh City, Vietnam',d:'Nov 2024',c:'SA8000',co:'Green Stitch Apparel',desc:'Living wage paid to all 1,240 workers. 87% female workforce. SA8000 certified since 2019. Annual audit by Bureau Veritas.'},
+  {s:'Distribution',l:'Melbourne, Australia',d:'Dec 2024',c:'Carbon Neutral',co:'Pacific Eco Logistics',desc:'Sea freight only. Approximately 95% fewer emissions than air freight. Transport: 0.41 kg CO\u2082e per unit. Offset via GreenFleet QLD reforestation, ISO 14064 verified.'},
 ];
-sc.forEach((s,i)=>{
-  const last=i===sc.length-1;
-  const d=document.createElement('div');d.className='sci';
-  d.innerHTML='<div class="scil"><div class="scib">'+(i+1)+'</div>'+(!last?'<div class="sciln"></div>':'')+'</div><div class="scir" onclick="tSC(this)"><div class="scit"><div><div class="scis">'+s.stage+'</div><div class="scilc">'+s.loc+', '+s.date+'</div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px"><span class="scitg">'+s.cert+'</span><span class="scia">&#9660;</span></div></div><div class="scibd"><div class="scico">'+s.company+'</div><div class="scidc">'+s.detail+'</div></div></div>';
-  document.getElementById('scsteps').appendChild(d);
+const jl=document.getElementById('jlist');
+jd.forEach((j,i)=>{
+  const last=i===jd.length-1;
+  const it=document.createElement('div');it.className='j-item';
+  it.innerHTML=`<div class="j-l"><div class="j-dot"></div>${!last?'<div class="j-line"></div>':''}</div><div class="j-r" onclick="tJ(this)"><div class="j-top"><div><div class="j-stage">${j.s}</div><div class="j-loc">${j.l} · ${j.d}</div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px"><span class="j-cert">${j.c}</span><div class="j-ch">&#9660;</div></div></div><div class="j-detail"><div class="j-company">${j.co}</div><div class="j-desc">${j.desc}</div></div></div>`;
+  jl.appendChild(it);
 });
-function tSC(el){const b=el.querySelector('.scibd'),a=el.querySelector('.scia');b.classList.toggle('open');a.style.transform=b.classList.contains('open')?'rotate(180deg)':'';}
+function tJ(el){
+  const d=el.querySelector('.j-detail'),c=el.querySelector('.j-ch');
+  d.classList.toggle('open');c.classList.toggle('open');
+}
 
-const bars=[
-  {l:'Carbon footprint',v:3.2,max:12,u:'kg CO\u2082e',bench:8.5,bl:'Industry avg: 8.5',good:'62% below avg',color:'#2D7A55',gc:'#1A5C42'},
-  {l:'Water consumption',v:1840,max:6000,u:'litres',bench:4200,bl:'Industry avg: 4,200 L',good:'56% below avg',color:'#2B6CB0',gc:'#1E5A8E'},
+// ── EOL actions ──
+const eols=[
+  {a:'RS',bg:'#EEF7F2',ic:'#1A5C42',t:'Resell',d:'Good condition for resale. Depop, Vestiaire Collective, or Facebook Marketplace. Extends life by an average of 2.2 years.'},
+  {a:'DN',bg:'#EEF3FB',ic:'#1E5A8E',t:'Donate',d:'1,200+ Seamless collection points across Australia. All conditions accepted.'},
+  {a:'RP',bg:'#FDF4E3',ic:'#8A6B1E',t:'Repair',d:'Rated Easy to repair. Seam, hem, snags. Full guide at terranovaworld.com/repair'},
+  {a:'RC',bg:'#EEF7F2',ic:'#0B3D2E',t:'Recycle',d:'Free in-store take-back. Certified textile-to-textile recycling. Receive 10% off your next purchase.'},
 ];
-bars.forEach(b=>{
-  const pct=Math.round((b.v/b.max)*100),bpct=Math.round((b.bench/b.max)*100),dv=b.v<100?b.v.toFixed(1):b.v.toLocaleString();
-  const d=document.createElement('div');d.className='ibr';
-  d.innerHTML='<div class="ibrt"><span class="ibrl">'+b.l+'</span><span class="ibrv">'+dv+' '+b.u+'</span></div><div class="ibrtr"><div class="ibrf" style="width:'+pct+'%;background:'+b.color+'"></div><div class="ibrb" style="left:'+bpct+'%"></div></div><div class="ibrft"><span>'+b.bl+'</span><span class="ibrg" style="color:'+b.gc+'">'+b.good+'</span></div>';
-  document.getElementById('ibars').appendChild(d);
-});
-
-const eol=[
-  {abbr:'RS',ibg:'#E8F4EE',ic:'#1A5C42',title:'Resell',desc:'This garment is in resale condition. List on Depop, Vestiaire Collective or Facebook Marketplace. Reselling extends its life by an average of 2.2 years.'},
-  {abbr:'DN',ibg:'#E8F0F8',ic:'#1E5A8E',title:'Donate',desc:'Drop off at 1,200+ Seamless collection points across Australia. All conditions accepted.'},
-  {abbr:'RP',ibg:'#FDF4E3',ic:'#8A6B1E',title:'Repair',desc:'Rated Easy to repair. Common repairs: seam reinforcement, hem, minor snags. Full guide at terranovaworld.com/repair'},
-  {abbr:'RC',ibg:'#E8F4EE',ic:'#0B3D2E',title:'Recycle',desc:'Return in-store via our free take-back program for certified textile-to-textile recycling. No landfill.'},
-];
-eol.forEach(o=>{
-  const d=document.createElement('div');d.className='acard';
-  d.innerHTML='<div class="aic" style="background:'+o.ibg+'"><span style="font-size:11px;font-weight:500;color:'+o.ic+'">'+o.abbr+'</span></div><div style="flex:1"><div class="atit">'+o.title+'</div><div class="adc">'+o.desc+'</div></div><div class="carr">&#8250;</div>';
-  document.getElementById('eolcards').appendChild(d);
+const eolEl=document.getElementById('eollist');
+eols.forEach(o=>{
+  const d=document.createElement('div');d.className='eol-row';
+  d.innerHTML=`<div class="eol-ic" style="background:${o.bg}"><span style="font-size:11px;font-weight:500;color:${o.ic}">${o.a}</span></div><div style="flex:1"><div class="eol-t">${o.t}</div><div class="eol-d">${o.d}</div></div><div class="eol-arr">›</div>`;
+  eolEl.appendChild(d);
 });
 
-const actions={
-  recycle:{msg:'Thank you for recycling!',sub:'Your action has been recorded and added to the community total.',n:'2.1',u:'kg CO\u2082 saved',eq:'Equivalent to 18 km not driven',comm:'Together with <strong>848 other owners</strong>, this community has now prevented <strong>9.2 tonnes CO\u2082</strong> and kept 2,848 garments from landfill.',warn:false},
-  donate:{msg:'Thank you for donating!',sub:'Your action has been recorded and added to the community total.',n:'1.4',u:'kg CO\u2082 avoided',eq:'Equivalent to 12 km not driven',comm:'Together with <strong>848 other owners</strong>, this community has now prevented <strong>9.2 tonnes CO\u2082</strong> and kept 2,848 garments from landfill.',warn:false},
-  resell:{msg:'Great. You resold it!',sub:'Your action has been recorded and added to the community total.',n:'1.8',u:'kg CO\u2082 avoided',eq:'2.2 additional years of product life',comm:'Together with <strong>848 other owners</strong>, this community has now prevented <strong>9.2 tonnes CO\u2082</strong> and kept 2,848 garments from landfill.',warn:false},
-  repair:{msg:'Nice work repairing it!',sub:'Your action has been recorded and added to the community total.',n:'0.8',u:'kg CO\u2082 saved',eq:'One more year of product life',comm:'Together with <strong>848 other owners</strong>, this community has now prevented <strong>9.2 tonnes CO\u2082</strong> and kept 2,848 garments from landfill.',warn:false},
-  landfill:{msg:'Thanks for telling us.',sub:'Every data point helps us improve our take-back schemes and durability targets.',n:'1.8',u:'kg CO\u2082 released',eq:'This garment could have been recycled or donated instead.',comm:'73% of owners chose to recycle or donate. Our free in-store take-back accepts garments in any condition, no questions asked.',warn:true},
-};
-function logAction(action){
-  const a=actions[action];if(!a)return;
-  document.getElementById('logger-grid').style.display='none';
-  const done=document.getElementById('logger-done');done.classList.add('show');
-  document.getElementById('done-msg').textContent=a.msg;
-  document.getElementById('done-sub').textContent=a.sub;
-  document.getElementById('done-n').textContent=a.n;
-  document.getElementById('done-u').textContent=a.u;
-  document.getElementById('done-eq').textContent=a.eq;
-  document.getElementById('done-comm').innerHTML=a.comm;
-  const imp=document.getElementById('done-impact'),chk=document.getElementById('done-chk');
-  imp.className=a.warn?'ldone-impact warn':'ldone-impact';
-  chk.className=a.warn?'ldone-chk warn':'ldone-chk';
+// Take-back
+function bookTakeback(btn){btn.textContent='Take-back booked ✓';btn.classList.add('done');btn.onclick=null;}
+
+// ── Logger ──
+function logA(btn,nText,eqText,warn){
+  document.querySelectorAll('.lpill').forEach(p=>p.classList.remove('sel'));
+  btn.classList.add('sel');
+  const r=document.getElementById('log-res');
+  r.className='log-result'+(warn?' warn':'')+' show';
+  const parts=nText.split(' ');
+  document.getElementById('log-n').textContent=parts[0];
+  document.getElementById('log-u').textContent=parts.slice(1).join(' ');
+  document.getElementById('log-eq').textContent=eqText;
   setTimeout(()=>{
-    const rs=document.getElementById('rating-sec');rs.style.display='block';rs.style.animation='fadeUp .4s ease';
+    const rl=document.getElementById('rate-lbl');
+    const ss=document.getElementById('star-section');
+    rl.style.display='block';ss.style.display='block';ss.style.animation='up .3s ease';
     buildStars();
-    setTimeout(()=>{const fb=document.getElementById('fb-sec');fb.style.display='block';fb.style.animation='fadeUp .4s ease';},400);
-  },800);
+    setTimeout(()=>{
+      const fa=document.getElementById('fb-acc');
+      fa.style.display='block';fa.style.animation='up .3s ease';
+    },350);
+  },500);
 }
-function resetLogger(){
-  document.getElementById('logger-grid').style.display='grid';
-  document.getElementById('logger-done').classList.remove('show');
-  document.getElementById('rating-sec').style.display='none';
-  document.getElementById('fb-sec').style.display='none';
-  const txt=document.getElementById('fb-txt');if(txt){txt.style.display='';txt.value='';}
-  const an=document.querySelector('.fb-anon');if(an)an.style.display='';
-  const sn=document.querySelector('.fb-send');if(sn)sn.style.display='';
-  document.getElementById('fb-sent').classList.remove('show');
-  document.getElementById('fb-body').classList.remove('open');
-  document.querySelector('.fbsec-ico').classList.remove('open');
+function resetLog(){
+  document.querySelectorAll('.lpill').forEach(p=>p.classList.remove('sel'));
+  document.getElementById('log-res').classList.remove('show');
+  document.getElementById('rate-lbl').style.display='none';
+  document.getElementById('star-section').style.display='none';
+  document.getElementById('fb-acc').style.display='none';
 }
-const starCats=[{id:'stars-quality',cat:'quality',def:4},{id:'stars-sust',cat:'sust',def:5},{id:'stars-claims',cat:'claims',def:4},{id:'stars-dur',cat:'dur',def:3}];
-const ratings={};
-function buildStars(){starCats.forEach(c=>{ratings[c.cat]=c.def;renderStars(document.getElementById(c.id),c.cat,c.def);});}
-function renderStars(el,cat,val){
-  el.innerHTML='';
+
+// ── Stars ──
+const sCats=[
+  {id:'sq',l:'Overall quality',def:4},
+  {id:'ss',l:'Sustainability',def:5},
+  {id:'sc',l:'Claims accuracy',def:4},
+  {id:'sd',l:'Durability',def:3},
+];
+const sVals={};
+function buildStars(){
+  const sw=document.getElementById('star-section');
+  if(sw.querySelector('.star-row'))return;
+  sCats.forEach(c=>{
+    sVals[c.id]=c.def;
+    const row=document.createElement('div');row.className='star-row';
+    row.innerHTML=`<span class="star-lbl">${c.l}</span><div class="stars-g" id="${c.id}"></div>`;
+    sw.appendChild(row);
+    renderStars(c.id,c.def);
+  });
+}
+function renderStars(id,val){
+  const el=document.getElementById(id);if(!el)return;el.innerHTML='';
   for(let i=1;i<=5;i++){
-    const b=document.createElement('div');b.className='star';
+    const b=document.createElement('button');b.className='star-btn';
+    b.style.cssText='background:none;border:none;padding:0;';
     const f=i<=val;
-    b.innerHTML='<svg width="18" height="18" viewBox="0 0 18 18"><path d="M9 2l1.9 3.8 4.2.6-3 3 .7 4.2L9 11.5l-3.8 2.1.7-4.2-3-3 4.2-.6z" fill="'+(f?'#C19A3C':'none')+'" stroke="'+(f?'#C19A3C':'#D0D0D0')+'" stroke-width="1.2" stroke-linejoin="round"/></svg>';
-    b.onclick=(()=>{const v=i;return()=>{ratings[cat]=v;renderStars(el,cat,v);}})();
+    b.innerHTML=`<svg width="22" height="22" viewBox="0 0 22 22"><path d="M11 2l2.4 4.8 5.3.8-3.8 3.7.9 5.3-4.8-2.5-4.8 2.5.9-5.3-3.8-3.7 5.3-.8z" fill="${f?'#C19A3C':'none'}" stroke="${f?'#C19A3C':'#DDD'}" stroke-width="1.3" stroke-linejoin="round"/></svg>`;
+    b.setAttribute('aria-label',`${i} star`);
+    b.onclick=(()=>{const v=i;return()=>{sVals[id]=v;renderStars(id,v);}})();
     el.appendChild(b);
   }
 }
-function toggleFB(hd){const b=document.getElementById('fb-body'),ic=hd.querySelector('.fbsec-ico');b.classList.toggle('open');ic.classList.toggle('open');}
-function submitFeedback(){
-  const txt=document.getElementById('fb-txt');if(!txt.value.trim())return;
-  txt.style.display='none';document.querySelector('.fb-anon').style.display='none';document.querySelector('.fb-send').style.display='none';
-  document.getElementById('fb-sent').classList.add('show');
+
+// ── Feedback ──
+function updateCount(ta){
+  document.getElementById('fb-count').textContent=`${ta.value.length} / 500`;
+  document.getElementById('fb-submit').disabled=ta.value.trim().length===0;
 }
-function toggleFollow(btn,ctId,base){
+function toggleFb(hd){
+  const bd=document.getElementById('fb-bd'),ch=hd.querySelector('.fb-hch');
+  bd.classList.toggle('open');ch.classList.toggle('open');
+}
+function sendFb(){
+  const ta=document.getElementById('fb-ta');if(!ta.value.trim())return;
+  ta.style.display='none';
+  document.querySelector('.fb-count').style.display='none';
+  document.querySelector('.fb-arow').style.display='none';
+  document.getElementById('fb-submit').style.display='none';
+  document.getElementById('fb-ok').classList.add('show');
+}
+
+// ── Follow ──
+function toggleFlw(btn,ctId,base){
   const ct=document.getElementById(ctId);
-  if(btn.classList.contains('on')){btn.classList.remove('on');btn.textContent=btn.id==='bi-flw'?'Follow pledge':'Follow';ct.textContent=base+' '+(btn.id==='bi-flw'?'owners following':'following');}
-  else{btn.classList.add('on');btn.textContent='Following \u2713';ct.textContent=(base+1)+' '+(btn.id==='bi-flw'?'owners following':'following');}
+  if(btn.style.background==='rgb(11, 61, 46)'||btn.dataset.following==='1'){
+    btn.dataset.following='';
+    btn.style.cssText='padding:7px 16px;border-radius:99px;border:1.5px solid var(--green);background:transparent;color:var(--green);font-size:12px;font-weight:500;cursor:pointer;font-family:inherit';
+    btn.textContent='Follow';
+    ct.textContent=base+' following';
+  } else {
+    btn.dataset.following='1';
+    btn.style.cssText='padding:7px 16px;border-radius:99px;border:1.5px solid #0B3D2E;background:#0B3D2E;color:#fff;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit';
+    btn.textContent='Following ✓';
+    ct.textContent=(base+1)+' following';
+  }
 }
 </script>
 </body>
