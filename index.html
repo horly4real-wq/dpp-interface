@@ -22,17 +22,12 @@
   -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
   -webkit-tap-highlight-color:transparent}
 html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
-
-/* ── ANIMATIONS ── */
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
 @keyframes up{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 @keyframes draw{from{stroke-dashoffset:40}to{stroke-dashoffset:0}}
 @keyframes pop{0%{transform:scale(.95)}60%{transform:scale(1.03)}100%{transform:scale(1)}}
-@keyframes spin{to{transform:rotate(360deg)}}
-@keyframes slideDown{from{max-height:0;opacity:0}to{max-height:600px;opacity:1}}
 
-/* ── LAYOUT ── */
-.wrap{display:flex;justify-content:center;align-items:flex-start;padding:2rem 1rem 2rem;min-height:100vh}
+.wrap{display:flex;justify-content:center;align-items:flex-start;padding:2rem 1rem;min-height:100vh}
 .phone{width:100%;max-width:375px;background:var(--white);border-radius:36px;overflow:hidden;
   box-shadow:0 20px 80px rgba(0,0,0,.15),0 2px 8px rgba(0,0,0,.06);
   display:flex;flex-direction:column;position:relative}
@@ -40,8 +35,7 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
 @media(max-width:520px){
   html,body{overflow:hidden;background:var(--white)}
   .wrap{padding:0;display:block}
-  .phone{max-width:100%;border-radius:0;box-shadow:none;
-    height:100vh;height:100dvh;overflow:hidden}
+  .phone{max-width:100%;border-radius:0;box-shadow:none;height:100vh;height:100dvh;overflow:hidden}
   .panel,.ss-body{-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
   .bnav{padding-bottom:calc(10px + env(safe-area-inset-bottom))}
 }
@@ -49,274 +43,184 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
 /* ── SCAN SCREEN ── */
 .scan-screen{display:flex;flex-direction:column;flex:1;min-height:0;overflow:hidden}
 .ss-hero{background:var(--green);padding:2.25rem 1.5rem 1.5rem;flex-shrink:0;position:relative;overflow:hidden}
-.ss-hero::after{content:'';position:absolute;right:-60px;top:-60px;width:220px;height:220px;
-  border-radius:50%;background:rgba(255,255,255,.04);pointer-events:none}
+.ss-hero::after{content:'';position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.04);pointer-events:none}
 .ss-vrow{display:flex;align-items:center;gap:6px;margin-bottom:1.25rem}
 .ss-vdot{width:7px;height:7px;border-radius:50%;background:#4DB380;animation:pulse 2.5s ease-in-out infinite}
 .ss-vtext{font-size:11px;color:rgba(255,255,255,.5);letter-spacing:.03em}
 .ss-pname{font-size:32px;font-weight:500;color:#fff;letter-spacing:-.04em;line-height:1;margin-bottom:5px}
 .ss-pmeta{font-size:14px;color:rgba(255,255,255,.42);letter-spacing:-.01em}
-.ss-gtin{font-size:9px;color:rgba(255,255,255,.15);margin-top:12px;
-  font-family:'SF Mono','Roboto Mono',monospace;letter-spacing:.05em}
-
+.ss-gtin{font-size:9px;color:rgba(255,255,255,.15);margin-top:12px;font-family:'SF Mono','Roboto Mono',monospace;letter-spacing:.05em}
 .ss-body{flex:1;overflow-y:auto;padding:1.5rem 1.5rem 1rem}
 .ss-q{font-size:18px;font-weight:500;color:var(--ink);letter-spacing:-.03em;margin-bottom:4px}
 .ss-qs{font-size:13px;color:var(--ink3);margin-bottom:1.25rem;line-height:1.55}
 .igrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1.25rem}
-.ibtn{padding:16px 14px;border-radius:var(--r-lg);border:1.5px solid var(--line2);
-  background:var(--bg);cursor:pointer;text-align:left;
-  display:flex;flex-direction:column;gap:7px;font-family:inherit;
-  transition:border-color .15s,transform .1s,background .15s;min-height:96px}
+.ibtn{padding:16px 14px;border-radius:var(--r-lg);border:1.5px solid var(--line2);background:var(--bg);cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:7px;font-family:inherit;transition:border-color .15s,transform .1s,background .15s;min-height:96px}
 .ibtn:active{transform:scale(.97);border-color:var(--green);background:var(--green-lt)}
 .ibtn-ic{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .ibtn-l{font-size:13px;font-weight:500;color:var(--ink);letter-spacing:-.01em;line-height:1.2}
 .ibtn-d{font-size:11px;color:var(--ink3);line-height:1.35}
-
-.ss-note{background:var(--green-lt);border:1px solid var(--green-bd);
-  border-radius:var(--r-md);padding:13px 14px;margin-bottom:1.25rem;
-  display:flex;gap:10px;align-items:flex-start}
-.ss-note-ic{width:28px;height:28px;border-radius:8px;background:var(--green);
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.ss-note{background:var(--green-lt);border:1px solid var(--green-bd);border-radius:var(--r-md);padding:13px 14px;margin-bottom:1.25rem;display:flex;gap:10px;align-items:flex-start}
+.ss-note-ic{width:28px;height:28px;border-radius:8px;background:var(--green);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
 .ss-note-t{font-size:12px;font-weight:500;color:var(--green-mid);margin-bottom:3px}
 .ss-note-b{font-size:11px;color:#2D6B4A;line-height:1.6}
-
-.ss-cta{display:block;width:100%;padding:17px;background:var(--green);border:none;cursor:pointer;
-  font-size:14px;font-weight:500;color:#fff;letter-spacing:-.01em;text-align:center;
-  flex-shrink:0;font-family:inherit;transition:background .15s}
+.ss-cta{display:block;width:100%;padding:17px;background:var(--green);border:none;cursor:pointer;font-size:14px;font-weight:500;color:#fff;letter-spacing:-.01em;text-align:center;flex-shrink:0;font-family:inherit;transition:background .15s}
 .ss-cta:active{background:#082E22}
 
 /* ── MAIN APP ── */
 .main-app{display:none;flex-direction:column;flex:1;min-height:0;overflow:hidden}
 .main-app.vis{display:flex}
 
-.vbar{display:flex;align-items:center;justify-content:space-between;
-  background:var(--green);padding:9px 1.25rem;flex-shrink:0}
+/* Verification bar with home button */
+.vbar{display:flex;align-items:center;justify-content:space-between;background:var(--green);padding:9px 1.25rem;flex-shrink:0}
 .vbar-l{display:flex;align-items:center;gap:7px}
-.vbar-p{width:7px;height:7px;border-radius:50%;background:#4DB380;
-  animation:pulse 2.5s ease-in-out infinite;flex-shrink:0}
+.vbar-p{width:7px;height:7px;border-radius:50%;background:#4DB380;animation:pulse 2.5s ease-in-out infinite;flex-shrink:0}
 .vbar-t{font-size:11px;color:rgba(255,255,255,.55);letter-spacing:.01em}
-.vbar-brand{font-size:10px;font-weight:500;color:rgba(255,255,255,.28);
-  letter-spacing:.1em;text-transform:uppercase}
+.vbar-brand{font-size:10px;font-weight:500;color:rgba(255,255,255,.28);letter-spacing:.1em;text-transform:uppercase}
+.vbar-home{width:30px;height:30px;border-radius:8px;background:rgba(255,255,255,.1);border:0.5px solid rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:background .15s;order:-1;margin-right:4px}
+.vbar-home:active{background:rgba(255,255,255,.2)}
 
 .panels{flex:1;min-height:0;overflow:hidden}
 .panel{display:none;overflow-y:auto;height:100%;scroll-behavior:smooth}
 .panel.active{display:block;animation:up .22s ease}
 
-/* ── BOTTOM NAV ── */
-.bnav{display:flex;border-top:1px solid var(--line);background:var(--white);
-  padding:8px 0 10px;flex-shrink:0}
-.nb{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;
-  padding:7px 4px 5px;border:none;background:none;cursor:pointer;
-  font-size:10px;font-weight:400;color:var(--ink4);line-height:1;
-  font-family:inherit;letter-spacing:.01em;transition:color .15s;min-width:44px}
+/* Bottom nav */
+.bnav{display:flex;border-top:1px solid var(--line);background:var(--white);padding:8px 0 10px;flex-shrink:0}
+.nb{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:7px 4px 5px;border:none;background:none;cursor:pointer;font-size:10px;font-weight:400;color:var(--ink4);line-height:1;font-family:inherit;letter-spacing:.01em;transition:color .15s;min-width:44px}
 .nb.on{color:var(--green);font-weight:500}
 .nb:active{opacity:.65}
 .nb svg{display:block;flex-shrink:0}
 .nbdot{width:4px;height:4px;border-radius:50%;background:var(--green);opacity:0;margin:0 auto}
 .nb.on .nbdot{opacity:1}
 
-/* ── SHARED ATOMS ── */
-.slbl{display:block;font-size:10px;font-weight:500;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--ink4);
-  padding:0 1.5rem;margin-top:1.75rem;margin-bottom:.85rem}
+/* Shared atoms */
+.slbl{display:block;font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:0 1.5rem;margin-top:1.75rem;margin-bottom:.85rem}
 .slbl:first-child{margin-top:1.5rem}
-
-/* Accordion */
 .acc{border-top:1px solid var(--line)}
-.acc-row{display:flex;align-items:center;justify-content:space-between;
-  padding:16px 1.5rem;cursor:pointer;gap:12px;min-height:52px;
-  transition:background .12s}
+.acc-row{display:flex;align-items:center;justify-content:space-between;padding:16px 1.5rem;cursor:pointer;gap:12px;min-height:52px;transition:background .12s}
 .acc-row:active{background:var(--bg)}
 .acc-l{flex:1;min-width:0}
 .acc-t{font-size:13px;font-weight:500;color:var(--ink);letter-spacing:-.01em}
 .acc-s{font-size:12px;color:var(--ink3);margin-top:2px}
-.acc-ch{width:20px;height:20px;border-radius:50%;background:var(--bg);
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;
-  font-size:9px;color:var(--ink4);transition:transform .25s;border:1px solid var(--line2)}
+.acc-ch{width:20px;height:20px;border-radius:50%;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:9px;color:var(--ink4);transition:transform .25s;border:1px solid var(--line2)}
 .acc-ch.open{transform:rotate(180deg)}
 .acc-body{display:none;padding:2px 1.5rem 16px;animation:up .2s ease}
 .acc-body.open{display:block}
-.kv{display:flex;justify-content:space-between;align-items:baseline;
-  padding:8px 0;border-bottom:1px solid var(--line);font-size:12px;gap:12px}
+.kv{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;border-bottom:1px solid var(--line);font-size:12px;gap:12px}
 .kv:last-child{border-bottom:none}
 .kk{color:var(--ink3);flex-shrink:0}
 .kv-v{font-weight:500;color:var(--ink);text-align:right}
 .kv-g{font-weight:500;color:var(--green-mid)}
 .bsp{height:1.5rem}
 
-/* ── OVERVIEW ── */
-.ov-hero{padding:1.75rem 1.5rem 1.25rem;display:flex;
-  align-items:flex-start;justify-content:space-between;gap:1rem}
-.ov-pname{font-size:26px;font-weight:500;color:var(--ink);
-  letter-spacing:-.03em;line-height:1.05;margin-bottom:5px}
+/* Care grid — now in Overview */
+.care-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:0 1.5rem;margin-bottom:.5rem}
+.care-card{display:flex;flex-direction:column;align-items:center;gap:6px;padding:13px 6px;border-radius:var(--r-sm);border:1px solid var(--line2);background:var(--bg)}
+.care-card.no{border-color:var(--red-bd);background:var(--red-lt)}
+.care-ic{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.care-lbl{font-size:10px;color:var(--ink2);text-align:center;line-height:1.3}
+.care-lbl.no{color:var(--red)}
+.care-note{font-size:11px;color:var(--ink4);padding:4px 1.5rem 0;line-height:1.6;margin-bottom:.25rem}
+
+/* Overview */
+.ov-hero{padding:1.75rem 1.5rem 1.25rem;display:flex;align-items:flex-start;justify-content:space-between;gap:1rem}
+.ov-pname{font-size:26px;font-weight:500;color:var(--ink);letter-spacing:-.03em;line-height:1.05;margin-bottom:5px}
 .ov-meta{font-size:13px;color:var(--ink3);letter-spacing:-.01em}
 .ov-ring-wrap{position:relative;width:76px;height:76px;flex-shrink:0}
-.ov-ring-c{position:absolute;inset:0;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;gap:1px}
+.ov-ring-c{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px}
 .ov-grade{font-size:20px;font-weight:500;color:var(--green);letter-spacing:-.02em;line-height:1}
 .ov-grade-s{font-size:8px;color:var(--ink4);letter-spacing:.1em}
-
-.ov-score{margin:0 1.5rem 1.5rem;background:var(--green-lt);
-  border:1px solid var(--green-bd);border-radius:var(--r-xl);padding:1.5rem}
+.ov-score{margin:0 1.5rem 1.5rem;background:var(--green-lt);border:1px solid var(--green-bd);border-radius:var(--r-xl);padding:1.5rem}
 .ov-score-row{display:flex;align-items:baseline;gap:4px}
-.ov-score-n{font-size:58px;font-weight:500;color:var(--green);
-  letter-spacing:-.06em;line-height:1;font-variant-numeric:tabular-nums}
+.ov-score-n{font-size:58px;font-weight:500;color:var(--green);letter-spacing:-.06em;line-height:1;font-variant-numeric:tabular-nums}
 .ov-score-d{font-size:22px;color:#4DB380;font-weight:400}
 .ov-score-lbl{font-size:12px;color:var(--green-mid);margin-top:5px}
-.ov-score-track{height:4px;background:rgba(0,0,0,.07);
-  border-radius:99px;overflow:hidden;margin-top:14px}
-.ov-score-fill{height:100%;border-radius:99px;background:#4DB380;width:78%;
-  transition:width 1s cubic-bezier(.4,0,.2,1)}
+.ov-score-track{height:4px;background:rgba(0,0,0,.07);border-radius:99px;overflow:hidden;margin-top:14px}
+.ov-score-fill{height:100%;border-radius:99px;background:#4DB380;width:78%}
 
-/* Certifications — horizontal scroll, touch-friendly */
-.cert-outer{position:relative}
-.cert-strip{
-  display:flex;gap:8px;
-  overflow-x:auto;overflow-y:visible;
-  padding:0 1.5rem 1rem;
-  scroll-padding:1.5rem;
-  -webkit-overflow-scrolling:touch;
-  overscroll-behavior-x:contain;
-  scrollbar-width:none;
-  cursor:grab
-}
+/* Cert strip */
+.cert-strip{display:flex;gap:8px;overflow-x:auto;padding:0 1.5rem 1rem;scroll-padding:1.5rem;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;scrollbar-width:none;cursor:grab}
 .cert-strip::-webkit-scrollbar{display:none}
 .cert-strip:active{cursor:grabbing}
-.cpill{flex-shrink:0;display:flex;align-items:center;gap:6px;
-  padding:8px 14px;border-radius:99px;
-  background:var(--white);border:1.5px solid var(--line2);
-  font-size:12px;font-weight:500;color:var(--ink2);
-  white-space:nowrap;
-  transition:border-color .15s,background .15s;
-  cursor:pointer;min-height:36px}
+.cpill{flex-shrink:0;display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:99px;background:var(--white);border:1.5px solid var(--line2);font-size:12px;font-weight:500;color:var(--ink2);white-space:nowrap;transition:border-color .15s,background .15s;cursor:pointer;min-height:36px}
 .cpill:active{background:var(--bg);border-color:var(--ink4)}
 .cpill-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 
-.comm-bar{margin:0 1.5rem 0;padding:13px 16px;
-  background:var(--bg);border-radius:var(--r-md);
-  display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink3)}
+.comm-bar{margin:0 1.5rem 0;padding:13px 16px;background:var(--bg);border-radius:var(--r-md);display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink3)}
 .comm-n{font-weight:500;color:var(--green-mid);font-size:13px}
 .comm-sep{width:3px;height:3px;border-radius:50%;background:var(--line2)}
 
-/* ── MADE (Materials + Journey) ── */
+/* Made */
 .fibre-hero{padding:1.5rem 1.5rem .5rem}
-.fibre-hl{font-size:14px;font-weight:500;color:var(--ink);
-  letter-spacing:-.02em;line-height:1.5;margin-bottom:14px}
+.fibre-hl{font-size:14px;font-weight:500;color:var(--ink);letter-spacing:-.02em;line-height:1.5;margin-bottom:14px}
 .fbar{display:flex;height:10px;border-radius:99px;overflow:hidden;gap:2px}
-.fseg{height:100%;border-radius:99px;transition:flex .4s}
+.fseg{height:100%;border-radius:99px}
 .flist{padding:0 1.5rem}
-.f-row{display:flex;align-items:center;gap:12px;
-  padding:14px 0;border-bottom:1px solid var(--line);
-  cursor:pointer;transition:opacity .15s;min-height:56px}
+.f-row{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--line);cursor:pointer;transition:opacity .15s;min-height:56px}
 .f-row:last-of-type{border-bottom:none}
 .f-row:active{opacity:.65}
 .f-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
 .f-info{flex:1;min-width:0}
 .f-name{font-size:14px;font-weight:500;color:var(--ink);letter-spacing:-.01em}
 .f-sub{font-size:11px;color:var(--ink3);margin-top:2px}
-.f-pct{font-size:24px;font-weight:500;color:var(--ink);
-  letter-spacing:-.03em;font-variant-numeric:tabular-nums;flex-shrink:0}
-.f-ch{width:20px;height:20px;border-radius:50%;background:var(--bg);
-  display:flex;align-items:center;justify-content:center;
-  font-size:9px;color:var(--ink4);transition:transform .25s;
-  flex-shrink:0;border:1px solid var(--line2)}
+.f-pct{font-size:24px;font-weight:500;color:var(--ink);letter-spacing:-.03em;font-variant-numeric:tabular-nums;flex-shrink:0}
+.f-ch{width:20px;height:20px;border-radius:50%;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--ink4);transition:transform .25s;flex-shrink:0;border:1px solid var(--line2)}
 .f-ch.open{transform:rotate(180deg)}
-.f-detail{display:none;padding:10px 22px 14px;
-  background:var(--bg);border-radius:var(--r-sm);margin-bottom:4px}
+.f-detail{display:none;padding:10px 22px 14px;background:var(--bg);border-radius:var(--r-sm);margin-bottom:4px}
 .f-detail.open{display:block;animation:up .2s ease}
 .f-detail-txt{font-size:12px;color:var(--ink2);line-height:1.7}
-.f-origin{font-size:11px;color:var(--ink3);margin-top:4px;
-  display:flex;align-items:center;gap:4px}
-.f-cert-tag{font-size:10px;font-weight:500;color:var(--green-mid);
-  background:var(--green-lt);border:1px solid var(--green-bd);
-  border-radius:99px;padding:2px 8px;display:inline-block;margin-top:6px}
 
-/* Journey timeline */
+/* Journey */
 .jlist{padding:0 1.5rem}
 .j-item{display:flex;gap:14px}
 .j-l{display:flex;flex-direction:column;align-items:center;width:20px;flex-shrink:0}
-.j-dot{width:10px;height:10px;border-radius:50%;background:var(--green);
-  flex-shrink:0;margin-top:5px;box-shadow:0 0 0 3px var(--green-lt)}
+.j-dot{width:10px;height:10px;border-radius:50%;background:var(--green);flex-shrink:0;margin-top:5px;box-shadow:0 0 0 3px var(--green-lt)}
 .j-line{flex:1;width:1.5px;background:var(--line2);margin:4px 0;min-height:14px}
-.j-r{flex:1;padding-bottom:18px;cursor:pointer;min-height:52px;
-  transition:opacity .15s}
+.j-r{flex:1;padding-bottom:18px;cursor:pointer;min-height:52px;transition:opacity .15s}
 .j-r:active{opacity:.65}
 .j-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
 .j-stage{font-size:13px;font-weight:500;color:var(--ink);letter-spacing:-.01em}
 .j-loc{font-size:11px;color:var(--ink3);margin-top:2px}
-.j-cert{font-size:10px;font-weight:500;color:var(--green-mid);
-  background:var(--green-lt);border:1px solid var(--green-bd);
-  border-radius:99px;padding:3px 9px;white-space:nowrap;flex-shrink:0}
-.j-ch{width:18px;height:18px;border-radius:50%;background:var(--bg);
-  display:flex;align-items:center;justify-content:center;
-  font-size:8px;color:var(--ink4);transition:transform .25s;
-  flex-shrink:0;margin-top:2px;border:1px solid var(--line2)}
+.j-cert{font-size:10px;font-weight:500;color:var(--green-mid);background:var(--green-lt);border:1px solid var(--green-bd);border-radius:99px;padding:3px 9px;white-space:nowrap;flex-shrink:0}
+.j-ch{width:18px;height:18px;border-radius:50%;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:8px;color:var(--ink4);transition:transform .25s;flex-shrink:0;margin-top:2px;border:1px solid var(--line2)}
 .j-ch.open{transform:rotate(180deg)}
-.j-detail{display:none;margin-top:10px;padding:12px 14px;
-  background:var(--bg);border-radius:var(--r-sm)}
+.j-detail{display:none;margin-top:10px;padding:12px 14px;background:var(--bg);border-radius:var(--r-sm)}
 .j-detail.open{display:block;animation:up .2s ease}
 .j-company{font-size:12px;font-weight:500;color:var(--ink);margin-bottom:5px}
 .j-desc{font-size:11px;color:var(--ink2);line-height:1.65}
 
-.w-row{display:flex;align-items:flex-start;gap:10px;
-  padding:10px 1.5rem;font-size:13px;color:var(--ink);line-height:1.45}
-.w-chk{width:20px;height:20px;border-radius:50%;background:var(--green-lt);
-  border:1.5px solid var(--green-bd);display:flex;align-items:center;
-  justify-content:center;flex-shrink:0;margin-top:1px}
+.w-row{display:flex;align-items:flex-start;gap:10px;padding:10px 1.5rem;font-size:13px;color:var(--ink);line-height:1.45}
+.w-chk{width:20px;height:20px;border-radius:50%;background:var(--green-lt);border:1.5px solid var(--green-bd);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
 
-/* ── IMPACT ── */
-.stat-block{margin:0 1.5rem .25rem;border-radius:var(--r-xl);
-  padding:1.5rem 1.75rem;border:1px solid var(--line2);background:var(--bg)}
-.stat-n{font-size:64px;font-weight:500;line-height:1;
-  letter-spacing:-.06em;font-variant-numeric:tabular-nums}
+/* Impact */
+.stat-block{margin:0 1.5rem .25rem;border-radius:var(--r-xl);padding:1.5rem 1.75rem;border:1px solid var(--line2);background:var(--bg)}
+.stat-n{font-size:64px;font-weight:500;line-height:1;letter-spacing:-.06em;font-variant-numeric:tabular-nums}
 .stat-u{font-size:18px;font-weight:400}
 .stat-lbl{font-size:13px;color:var(--ink3);margin-top:5px}
-.stat-delta{display:inline-flex;align-items:center;gap:5px;
-  margin-top:14px;border-radius:99px;padding:5px 14px;
-  font-size:12px;font-weight:500}
-.grade-band{margin:0 1.5rem .25rem;display:flex;align-items:center;gap:14px;
-  padding:16px 18px;border-radius:var(--r-lg);
-  background:var(--green-lt);border:1px solid var(--green-bd)}
-.grade-c{width:54px;height:54px;border-radius:50%;background:var(--green);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0}
+.stat-scope{font-size:11px;color:var(--ink4);margin-top:4px;line-height:1.45}
+.stat-delta{display:inline-flex;align-items:center;gap:5px;margin-top:14px;border-radius:99px;padding:5px 14px;font-size:12px;font-weight:500}
+.grade-band{margin:0 1.5rem .25rem;display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:var(--r-lg);background:var(--green-lt);border:1px solid var(--green-bd)}
+.grade-c{width:54px;height:54px;border-radius:50%;background:var(--green);display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0}
 .grade-l{font-size:20px;font-weight:500;color:#fff;letter-spacing:-.02em;line-height:1}
 .grade-ss{font-size:8px;color:rgba(255,255,255,.4);letter-spacing:.09em;margin-top:2px}
 .grade-tit{font-size:13px;font-weight:500;color:var(--green);margin-bottom:4px;letter-spacing:-.01em}
 .grade-desc{font-size:12px;color:var(--green-mid);line-height:1.55}
 
-/* ── EOL ── */
-.care-grid{display:grid;grid-template-columns:repeat(4,1fr);
-  gap:8px;padding:0 1.5rem;margin-bottom:.5rem}
-.care-card{display:flex;flex-direction:column;align-items:center;gap:6px;
-  padding:13px 6px;border-radius:var(--r-sm);
-  border:1px solid var(--line2);background:var(--bg);
-  transition:border-color .15s;cursor:default}
-.care-card.no{border-color:var(--red-bd);background:var(--red-lt)}
-.care-ic{width:38px;height:38px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center}
-.care-lbl{font-size:10px;color:var(--ink2);text-align:center;
-  line-height:1.3;font-weight:400}
-.care-lbl.no{color:var(--red)}
-
+/* EOL */
 .eol-list{padding:0 1.5rem}
-.eol-row{display:flex;align-items:center;gap:14px;
-  padding:14px 0;border-bottom:1px solid var(--line);
-  cursor:pointer;transition:opacity .15s;min-height:60px}
+.eol-row{border-bottom:1px solid var(--line);cursor:pointer}
 .eol-row:last-child{border-bottom:none}
-.eol-row:active{opacity:.65}
-.eol-ic{width:44px;height:44px;border-radius:14px;
-  display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.eol-t{font-size:14px;font-weight:500;color:var(--ink);
-  letter-spacing:-.01em;margin-bottom:3px}
+.eol-top{display:flex;align-items:center;gap:14px;padding:14px 0;min-height:60px;transition:opacity .15s}
+.eol-top:active{opacity:.65}
+.eol-ic{width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.eol-t{font-size:14px;font-weight:500;color:var(--ink);letter-spacing:-.01em;margin-bottom:3px}
 .eol-d{font-size:12px;color:var(--ink3);line-height:1.4}
-.eol-arr{margin-left:auto;font-size:20px;color:var(--ink4);flex-shrink:0;line-height:1}
+.eol-arr{margin-left:auto;font-size:20px;color:var(--ink4);flex-shrink:0;line-height:1;transition:transform .25s}
+.eol-arr.open{transform:rotate(90deg)}
+.eol-detail{display:none;padding:0 0 14px 58px}
+.eol-detail.open{display:block;animation:up .2s ease}
+.eol-detail-txt{font-size:12px;color:var(--ink2);line-height:1.65;padding:10px 14px;background:var(--bg);border-radius:var(--r-sm)}
 
-.takeback-btn{display:block;margin:1rem 1.5rem;
-  background:var(--green);color:#fff;border:none;cursor:pointer;
-  border-radius:var(--r-md);padding:17px;
-  font-size:14px;font-weight:500;letter-spacing:-.01em;
-  text-align:center;width:calc(100% - 3rem);font-family:inherit;
-  transition:background .15s,transform .1s}
+.takeback-btn{display:block;margin:1rem 1.5rem;background:var(--green);color:#fff;border:none;cursor:pointer;border-radius:var(--r-md);padding:17px;font-size:14px;font-weight:500;letter-spacing:-.01em;text-align:center;width:calc(100% - 3rem);font-family:inherit;transition:background .15s,transform .1s}
 .takeback-btn:active{background:#082E22;transform:scale(.98)}
 .takeback-btn.done{background:var(--green-mid)}
 
@@ -324,80 +228,54 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
 .log-wrap{padding:0 1.5rem}
 .log-s{font-size:12px;color:var(--ink3);margin-bottom:12px;line-height:1.55}
 .log-pills{display:flex;flex-wrap:wrap;gap:8px}
-.lpill{padding:10px 16px;border-radius:99px;
-  border:1.5px solid var(--line2);background:var(--bg);
-  font-size:12px;font-weight:500;color:var(--ink2);
-  cursor:pointer;font-family:inherit;
-  transition:border-color .15s,background .15s,color .15s,transform .1s;
-  min-height:40px}
+.lpill{padding:10px 16px;border-radius:99px;border:1.5px solid var(--line2);background:var(--bg);font-size:12px;font-weight:500;color:var(--ink2);cursor:pointer;font-family:inherit;transition:border-color .15s,background .15s,color .15s,transform .1s;min-height:40px}
 .lpill:active{transform:scale(.96)}
-.lpill.sel{background:var(--green);border-color:var(--green);color:#fff;
-  animation:pop .25s ease}
+.lpill.sel{background:var(--green);border-color:var(--green);color:#fff;animation:pop .25s ease}
 .lpill.lf{border-style:dashed;color:var(--ink4)}
 .lpill.lf.sel{background:#8A6B1E;border-color:#8A6B1E;color:#fff;border-style:solid}
-
-.log-result{display:none;margin-top:12px;padding:16px;
-  background:var(--green-lt);border:1px solid var(--green-bd);border-radius:var(--r-md)}
+.log-result{display:none;margin-top:12px;padding:16px;background:var(--green-lt);border:1px solid var(--green-bd);border-radius:var(--r-md)}
 .log-result.warn{background:var(--amber-lt);border-color:var(--amber-bd)}
 .log-result.show{display:block;animation:up .25s ease}
-.log-rn{font-size:30px;font-weight:500;color:var(--green);
-  letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.log-rn{font-size:30px;font-weight:500;color:var(--green);letter-spacing:-.04em;font-variant-numeric:tabular-nums}
 .log-result.warn .log-rn{color:var(--amber)}
 .log-ru{font-size:13px;color:var(--green-mid)}
 .log-result.warn .log-ru{color:var(--amber)}
 .log-req{font-size:12px;color:var(--green-mid);margin-top:4px;line-height:1.45}
 .log-result.warn .log-req{color:var(--amber)}
-.log-change{font-size:11px;color:var(--ink4);margin-top:12px;
-  cursor:pointer;display:inline-flex;align-items:center;gap:4px;
-  border:none;background:none;font-family:inherit;padding:0;text-decoration:underline}
+.log-change{font-size:11px;color:var(--ink4);margin-top:12px;cursor:pointer;display:inline-flex;align-items:center;gap:4px;border:none;background:none;font-family:inherit;padding:0;text-decoration:underline}
 
-/* Star rating */
+/* Stars */
+.star-transition{padding:1.5rem 1.5rem .5rem}
+.star-lead{font-size:13px;color:var(--ink2);line-height:1.55}
 .star-section{padding:0 1.5rem}
-.star-row{display:flex;align-items:center;justify-content:space-between;
-  padding:12px 0;border-bottom:1px solid var(--line);min-height:48px}
+.star-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line);min-height:48px}
 .star-row:last-child{border-bottom:none}
-.star-lbl{font-size:13px;color:var(--ink);font-weight:400}
+.star-lbl{font-size:13px;color:var(--ink)}
 .stars-g{display:flex;gap:5px}
-.star-btn{cursor:pointer;width:28px;height:28px;
-  display:flex;align-items:center;justify-content:center;
-  transition:transform .12s;flex-shrink:0}
+.star-btn{cursor:pointer;width:28px;height:28px;display:flex;align-items:center;justify-content:center;transition:transform .12s;flex-shrink:0;background:none;border:none;padding:0}
 .star-btn:active{transform:scale(1.25)}
 
 /* Feedback */
 .fb-acc{border-top:1px solid var(--line)}
-.fb-head{display:flex;align-items:center;justify-content:space-between;
-  padding:16px 1.5rem;cursor:pointer;min-height:52px;transition:background .12s}
+.fb-head{display:flex;align-items:center;justify-content:space-between;padding:16px 1.5rem;cursor:pointer;min-height:52px;transition:background .12s}
 .fb-head:active{background:var(--bg)}
 .fb-hl{font-size:13px;font-weight:500;color:var(--ink);letter-spacing:-.01em}
-.fb-hch{width:20px;height:20px;border-radius:50%;background:var(--bg);
-  display:flex;align-items:center;justify-content:center;
-  font-size:9px;color:var(--ink4);transition:transform .25s;border:1px solid var(--line2)}
+.fb-hch{width:20px;height:20px;border-radius:50%;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--ink4);transition:transform .25s;border:1px solid var(--line2)}
 .fb-hch.open{transform:rotate(180deg)}
 .fb-bd{display:none;padding:0 1.5rem 1.5rem}
 .fb-bd.open{display:block;animation:up .2s ease}
-.fb-ta{width:100%;border:1.5px solid var(--line2);border-radius:var(--r-md);
-  padding:13px 14px;font-size:13px;color:var(--ink);
-  background:var(--bg);resize:none;font-family:inherit;
-  line-height:1.55;margin-bottom:10px;min-height:100px}
+.fb-ta{width:100%;border:1.5px solid var(--line2);border-radius:var(--r-md);padding:13px 14px;font-size:13px;color:var(--ink);background:var(--bg);resize:none;font-family:inherit;line-height:1.55;margin-bottom:10px;min-height:100px}
 .fb-ta:focus{outline:none;border-color:var(--green)}
 .fb-count{font-size:10px;color:var(--ink4);text-align:right;margin:-6px 0 10px}
-.fb-arow{display:flex;align-items:center;justify-content:space-between;
-  margin-bottom:12px;font-size:13px;color:var(--ink2)}
-.ftoggle{width:42px;height:24px;border-radius:99px;background:var(--line2);
-  position:relative;cursor:pointer;transition:background .2s;flex-shrink:0}
+.fb-arow{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;font-size:13px;color:var(--ink2)}
+.ftoggle{width:42px;height:24px;border-radius:99px;background:var(--line2);position:relative;cursor:pointer;transition:background .2s;flex-shrink:0}
 .ftoggle.on{background:var(--green)}
-.ftoggle::after{content:'';position:absolute;top:3px;left:3px;
-  width:18px;height:18px;border-radius:50%;background:#fff;
-  transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.ftoggle::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
 .ftoggle.on::after{transform:translateX(18px)}
-.fb-submit{width:100%;padding:15px;border-radius:var(--r-md);border:none;
-  background:var(--ink);color:#fff;font-size:14px;font-weight:500;
-  cursor:pointer;font-family:inherit;letter-spacing:-.01em;
-  transition:background .15s,transform .1s}
+.fb-submit{width:100%;padding:15px;border-radius:var(--r-md);border:none;background:var(--ink);color:#fff;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit;letter-spacing:-.01em;transition:background .15s,transform .1s}
 .fb-submit:active{background:#333;transform:scale(.99)}
 .fb-submit:disabled{background:var(--line2);color:var(--ink4);cursor:default;transform:none}
-.fb-ok{display:none;font-size:13px;color:var(--green-mid);
-  text-align:center;padding:12px 0;line-height:1.5}
+.fb-ok{display:none;font-size:13px;color:var(--green-mid);text-align:center;padding:12px 0;line-height:1.5}
 .fb-ok.show{display:block;animation:up .3s ease}
 </style>
 </head>
@@ -420,38 +298,28 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
     <div class="ss-qs">We'll take you straight to what you need.</div>
     <div class="igrid">
       <button class="ibtn" onclick="enterApp('overview')">
-        <div class="ibtn-ic" style="background:#EEF7F2">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#1A5C42" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="5.5"/><path d="M8 5.5V8l1.5 1.5"/></svg>
-        </div>
+        <div class="ibtn-ic" style="background:#EEF7F2"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#1A5C42" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="5.5"/><path d="M8 5.5V8l1.5 1.5"/></svg></div>
         <div class="ibtn-l">Thinking of buying</div>
         <div class="ibtn-d">Sustainability and certifications</div>
       </button>
-      <button class="ibtn" onclick="enterApp('made')">
-        <div class="ibtn-ic" style="background:#EEF3FB">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#1E5A8E" stroke-width="1.5" stroke-linecap="round"><path d="M3 5h10M3 8h6M3 11h8"/></svg>
-        </div>
+      <button class="ibtn" onclick="enterApp('overview')">
+        <div class="ibtn-ic" style="background:#EEF3FB"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#1E5A8E" stroke-width="1.5" stroke-linecap="round"><path d="M3 5h10M3 8h6M3 11h8"/></svg></div>
         <div class="ibtn-l">Just bought it</div>
-        <div class="ibtn-d">Materials and care guide</div>
+        <div class="ibtn-d">Care guide and what's in it</div>
       </button>
       <button class="ibtn" onclick="enterApp('eol')">
-        <div class="ibtn-ic" style="background:#FDF4E3">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#8A6B1E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8a4 4 0 01-4 4H5M4 8a4 4 0 014-4h3"/><path d="M5 11l-2.5 1 .5-2.5M11 2l2.5 1-.5 2.5"/></svg>
-        </div>
+        <div class="ibtn-ic" style="background:#FDF4E3"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#8A6B1E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8a4 4 0 01-4 4H5M4 8a4 4 0 014-4h3"/><path d="M5 11l-2.5 1 .5-2.5M11 2l2.5 1-.5 2.5"/></svg></div>
         <div class="ibtn-l">Done with it</div>
         <div class="ibtn-d">Recycle, donate or repair</div>
       </button>
       <button class="ibtn" onclick="enterApp('impact')">
-        <div class="ibtn-ic" style="background:#EEF3FB">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#1E5A8E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12L6 7l3 3 5-7"/></svg>
-        </div>
+        <div class="ibtn-ic" style="background:#EEF3FB"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#1E5A8E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12L6 7l3 3 5-7"/></svg></div>
         <div class="ibtn-l">Environmental impact</div>
         <div class="ibtn-d">Carbon, water, benchmarks</div>
       </button>
     </div>
     <div class="ss-note">
-      <div class="ss-note-ic">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="rgba(255,255,255,.8)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="1.5" width="10" height="11" rx="2"/><path d="M5 5.5h4M5 8h3"/></svg>
-      </div>
+      <div class="ss-note-ic"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="rgba(255,255,255,.8)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="1.5" width="10" height="11" rx="2"/><path d="M5 5.5h4M5 8h3"/></svg></div>
       <div>
         <div class="ss-note-t">What is a Digital Product Passport?</div>
         <div class="ss-note-b">A verified, independently audited record of this garment's materials, origins, environmental footprint, and end-of-life options. Issued by Terranova World and verified by GS1 Australia.</div>
@@ -464,6 +332,12 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
 <!-- ══ MAIN APP ══ -->
 <div class="main-app" id="main-app">
   <div class="vbar">
+    <!-- Home button — returns to scan entry screen -->
+    <div class="vbar-home" onclick="goHome()" title="Back to entry screen">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="rgba(255,255,255,.75)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2 6.5L7 2l5 4.5V12a.5.5 0 01-.5.5H9V9H5v3.5H2.5A.5.5 0 012 12V6.5z"/>
+      </svg>
+    </div>
     <div class="vbar-l">
       <div class="vbar-p"></div>
       <span class="vbar-t">Scan confirmed · GS1 verified</span>
@@ -473,7 +347,7 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
 
   <div class="panels">
 
-    <!-- ─ OVERVIEW ─ -->
+    <!-- ── OVERVIEW ── -->
     <div class="panel active" id="pan-overview">
       <div class="ov-hero">
         <div>
@@ -483,25 +357,41 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
         <div class="ov-ring-wrap">
           <svg width="76" height="76" viewBox="0 0 76 76">
             <circle cx="38" cy="38" r="31" fill="none" stroke="#E8E8E8" stroke-width="5.5"/>
-            <circle cx="38" cy="38" r="31" fill="none" stroke="#4DB380" stroke-width="5.5"
-              stroke-linecap="round" stroke-dasharray="194.8" stroke-dashoffset="42.9"
-              transform="rotate(-90 38 38)"/>
+            <circle cx="38" cy="38" r="31" fill="none" stroke="#4DB380" stroke-width="5.5" stroke-linecap="round" stroke-dasharray="194.8" stroke-dashoffset="42.9" transform="rotate(-90 38 38)"/>
           </svg>
-          <div class="ov-ring-c">
-            <div class="ov-grade">B+</div>
-            <div class="ov-grade-s">GRADE</div>
-          </div>
+          <div class="ov-ring-c"><div class="ov-grade">B+</div><div class="ov-grade-s">GRADE</div></div>
         </div>
       </div>
 
       <div class="ov-score">
-        <div class="ov-score-row">
-          <span class="ov-score-n">78</span><span class="ov-score-d">/100</span>
-        </div>
+        <div class="ov-score-row"><span class="ov-score-n">78</span><span class="ov-score-d">/100</span></div>
         <div class="ov-score-lbl">Better than 73% of similar garments</div>
         <div class="ov-score-track"><div class="ov-score-fill"></div></div>
       </div>
 
+      <!-- Care instructions — first content after score, above certifications -->
+      <span class="slbl">Care instructions</span>
+      <div class="care-grid">
+        <div class="care-card">
+          <div class="care-ic" style="background:#EEF7F2"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#1A5C42" stroke-width="1.5" stroke-linecap="round"><path d="M4 8h12M4 8a6 6 0 0012 0"/><path d="M10 3v2"/></svg></div>
+          <div class="care-lbl">30°C cold wash</div>
+        </div>
+        <div class="care-card">
+          <div class="care-ic" style="background:#EEF7F2"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#1A5C42" stroke-width="1.5" stroke-linecap="round"><path d="M6 10a4 4 0 008 0V6H6v4z"/></svg></div>
+          <div class="care-lbl">Gentle cycle</div>
+        </div>
+        <div class="care-card">
+          <div class="care-ic" style="background:#EEF7F2"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#1A5C42" stroke-width="1.5" stroke-linecap="round"><path d="M10 15V7M6 11l4-4 4 4"/><path d="M5 16h10"/></svg></div>
+          <div class="care-lbl">Air dry flat</div>
+        </div>
+        <div class="care-card no">
+          <div class="care-ic" style="background:#FEE2E2"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#DC2626" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l10 10M15 5L5 15"/></svg></div>
+          <div class="care-lbl no">No bleach</div>
+        </div>
+      </div>
+      <div class="care-note">Cool iron max 110°C if needed. No dry cleaning.</div>
+
+      <!-- Certifications — below care instructions -->
       <span class="slbl">Certifications — swipe to see all</span>
       <div class="cert-strip" id="cert-strip">
         <div class="cpill"><div class="cpill-dot" style="background:#2D7A55"></div>GOTS · Organic</div>
@@ -518,17 +408,14 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
         <span>9.2t CO&#x2082; prevented together</span>
       </div>
 
-      <!-- Brand update -->
+      <!-- Brand commitment (was "Brand update") -->
       <div class="acc">
         <div class="acc-row" onclick="toggleAcc(this)">
-          <div class="acc-l">
-            <div class="acc-t">Brand update</div>
-            <div class="acc-s">Eliminating virgin elastane by 2026</div>
-          </div>
+          <div class="acc-l"><div class="acc-t">Brand commitment</div><div class="acc-s">Eliminating virgin elastane by 2026</div></div>
           <div class="acc-ch">&#9660;</div>
         </div>
         <div class="acc-body">
-          <div style="font-size:13px;font-weight:500;color:var(--ink);margin-bottom:7px;letter-spacing:-.01em">Eliminating virgin elastane across all products by 2026</div>
+          <div style="font-size:13px;font-weight:500;color:var(--ink);margin-bottom:7px;letter-spacing:-.01em">100% bio-based or recycled elastane across all products by 2026</div>
           <div style="font-size:12px;color:var(--ink2);line-height:1.65;margin-bottom:14px">We are trialling three bio-based and recycled elastane suppliers to replace the 100% virgin synthetics across our core range. The 5% elastane in this tee is currently virgin synthetic. Future versions will use certified alternatives.</div>
           <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--ink3);margin-bottom:6px"><span>Progress to goal</span><span style="font-weight:500;color:var(--ink)">40%</span></div>
           <div style="height:6px;background:var(--line2);border-radius:99px;overflow:hidden;margin-bottom:5px"><div style="height:100%;width:40%;background:var(--green);border-radius:99px"></div></div>
@@ -540,13 +427,9 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
         </div>
       </div>
 
-      <!-- Passport details -->
       <div class="acc">
         <div class="acc-row" onclick="toggleAcc(this)">
-          <div class="acc-l">
-            <div class="acc-t">Passport details</div>
-            <div class="acc-s">GS1 Digital Link · EPCIS 2.0 · GDSN</div>
-          </div>
+          <div class="acc-l"><div class="acc-t">Passport details</div><div class="acc-s">GS1 Digital Link · EPCIS 2.0 · GDSN</div></div>
           <div class="acc-ch">&#9660;</div>
         </div>
         <div class="acc-body">
@@ -560,7 +443,7 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
       <div class="bsp"></div>
     </div>
 
-    <!-- ─ MADE ─ -->
+    <!-- ── MADE ── -->
     <div class="panel" id="pan-made">
       <span class="slbl">Composition</span>
       <div class="fibre-hero">
@@ -573,13 +456,9 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
       </div>
       <div class="flist" id="flist"></div>
 
-      <!-- Dyes accordion -->
       <div class="acc">
         <div class="acc-row" onclick="toggleAcc(this)">
-          <div class="acc-l">
-            <div class="acc-t">Dyes and treatments</div>
-            <div class="acc-s">PFAS-free · No restricted substances</div>
-          </div>
+          <div class="acc-l"><div class="acc-t">Dyes and treatments</div><div class="acc-s">PFAS-free · No restricted substances</div></div>
           <div class="acc-ch">&#9660;</div>
         </div>
         <div class="acc-body">
@@ -592,10 +471,10 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
         </div>
       </div>
 
-      <span class="slbl">Production Journey</span>
+      <span class="slbl">Production journey</span>
       <div class="jlist" id="jlist"></div>
 
-      <span class="slbl">Worker Welfare</span>
+      <span class="slbl">Worker welfare</span>
       <div class="w-row"><div class="w-chk"><svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="#1A5C42" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Living wage paid to all production workers</span></div>
       <div class="w-row"><div class="w-chk"><svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="#1A5C42" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Safe and healthy working conditions verified</span></div>
       <div class="w-row"><div class="w-chk"><svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="#1A5C42" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>No child labour or forced labour</span></div>
@@ -605,9 +484,9 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
       <div class="bsp"></div>
     </div>
 
-    <!-- ─ IMPACT ─ -->
+    <!-- ── IMPACT ── -->
     <div class="panel" id="pan-impact">
-      <span class="slbl">Environmental Rating</span>
+      <span class="slbl">Environmental rating</span>
       <div class="grade-band">
         <div class="grade-c"><div class="grade-l">B+</div><div class="grade-ss">RATING</div></div>
         <div>
@@ -616,69 +495,44 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
         </div>
       </div>
 
-      <span class="slbl">Carbon Footprint</span>
+      <span class="slbl">Carbon footprint</span>
       <div class="stat-block">
         <div><span class="stat-n" style="color:#2D7A55">3.2</span><span class="stat-u" style="color:#4DB380"> kg CO&#x2082;e</span></div>
-        <div class="stat-lbl">Lifecycle carbon footprint per garment</div>
+        <div class="stat-lbl">Carbon footprint per garment</div>
+        <!-- Scope clarification per recommendation 8 -->
+        <div class="stat-scope">Production phase only — material extraction through to point of sale</div>
         <div class="stat-delta" style="background:#EEF7F2;color:#1A5C42">&#x2193; 62% below industry average</div>
       </div>
 
-      <span class="slbl">Water Usage</span>
+      <span class="slbl">Water usage</span>
       <div class="stat-block">
         <div><span class="stat-n" style="color:#1E5A8E">1,840</span><span class="stat-u" style="color:#2B6CB0"> L</span></div>
-        <div class="stat-lbl">Total water consumption per garment</div>
+        <div class="stat-lbl">Water consumption per garment</div>
+        <!-- Scope clarification per recommendation 8 -->
+        <div class="stat-scope">Production phase only — material extraction through to point of sale</div>
         <div class="stat-delta" style="background:#EEF3FB;color:#1E5A8E">&#x2193; 56% below industry average</div>
       </div>
 
       <div class="acc">
         <div class="acc-row" onclick="toggleAcc(this)">
-          <div class="acc-l">
-            <div class="acc-t">About this data</div>
-            <div class="acc-s">Methodology and benchmarks explained</div>
-          </div>
+          <div class="acc-l"><div class="acc-t">About this data</div><div class="acc-s">Methodology, scope and benchmarks</div></div>
           <div class="acc-ch">&#9660;</div>
         </div>
         <div class="acc-body">
-          <div style="font-size:12px;color:var(--ink2);line-height:1.75">Carbon benchmarks from the Higg Materials Sustainability Index. Water data calculated using the Water Footprint Network methodology. Compared against a conventional cotton t-shirt as the industry average. Lifecycle assessment conducted in alignment with ESPR requirements.</div>
+          <div style="font-size:12px;color:var(--ink2);line-height:1.75">
+            <strong style="color:var(--ink);font-weight:500">What is included:</strong> These figures cover the production lifecycle phase — specifically raw material extraction, processing, dyeing, manufacturing, and distribution to point of sale. This is known as a cradle-to-gate assessment.<br><br>
+            <strong style="color:var(--ink);font-weight:500">What is not included:</strong> Figures do not include emissions or water use from washing, drying, and ironing during the garment's use phase, nor from end-of-life disposal. Use-phase impacts can exceed production-phase impacts over a garment's lifetime.<br><br>
+            <strong style="color:var(--ink);font-weight:500">Data sources:</strong> Carbon benchmarks from the Higg Materials Sustainability Index. Water data from the Water Footprint Network. Industry average baseline is a conventional cotton t-shirt.
+          </div>
         </div>
       </div>
       <div class="bsp"></div>
     </div>
 
-    <!-- ─ END OF LIFE ─ -->
+    <!-- ── END OF LIFE ── -->
     <div class="panel" id="pan-eol">
-      <span class="slbl">Care Instructions</span>
-      <div class="care-grid">
-        <div class="care-card">
-          <div class="care-ic" style="background:#EEF7F2">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#1A5C42" stroke-width="1.5" stroke-linecap="round"><path d="M4 8h12M4 8a6 6 0 0012 0"/><path d="M10 3v2"/></svg>
-          </div>
-          <div class="care-lbl">30°C cold wash</div>
-        </div>
-        <div class="care-card">
-          <div class="care-ic" style="background:#EEF7F2">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#1A5C42" stroke-width="1.5" stroke-linecap="round"><path d="M6 10a4 4 0 008 0V6H6v4z"/></svg>
-          </div>
-          <div class="care-lbl">Gentle cycle</div>
-        </div>
-        <div class="care-card">
-          <div class="care-ic" style="background:#EEF7F2">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#1A5C42" stroke-width="1.5" stroke-linecap="round"><path d="M10 15V7M6 11l4-4 4 4"/><path d="M5 16h10"/></svg>
-          </div>
-          <div class="care-lbl">Air dry flat</div>
-        </div>
-        <div class="care-card no">
-          <div class="care-ic" style="background:#FEE2E2">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#DC2626" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l10 10M15 5L5 15"/></svg>
-          </div>
-          <div class="care-lbl no">No bleach</div>
-        </div>
-      </div>
-      <div style="font-size:11px;color:var(--ink4);padding:4px 1.5rem 4px;line-height:1.6">Cool iron max 110°C if needed. No dry cleaning.</div>
-
-      <span class="slbl">When you're done with it</span>
+      <span class="slbl">End-of-life options</span>
       <div class="eol-list" id="eollist"></div>
-
       <button class="takeback-btn" id="tb-btn" onclick="bookTakeback(this)">Book free in-store take-back &rarr;</button>
 
       <span class="slbl">Record your action</span>
@@ -701,6 +555,10 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
         </div>
       </div>
 
+      <!-- Transitional label before star ratings — per recommendation 6 -->
+      <div class="star-transition" id="star-lead-wrap" style="display:none">
+        <div class="star-lead">Based on your experience owning this garment, how would you rate it?</div>
+      </div>
       <span class="slbl" id="rate-lbl" style="display:none">Rate this garment</span>
       <div class="star-section" id="star-section" style="display:none"></div>
 
@@ -714,10 +572,7 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
             placeholder="What worked well, what could be better, or any concerns about the sustainability claims..."
             oninput="updateCount(this)"></textarea>
           <div class="fb-count" id="fb-count">0 / 500</div>
-          <div class="fb-arow">
-            <span>Submit anonymously</span>
-            <div class="ftoggle" onclick="this.classList.toggle('on')"></div>
-          </div>
+          <div class="fb-arow"><span>Submit anonymously</span><div class="ftoggle" onclick="this.classList.toggle('on')"></div></div>
           <button class="fb-submit" id="fb-submit" onclick="sendFb()" disabled>Send feedback &rarr;</button>
           <div class="fb-ok" id="fb-ok">
             <svg width="20" height="20" viewBox="0 0 20 20" style="display:inline-block;vertical-align:middle;margin-right:5px"><circle cx="10" cy="10" r="9" fill="#EEF7F2" stroke="#A8D5BC" stroke-width="1"/><path d="M6 10l3 3 5-5" stroke="#1A5C42" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -728,9 +583,9 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
       <div class="bsp"></div>
     </div>
 
-  </div><!-- /panels -->
+  </div>
 
-  <!-- ── BOTTOM NAV ── -->
+  <!-- Bottom nav -->
   <div class="bnav">
     <button class="nb on" data-p="overview" onclick="switchNav(this)">
       <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="12" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="12" width="7" height="7" rx="1.5"/><rect x="12" y="12" width="7" height="7" rx="1.5"/></svg>
@@ -749,8 +604,8 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
       <span>End of Life</span><div class="nbdot"></div>
     </button>
   </div>
+</div>
 
-</div><!-- /main-app -->
 </div></div>
 
 <script>
@@ -760,46 +615,46 @@ function enterApp(t){
   document.getElementById('main-app').classList.add('vis');
   switchPanel(t);syncNav(t);
 }
+function goHome(){
+  document.getElementById('scan-screen').style.display='';
+  document.getElementById('main-app').classList.remove('vis');
+  document.querySelectorAll('.panel').forEach(p=>{p.scrollTop=0;});
+}
 function switchNav(btn){
   document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');
   switchPanel(btn.dataset.p);
 }
 function switchPanel(p){
-  document.querySelectorAll('.panel').forEach(x=>{
-    x.classList.remove('active');
-    x.scrollTop=0;
-  });
+  document.querySelectorAll('.panel').forEach(x=>{x.classList.remove('active');x.scrollTop=0;});
   document.getElementById('pan-'+p).classList.add('active');
 }
 function syncNav(p){
   document.querySelectorAll('.nb').forEach(b=>b.classList.toggle('on',b.dataset.p===p));
 }
-
-// ── Accordion ──
 function toggleAcc(row){
   const b=row.nextElementSibling,c=row.querySelector('.acc-ch');
   b.classList.toggle('open');c.classList.toggle('open');
 }
 
-// ── Cert strip: drag-to-scroll on desktop ──
+// Cert strip drag-to-scroll
 (function(){
   const el=document.getElementById('cert-strip');
   let isDown=false,sx=0,sl=0;
-  el.addEventListener('mousedown',e=>{isDown=true;el.classList.add('active');sx=e.pageX-el.offsetLeft;sl=el.scrollLeft;});
+  el.addEventListener('mousedown',e=>{isDown=true;sx=e.pageX-el.offsetLeft;sl=el.scrollLeft;});
   el.addEventListener('mouseleave',()=>{isDown=false;});
   el.addEventListener('mouseup',()=>{isDown=false;});
   el.addEventListener('mousemove',e=>{if(!isDown)return;e.preventDefault();const x=e.pageX-el.offsetLeft;el.scrollLeft=sl-(x-sx)*1.2;});
 })();
 
-// ── Fibres ──
+// Fibres
 const fibres=[
   {name:'Organic Cotton',pct:60,origin:'Maharashtra, India',cert:'GOTS Certified',color:'#2D7A55',
    detail:'GOTS-certified organic cotton grown without synthetic pesticides or fertilisers. Sourced from a fair-trade cooperative of 2,400 smallholder farmers. Annual crop and chain-of-custody audits by Control Union Certifications.'},
   {name:'Recycled Polyester',pct:35,origin:'Taiwan',cert:'GRS Certified',color:'#2B6CB0',
    detail:'Produced from post-consumer PET plastic bottles. GRS certified. Reduces reliance on virgin petrochemicals by approximately 59% and diverts plastic waste from landfill.'},
   {name:'Elastane',pct:5,origin:'Germany',cert:'OEKO-TEX 100',color:'#B8860B',
-   detail:'Provides shape retention and stretch. Synthetically produced with no animal derivatives. OEKO-TEX STANDARD 100 certified against 100+ harmful substances. Subject to brand transition pledge in Overview.'},
+   detail:'Provides shape retention and stretch. Synthetically produced with no animal derivatives. OEKO-TEX STANDARD 100 certified against 100+ harmful substances. Subject to the brand commitment in the Overview tab — future versions will use bio-based or recycled alternatives.'},
 ];
 const fl=document.getElementById('flist');
 fibres.forEach(f=>{
@@ -809,11 +664,10 @@ fibres.forEach(f=>{
   const det=document.createElement('div');det.className='f-detail';
   det.innerHTML=`<div class="f-detail-txt">${f.detail}</div>`;
   row.onclick=()=>{det.classList.toggle('open');row.querySelector('.f-ch').classList.toggle('open');};
-  wrap.appendChild(row);wrap.appendChild(det);
-  fl.appendChild(wrap);
+  wrap.appendChild(row);wrap.appendChild(det);fl.appendChild(wrap);
 });
 
-// ── Journey ──
+// Journey
 const jd=[
   {s:'Raw Material',l:'Maharashtra, India',d:'Aug 2024',c:'GOTS',co:'Chetna Organic Farms',desc:'Organic cotton grown without synthetic pesticides. Fair-trade cooperative of 2,400 smallholder farmers. Annual crop and chain-of-custody audits by Control Union Certifications.'},
   {s:'Spinning and Weaving',l:'Gujarat, India',d:'Sep 2024',c:'OCS',co:'Arvind Mills Ltd.',desc:'Ring-spun yarn for superior durability. Closed-loop water recycling reduces freshwater consumption by 60%. ISO 14001:2015 certified.'},
@@ -828,29 +682,47 @@ jd.forEach((j,i)=>{
   it.innerHTML=`<div class="j-l"><div class="j-dot"></div>${!last?'<div class="j-line"></div>':''}</div><div class="j-r" onclick="tJ(this)"><div class="j-top"><div><div class="j-stage">${j.s}</div><div class="j-loc">${j.l} · ${j.d}</div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px"><span class="j-cert">${j.c}</span><div class="j-ch">&#9660;</div></div></div><div class="j-detail"><div class="j-company">${j.co}</div><div class="j-desc">${j.desc}</div></div></div>`;
   jl.appendChild(it);
 });
-function tJ(el){
-  const d=el.querySelector('.j-detail'),c=el.querySelector('.j-ch');
-  d.classList.toggle('open');c.classList.toggle('open');
-}
+function tJ(el){const d=el.querySelector('.j-detail'),c=el.querySelector('.j-ch');d.classList.toggle('open');c.classList.toggle('open');}
 
-// ── EOL actions ──
+// EOL action rows — now expandable with detail cards
 const eols=[
-  {a:'RS',bg:'#EEF7F2',ic:'#1A5C42',t:'Resell',d:'Good condition for resale. Depop, Vestiaire Collective, or Facebook Marketplace. Extends life by an average of 2.2 years.'},
-  {a:'DN',bg:'#EEF3FB',ic:'#1E5A8E',t:'Donate',d:'1,200+ Seamless collection points across Australia. All conditions accepted.'},
-  {a:'RP',bg:'#FDF4E3',ic:'#8A6B1E',t:'Repair',d:'Rated Easy to repair. Seam, hem, snags. Full guide at terranovaworld.com/repair'},
-  {a:'RC',bg:'#EEF7F2',ic:'#0B3D2E',t:'Recycle',d:'Free in-store take-back. Certified textile-to-textile recycling. Receive 10% off your next purchase.'},
+  {a:'RS',bg:'#EEF7F2',ic:'#1A5C42',t:'Resell',
+   d:'Still in good condition.',
+   detail:'List on Depop, Vestiaire Collective or Facebook Marketplace. Reselling extends the garment\'s life by an average of 2.2 years and keeps it out of landfill. Tip: photograph in natural light for best results.'},
+  {a:'DN',bg:'#EEF3FB',ic:'#1E5A8E',t:'Donate',
+   d:'Any condition accepted.',
+   detail:'Drop off at 1,200+ Seamless collection points across Australia. All conditions accepted — worn or damaged garments are redirected to textile recycling. Find your nearest collection point at seamlessaustralia.com'},
+  {a:'RP',bg:'#FDF4E3',ic:'#8A6B1E',t:'Repair',
+   d:'Rated Easy to repair.',
+   detail:'Common repairs: seam reinforcement, hem fraying, minor snags. All can be done at home or by a local tailor. Full step-by-step repair guide available at terranovaworld.com/repair — free to download.'},
+  {a:'RC',bg:'#EEF7F2',ic:'#0B3D2E',t:'Recycle',
+   d:'Free in-store take-back.',
+   detail:'Return to any Terranova World store for certified textile-to-textile recycling at no cost. No minimum condition required. Receive 10% off your next purchase as a thank-you. Use the "Book take-back" button below to confirm your visit.'},
 ];
 const eolEl=document.getElementById('eollist');
 eols.forEach(o=>{
-  const d=document.createElement('div');d.className='eol-row';
-  d.innerHTML=`<div class="eol-ic" style="background:${o.bg}"><span style="font-size:11px;font-weight:500;color:${o.ic}">${o.a}</span></div><div style="flex:1"><div class="eol-t">${o.t}</div><div class="eol-d">${o.d}</div></div><div class="eol-arr">›</div>`;
-  eolEl.appendChild(d);
+  const row=document.createElement('div');row.className='eol-row';
+  row.innerHTML=`
+    <div class="eol-top" onclick="toggleEol(this)">
+      <div class="eol-ic" style="background:${o.bg}"><span style="font-size:11px;font-weight:500;color:${o.ic}">${o.a}</span></div>
+      <div style="flex:1"><div class="eol-t">${o.t}</div><div class="eol-d">${o.d}</div></div>
+      <div class="eol-arr">&#8250;</div>
+    </div>
+    <div class="eol-detail">
+      <div class="eol-detail-txt">${o.detail}</div>
+    </div>`;
+  eolEl.appendChild(row);
 });
+function toggleEol(top){
+  const det=top.nextElementSibling;
+  const arr=top.querySelector('.eol-arr');
+  det.classList.toggle('open');
+  arr.classList.toggle('open');
+}
 
-// Take-back
 function bookTakeback(btn){btn.textContent='Take-back booked ✓';btn.classList.add('done');btn.onclick=null;}
 
-// ── Logger ──
+// Logger
 function logA(btn,nText,eqText,warn){
   document.querySelectorAll('.lpill').forEach(p=>p.classList.remove('sel'));
   btn.classList.add('sel');
@@ -861,25 +733,24 @@ function logA(btn,nText,eqText,warn){
   document.getElementById('log-u').textContent=parts.slice(1).join(' ');
   document.getElementById('log-eq').textContent=eqText;
   setTimeout(()=>{
+    const lw=document.getElementById('star-lead-wrap');
     const rl=document.getElementById('rate-lbl');
     const ss=document.getElementById('star-section');
+    lw.style.display='block';lw.style.animation='up .3s ease';
     rl.style.display='block';ss.style.display='block';ss.style.animation='up .3s ease';
     buildStars();
-    setTimeout(()=>{
-      const fa=document.getElementById('fb-acc');
-      fa.style.display='block';fa.style.animation='up .3s ease';
-    },350);
+    setTimeout(()=>{const fa=document.getElementById('fb-acc');fa.style.display='block';fa.style.animation='up .3s ease';},350);
   },500);
 }
 function resetLog(){
   document.querySelectorAll('.lpill').forEach(p=>p.classList.remove('sel'));
   document.getElementById('log-res').classList.remove('show');
-  document.getElementById('rate-lbl').style.display='none';
-  document.getElementById('star-section').style.display='none';
-  document.getElementById('fb-acc').style.display='none';
+  ['star-lead-wrap','rate-lbl','star-section','fb-acc'].forEach(id=>{
+    const el=document.getElementById(id);if(el)el.style.display='none';
+  });
 }
 
-// ── Stars ──
+// Stars
 const sCats=[
   {id:'sq',l:'Overall quality',def:4},
   {id:'ss',l:'Sustainability',def:5},
@@ -894,15 +765,13 @@ function buildStars(){
     sVals[c.id]=c.def;
     const row=document.createElement('div');row.className='star-row';
     row.innerHTML=`<span class="star-lbl">${c.l}</span><div class="stars-g" id="${c.id}"></div>`;
-    sw.appendChild(row);
-    renderStars(c.id,c.def);
+    sw.appendChild(row);renderStars(c.id,c.def);
   });
 }
 function renderStars(id,val){
   const el=document.getElementById(id);if(!el)return;el.innerHTML='';
   for(let i=1;i<=5;i++){
     const b=document.createElement('button');b.className='star-btn';
-    b.style.cssText='background:none;border:none;padding:0;';
     const f=i<=val;
     b.innerHTML=`<svg width="22" height="22" viewBox="0 0 22 22"><path d="M11 2l2.4 4.8 5.3.8-3.8 3.7.9 5.3-4.8-2.5-4.8 2.5.9-5.3-3.8-3.7 5.3-.8z" fill="${f?'#C19A3C':'none'}" stroke="${f?'#C19A3C':'#DDD'}" stroke-width="1.3" stroke-linejoin="round"/></svg>`;
     b.setAttribute('aria-label',`${i} star`);
@@ -911,15 +780,12 @@ function renderStars(id,val){
   }
 }
 
-// ── Feedback ──
+// Feedback
 function updateCount(ta){
   document.getElementById('fb-count').textContent=`${ta.value.length} / 500`;
   document.getElementById('fb-submit').disabled=ta.value.trim().length===0;
 }
-function toggleFb(hd){
-  const bd=document.getElementById('fb-bd'),ch=hd.querySelector('.fb-hch');
-  bd.classList.toggle('open');ch.classList.toggle('open');
-}
+function toggleFb(hd){const bd=document.getElementById('fb-bd'),ch=hd.querySelector('.fb-hch');bd.classList.toggle('open');ch.classList.toggle('open');}
 function sendFb(){
   const ta=document.getElementById('fb-ta');if(!ta.value.trim())return;
   ta.style.display='none';
@@ -929,19 +795,15 @@ function sendFb(){
   document.getElementById('fb-ok').classList.add('show');
 }
 
-// ── Follow ──
+// Follow
 function toggleFlw(btn,ctId,base){
   const ct=document.getElementById(ctId);
-  if(btn.style.background==='rgb(11, 61, 46)'||btn.dataset.following==='1'){
-    btn.dataset.following='';
-    btn.style.cssText='padding:7px 16px;border-radius:99px;border:1.5px solid var(--green);background:transparent;color:var(--green);font-size:12px;font-weight:500;cursor:pointer;font-family:inherit';
-    btn.textContent='Follow';
-    ct.textContent=base+' following';
+  if(btn.dataset.f==='1'){
+    btn.dataset.f='';btn.style.cssText='padding:7px 16px;border-radius:99px;border:1.5px solid var(--green);background:transparent;color:var(--green);font-size:12px;font-weight:500;cursor:pointer;font-family:inherit';
+    btn.textContent='Follow';ct.textContent=base+' following';
   } else {
-    btn.dataset.following='1';
-    btn.style.cssText='padding:7px 16px;border-radius:99px;border:1.5px solid #0B3D2E;background:#0B3D2E;color:#fff;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit';
-    btn.textContent='Following ✓';
-    ct.textContent=(base+1)+' following';
+    btn.dataset.f='1';btn.style.cssText='padding:7px 16px;border-radius:99px;border:1.5px solid #0B3D2E;background:#0B3D2E;color:#fff;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit';
+    btn.textContent='Following ✓';ct.textContent=(base+1)+' following';
   }
 }
 </script>
