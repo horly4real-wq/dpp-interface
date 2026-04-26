@@ -24,24 +24,52 @@
 html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
 @keyframes up{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-@keyframes draw{from{stroke-dashoffset:40}to{stroke-dashoffset:0}}
 @keyframes pop{0%{transform:scale(.95)}60%{transform:scale(1.03)}100%{transform:scale(1)}}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes toastIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes toastOut{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(12px)}}
 
 .wrap{display:flex;justify-content:center;align-items:flex-start;padding:2rem 1rem;min-height:100vh}
 .phone{width:100%;max-width:375px;background:var(--white);border-radius:36px;overflow:hidden;
   box-shadow:0 20px 80px rgba(0,0,0,.15),0 2px 8px rgba(0,0,0,.06);
-  display:flex;flex-direction:column;position:relative}
-
+  display:flex;flex-direction:column;position:relative;min-height:600px}
 @media(max-width:520px){
   html,body{overflow:hidden;background:var(--white)}
   .wrap{padding:0;display:block}
   .phone{max-width:100%;border-radius:0;box-shadow:none;height:100vh;height:100dvh;overflow:hidden}
-  .panel,.ss-body{-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+  .panel,.ss-body,.tg-body{-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
   .bnav{padding-bottom:calc(10px + env(safe-area-inset-bottom))}
 }
 
-/* ── SCAN SCREEN ── */
-.scan-screen{display:flex;flex-direction:column;flex:1;min-height:0;overflow:hidden}
+/* TASK GUIDE LANDING */
+.tg-screen{display:flex;flex-direction:column;flex:1;min-height:0;overflow:hidden}
+.tg-hero{background:var(--green);padding:2rem 1.5rem 1.5rem;flex-shrink:0;position:relative;overflow:hidden}
+.tg-hero::after{content:'';position:absolute;right:-50px;top:-50px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.04);pointer-events:none}
+.tg-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);border:.5px solid rgba(255,255,255,.2);border-radius:99px;padding:4px 12px;margin-bottom:14px}
+.tg-badge-dot{width:6px;height:6px;border-radius:50%;background:#4DB380}
+.tg-badge-txt{font-size:11px;color:rgba(255,255,255,.7);letter-spacing:.03em}
+.tg-title{font-size:26px;font-weight:500;color:#fff;letter-spacing:-.03em;line-height:1.1;margin-bottom:6px}
+.tg-sub{font-size:14px;color:rgba(255,255,255,.48);line-height:1.5}
+.tg-meta{display:flex;align-items:center;gap:16px;margin-top:14px}
+.tg-pill{display:flex;align-items:center;gap:5px;font-size:11px;color:rgba(255,255,255,.5)}
+.tg-body{flex:1;overflow-y:auto;padding:1.25rem 1.5rem 1rem}
+.tg-intro{font-size:13px;color:var(--ink2);line-height:1.65;margin-bottom:1.25rem}
+.tg-intro strong{color:var(--ink);font-weight:500}
+.tg-tasks{margin-bottom:1.25rem}
+.tg-task-item{display:flex;align-items:flex-start;gap:11px;padding:10px 0;border-bottom:1px solid var(--line)}
+.tg-task-item:last-child{border-bottom:none}
+.tg-num{width:24px;height:24px;border-radius:50%;background:var(--green-lt);border:1px solid var(--green-bd);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--green-mid);flex-shrink:0;margin-top:1px}
+.tg-task-text{flex:1;font-size:12px;color:var(--ink2);line-height:1.55}
+.tg-task-tab{font-size:10px;font-weight:500;color:var(--ink4);letter-spacing:.03em;margin-bottom:2px}
+.tg-note{background:var(--amber-lt);border:1px solid var(--amber-bd);border-radius:var(--r-md);padding:12px 14px;margin-bottom:1.25rem;font-size:12px;color:var(--amber);line-height:1.6}
+.tg-note strong{font-weight:500}
+.tg-cta{display:block;width:100%;padding:17px;background:var(--green);border:none;cursor:pointer;font-size:15px;font-weight:500;color:#fff;letter-spacing:-.01em;text-align:center;flex-shrink:0;font-family:inherit;transition:background .15s}
+.tg-cta:active{background:#082E22}
+
+/* SCAN SCREEN */
+.scan-screen{display:none;flex-direction:column;flex:1;min-height:0;overflow:hidden}
+.scan-screen.vis{display:flex}
 .ss-hero{background:var(--green);padding:2.25rem 1.5rem 1.5rem;flex-shrink:0;position:relative;overflow:hidden}
 .ss-hero::after{content:'';position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.04);pointer-events:none}
 .ss-vrow{display:flex;align-items:center;gap:6px;margin-bottom:1.25rem}
@@ -66,24 +94,19 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
 .ss-cta{display:block;width:100%;padding:17px;background:var(--green);border:none;cursor:pointer;font-size:14px;font-weight:500;color:#fff;letter-spacing:-.01em;text-align:center;flex-shrink:0;font-family:inherit;transition:background .15s}
 .ss-cta:active{background:#082E22}
 
-/* ── MAIN APP ── */
+/* MAIN APP */
 .main-app{display:none;flex-direction:column;flex:1;min-height:0;overflow:hidden}
 .main-app.vis{display:flex}
-
-/* Verification bar with home button */
 .vbar{display:flex;align-items:center;justify-content:space-between;background:var(--green);padding:9px 1.25rem;flex-shrink:0}
 .vbar-l{display:flex;align-items:center;gap:7px}
 .vbar-p{width:7px;height:7px;border-radius:50%;background:#4DB380;animation:pulse 2.5s ease-in-out infinite;flex-shrink:0}
 .vbar-t{font-size:11px;color:rgba(255,255,255,.55);letter-spacing:.01em}
 .vbar-brand{font-size:10px;font-weight:500;color:rgba(255,255,255,.28);letter-spacing:.1em;text-transform:uppercase}
-.vbar-home{width:30px;height:30px;border-radius:8px;background:rgba(255,255,255,.1);border:0.5px solid rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:background .15s;order:-1;margin-right:4px}
+.vbar-home{width:30px;height:30px;border-radius:8px;background:rgba(255,255,255,.1);border:.5px solid rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:background .15s;order:-1;margin-right:4px}
 .vbar-home:active{background:rgba(255,255,255,.2)}
-
 .panels{flex:1;min-height:0;overflow:hidden}
 .panel{display:none;overflow-y:auto;height:100%;scroll-behavior:smooth}
 .panel.active{display:block;animation:up .22s ease}
-
-/* Bottom nav */
 .bnav{display:flex;border-top:1px solid var(--line);background:var(--white);padding:8px 0 10px;flex-shrink:0}
 .nb{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:7px 4px 5px;border:none;background:none;cursor:pointer;font-size:10px;font-weight:400;color:var(--ink4);line-height:1;font-family:inherit;letter-spacing:.01em;transition:color .15s;min-width:44px}
 .nb.on{color:var(--green);font-weight:500}
@@ -91,6 +114,59 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
 .nb svg{display:block;flex-shrink:0}
 .nbdot{width:4px;height:4px;border-radius:50%;background:var(--green);opacity:0;margin:0 auto}
 .nb.on .nbdot{opacity:1}
+
+/* DRAGGABLE FAB */
+.fab{position:absolute;z-index:50;cursor:grab;touch-action:none;display:none;user-select:none}
+.fab.vis{display:block}
+.fab:active{cursor:grabbing}
+.fab-btn{width:50px;height:50px;border-radius:50%;background:var(--green);box-shadow:0 4px 16px rgba(11,61,46,.35),0 1px 4px rgba(0,0,0,.15);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:none;cursor:pointer;transition:box-shadow .15s;position:relative}
+.fab-btn:active{box-shadow:0 2px 8px rgba(11,61,46,.3)}
+.fab-badge{position:absolute;top:-3px;right:-3px;width:19px;height:19px;border-radius:50%;background:#4DB380;border:2px solid var(--white);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;color:var(--green);font-variant-numeric:tabular-nums;pointer-events:none}
+.fab-label{font-size:8px;color:rgba(255,255,255,.65);letter-spacing:.04em;text-align:center;line-height:1;pointer-events:none}
+
+/* TASK PANEL OVERLAY */
+.task-overlay{position:absolute;inset:0;z-index:100;display:none;flex-direction:column;pointer-events:none}
+.task-overlay.vis{display:flex;pointer-events:all}
+.task-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.35);animation:fadeIn .2s ease;cursor:pointer}
+.task-panel{position:absolute;bottom:0;left:0;right:0;background:var(--white);border-radius:24px 24px 0 0;display:flex;flex-direction:column;max-height:88%;animation:slideUp .28s cubic-bezier(.32,.72,0,1)}
+.task-panel-handle{width:36px;height:4px;border-radius:99px;background:var(--line2);margin:10px auto 0;flex-shrink:0}
+.task-panel-hd{display:flex;align-items:center;justify-content:space-between;padding:14px 1.5rem 10px;flex-shrink:0}
+.task-panel-title{font-size:15px;font-weight:500;color:var(--ink);letter-spacing:-.02em}
+.task-panel-prog{font-size:12px;color:var(--ink3);font-variant-numeric:tabular-nums}
+.task-panel-close{width:28px;height:28px;border-radius:50%;background:var(--bg);border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;color:var(--ink4);flex-shrink:0}
+.task-panel-track{height:3px;background:var(--line2);margin:0 1.5rem;border-radius:99px;overflow:hidden;flex-shrink:0;margin-bottom:2px}
+.task-panel-fill{height:100%;border-radius:99px;background:#4DB380;transition:width .4s cubic-bezier(.4,0,.2,1);width:0%}
+
+/* Completion banner */
+.task-done-banner{display:none;margin:12px 1.5rem 4px;padding:16px;background:var(--green-lt);border:1px solid var(--green-bd);border-radius:var(--r-md);flex-shrink:0}
+.task-done-banner.vis{display:block;animation:up .3s ease}
+.task-done-title{font-size:14px;font-weight:500;color:var(--green);letter-spacing:-.01em;margin-bottom:4px}
+.task-done-sub{font-size:12px;color:var(--green-mid);line-height:1.55;margin-bottom:12px}
+.task-done-actions{display:flex;flex-direction:column;gap:8px}
+.task-done-btn-primary{display:block;width:100%;padding:12px;background:var(--green);border:none;border-radius:var(--r-sm);font-size:13px;font-weight:500;color:#fff;cursor:pointer;font-family:inherit;letter-spacing:-.01em;text-align:center}
+.task-done-btn-secondary{display:block;width:100%;padding:11px;background:transparent;border:1.5px solid var(--green-bd);border-radius:var(--r-sm);font-size:13px;font-weight:500;color:var(--green-mid);cursor:pointer;font-family:inherit;letter-spacing:-.01em;text-align:center}
+
+.task-list{overflow-y:auto;-webkit-overflow-scrolling:touch;padding:8px 1.5rem 1.5rem;flex:1;min-height:0}
+.task-item{display:flex;align-items:flex-start;gap:12px;padding:11px 0;border-bottom:1px solid var(--line);cursor:pointer;transition:opacity .15s}
+.task-item:last-child{border-bottom:none}
+.task-item:active{opacity:.65}
+.task-cb{width:22px;height:22px;border-radius:6px;border:1.5px solid var(--line2);background:var(--white);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;transition:background .15s,border-color .15s}
+.task-cb.done{background:var(--green);border-color:var(--green)}
+.task-body{flex:1}
+.task-tab-lbl{font-size:10px;font-weight:500;color:var(--ink4);letter-spacing:.05em;text-transform:uppercase;margin-bottom:2px}
+.task-desc{font-size:13px;color:var(--ink);line-height:1.5}
+.task-desc.done{color:var(--ink4);text-decoration:line-through}
+
+/* Toast notification */
+.toast{position:absolute;bottom:80px;left:16px;right:16px;z-index:200;pointer-events:none;display:none}
+.toast.show{display:block;animation:toastIn .3s ease forwards}
+.toast.hide{display:block;animation:toastOut .3s ease forwards}
+.toast-inner{background:var(--green);border-radius:14px;padding:12px 16px;display:flex;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(11,61,46,.3);pointer-events:all;cursor:pointer}
+.toast-icon{width:28px;height:28px;border-radius:50%;background:#4DB380;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.toast-text{flex:1}
+.toast-title{font-size:12px;font-weight:500;color:#fff;letter-spacing:-.01em;margin-bottom:1px}
+.toast-sub{font-size:11px;color:rgba(255,255,255,.6)}
+.toast-arr{font-size:14px;color:rgba(255,255,255,.5);flex-shrink:0}
 
 /* Shared atoms */
 .slbl{display:block;font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:0 1.5rem;margin-top:1.75rem;margin-bottom:.85rem}
@@ -111,8 +187,6 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
 .kv-v{font-weight:500;color:var(--ink);text-align:right}
 .kv-g{font-weight:500;color:var(--green-mid)}
 .bsp{height:1.5rem}
-
-/* Care grid — now in Overview */
 .care-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:0 1.5rem;margin-bottom:.5rem}
 .care-card{display:flex;flex-direction:column;align-items:center;gap:6px;padding:13px 6px;border-radius:var(--r-sm);border:1px solid var(--line2);background:var(--bg)}
 .care-card.no{border-color:var(--red-bd);background:var(--red-lt)}
@@ -120,8 +194,6 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
 .care-lbl{font-size:10px;color:var(--ink2);text-align:center;line-height:1.3}
 .care-lbl.no{color:var(--red)}
 .care-note{font-size:11px;color:var(--ink4);padding:4px 1.5rem 0;line-height:1.6;margin-bottom:.25rem}
-
-/* Overview */
 .ov-hero{padding:1.75rem 1.5rem 1.25rem;display:flex;align-items:flex-start;justify-content:space-between;gap:1rem}
 .ov-pname{font-size:26px;font-weight:500;color:var(--ink);letter-spacing:-.03em;line-height:1.05;margin-bottom:5px}
 .ov-meta{font-size:13px;color:var(--ink3);letter-spacing:-.01em}
@@ -136,20 +208,15 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
 .ov-score-lbl{font-size:12px;color:var(--green-mid);margin-top:5px}
 .ov-score-track{height:4px;background:rgba(0,0,0,.07);border-radius:99px;overflow:hidden;margin-top:14px}
 .ov-score-fill{height:100%;border-radius:99px;background:#4DB380;width:78%}
-
-/* Cert strip */
 .cert-strip{display:flex;gap:8px;overflow-x:auto;padding:0 1.5rem 1rem;scroll-padding:1.5rem;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;scrollbar-width:none;cursor:grab}
 .cert-strip::-webkit-scrollbar{display:none}
 .cert-strip:active{cursor:grabbing}
 .cpill{flex-shrink:0;display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:99px;background:var(--white);border:1.5px solid var(--line2);font-size:12px;font-weight:500;color:var(--ink2);white-space:nowrap;transition:border-color .15s,background .15s;cursor:pointer;min-height:36px}
 .cpill:active{background:var(--bg);border-color:var(--ink4)}
 .cpill-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-
 .comm-bar{margin:0 1.5rem 0;padding:13px 16px;background:var(--bg);border-radius:var(--r-md);display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink3)}
 .comm-n{font-weight:500;color:var(--green-mid);font-size:13px}
 .comm-sep{width:3px;height:3px;border-radius:50%;background:var(--line2)}
-
-/* Made */
 .fibre-hero{padding:1.5rem 1.5rem .5rem}
 .fibre-hl{font-size:14px;font-weight:500;color:var(--ink);letter-spacing:-.02em;line-height:1.5;margin-bottom:14px}
 .fbar{display:flex;height:10px;border-radius:99px;overflow:hidden;gap:2px}
@@ -168,8 +235,6 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
 .f-detail{display:none;padding:10px 22px 14px;background:var(--bg);border-radius:var(--r-sm);margin-bottom:4px}
 .f-detail.open{display:block;animation:up .2s ease}
 .f-detail-txt{font-size:12px;color:var(--ink2);line-height:1.7}
-
-/* Journey */
 .jlist{padding:0 1.5rem}
 .j-item{display:flex;gap:14px}
 .j-l{display:flex;flex-direction:column;align-items:center;width:20px;flex-shrink:0}
@@ -187,11 +252,8 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
 .j-detail.open{display:block;animation:up .2s ease}
 .j-company{font-size:12px;font-weight:500;color:var(--ink);margin-bottom:5px}
 .j-desc{font-size:11px;color:var(--ink2);line-height:1.65}
-
 .w-row{display:flex;align-items:flex-start;gap:10px;padding:10px 1.5rem;font-size:13px;color:var(--ink);line-height:1.45}
 .w-chk{width:20px;height:20px;border-radius:50%;background:var(--green-lt);border:1.5px solid var(--green-bd);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
-
-/* Impact */
 .stat-block{margin:0 1.5rem .25rem;border-radius:var(--r-xl);padding:1.5rem 1.75rem;border:1px solid var(--line2);background:var(--bg)}
 .stat-n{font-size:64px;font-weight:500;line-height:1;letter-spacing:-.06em;font-variant-numeric:tabular-nums}
 .stat-u{font-size:18px;font-weight:400}
@@ -204,8 +266,6 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
 .grade-ss{font-size:8px;color:rgba(255,255,255,.4);letter-spacing:.09em;margin-top:2px}
 .grade-tit{font-size:13px;font-weight:500;color:var(--green);margin-bottom:4px;letter-spacing:-.01em}
 .grade-desc{font-size:12px;color:var(--green-mid);line-height:1.55}
-
-/* EOL */
 .eol-list{padding:0 1.5rem}
 .eol-row{border-bottom:1px solid var(--line);cursor:pointer}
 .eol-row:last-child{border-bottom:none}
@@ -219,12 +279,9 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
 .eol-detail{display:none;padding:0 0 14px 58px}
 .eol-detail.open{display:block;animation:up .2s ease}
 .eol-detail-txt{font-size:12px;color:var(--ink2);line-height:1.65;padding:10px 14px;background:var(--bg);border-radius:var(--r-sm)}
-
 .takeback-btn{display:block;margin:1rem 1.5rem;background:var(--green);color:#fff;border:none;cursor:pointer;border-radius:var(--r-md);padding:17px;font-size:14px;font-weight:500;letter-spacing:-.01em;text-align:center;width:calc(100% - 3rem);font-family:inherit;transition:background .15s,transform .1s}
 .takeback-btn:active{background:#082E22;transform:scale(.98)}
 .takeback-btn.done{background:var(--green-mid)}
-
-/* Logger */
 .log-wrap{padding:0 1.5rem}
 .log-s{font-size:12px;color:var(--ink3);margin-bottom:12px;line-height:1.55}
 .log-pills{display:flex;flex-wrap:wrap;gap:8px}
@@ -243,8 +300,6 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
 .log-req{font-size:12px;color:var(--green-mid);margin-top:4px;line-height:1.45}
 .log-result.warn .log-req{color:var(--amber)}
 .log-change{font-size:11px;color:var(--ink4);margin-top:12px;cursor:pointer;display:inline-flex;align-items:center;gap:4px;border:none;background:none;font-family:inherit;padding:0;text-decoration:underline}
-
-/* Stars */
 .star-transition{padding:1.5rem 1.5rem .5rem}
 .star-lead{font-size:13px;color:var(--ink2);line-height:1.55}
 .star-section{padding:0 1.5rem}
@@ -254,8 +309,6 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
 .stars-g{display:flex;gap:5px}
 .star-btn{cursor:pointer;width:28px;height:28px;display:flex;align-items:center;justify-content:center;transition:transform .12s;flex-shrink:0;background:none;border:none;padding:0}
 .star-btn:active{transform:scale(1.25)}
-
-/* Feedback */
 .fb-acc{border-top:1px solid var(--line)}
 .fb-head{display:flex;align-items:center;justify-content:space-between;padding:16px 1.5rem;cursor:pointer;min-height:52px;transition:background .12s}
 .fb-head:active{background:var(--bg)}
@@ -280,18 +333,34 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
 </style>
 </head>
 <body>
-<div class="wrap"><div class="phone">
+<div class="wrap"><div class="phone" id="phone">
 
-<!-- ══ SCAN SCREEN ══ -->
+<!-- TASK GUIDE LANDING -->
+<div class="tg-screen" id="tg-screen">
+  <div class="tg-hero">
+    <div class="tg-badge"><div class="tg-badge-dot"></div><span class="tg-badge-txt">Research Study, Swinburne University</span></div>
+    <div class="tg-title">Your tasks</div>
+    <div class="tg-sub">Please read through all 16 tasks before you begin.</div>
+    <div class="tg-meta">
+      <div class="tg-pill"><svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="6.5" cy="6.5" r="5"/><path d="M6.5 4v2.5L8 8"/></svg>About 10 minutes</div>
+      <div class="tg-pill"><svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h9M2 6.5h9M2 10h5"/></svg>16 tasks</div>
+    </div>
+  </div>
+  <div class="tg-body">
+    <div class="tg-intro">You are about to explore a <strong>Digital Product Passport (DPP)</strong>, a digital record of a garment's materials, production journey, environmental impact, and end-of-life options. This is a design model only; no real transaction is required.<br><br>Work through the tasks in order. You can <strong>tick each task off as you complete it</strong> using the green checklist button visible at all times in the app. When all tasks are done, you will be prompted to return to the survey.</div>
+    <div class="tg-tasks" id="tg-preview-tasks"></div>
+    <div class="tg-note"><strong>Tip:</strong> The task checklist is always accessible via the green button on screen. You can move it by dragging it to any position that works for you.</div>
+  </div>
+  <button class="tg-cta" onclick="showScan()">I have read the tasks, begin &rarr;</button>
+</div>
+
+<!-- SCAN SCREEN -->
 <div class="scan-screen" id="scan-screen">
   <div class="ss-hero">
-    <div class="ss-vrow">
-      <div class="ss-vdot"></div>
-      <span class="ss-vtext">GS1 Digital Link · Verified product</span>
-    </div>
+    <div class="ss-vrow"><div class="ss-vdot"></div><span class="ss-vtext">GS1 Digital Link, Verified product</span></div>
     <div class="ss-pname">Essential Tee</div>
-    <div class="ss-pmeta">Sage Green · Size M · Women's · SS25</div>
-    <div class="ss-gtin">DPP-AU-2025-TX-00847261 · GTIN 9312345678901</div>
+    <div class="ss-pmeta">Sage Green, Size M, Women's, SS25</div>
+    <div class="ss-gtin">DPP-AU-2025-TX-00847261, GTIN 9312345678901</div>
   </div>
   <div class="ss-body">
     <div class="ss-q">What brings you here?</div>
@@ -299,116 +368,69 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
     <div class="igrid">
       <button class="ibtn" onclick="enterApp('overview')">
         <div class="ibtn-ic" style="background:#EEF7F2"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#1A5C42" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="5.5"/><path d="M8 5.5V8l1.5 1.5"/></svg></div>
-        <div class="ibtn-l">Thinking of buying</div>
-        <div class="ibtn-d">Sustainability and certifications</div>
+        <div class="ibtn-l">Thinking of buying</div><div class="ibtn-d">Sustainability and certifications</div>
       </button>
       <button class="ibtn" onclick="enterApp('overview')">
         <div class="ibtn-ic" style="background:#EEF3FB"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#1E5A8E" stroke-width="1.5" stroke-linecap="round"><path d="M3 5h10M3 8h6M3 11h8"/></svg></div>
-        <div class="ibtn-l">Just bought it</div>
-        <div class="ibtn-d">Care guide and what's in it</div>
+        <div class="ibtn-l">Just bought it</div><div class="ibtn-d">Care guide and what's in it</div>
       </button>
       <button class="ibtn" onclick="enterApp('eol')">
         <div class="ibtn-ic" style="background:#FDF4E3"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#8A6B1E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8a4 4 0 01-4 4H5M4 8a4 4 0 014-4h3"/><path d="M5 11l-2.5 1 .5-2.5M11 2l2.5 1-.5 2.5"/></svg></div>
-        <div class="ibtn-l">Done with it</div>
-        <div class="ibtn-d">Recycle, donate or repair</div>
+        <div class="ibtn-l">Done with it</div><div class="ibtn-d">Recycle, donate or repair</div>
       </button>
       <button class="ibtn" onclick="enterApp('impact')">
         <div class="ibtn-ic" style="background:#EEF3FB"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#1E5A8E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12L6 7l3 3 5-7"/></svg></div>
-        <div class="ibtn-l">Environmental impact</div>
-        <div class="ibtn-d">Carbon, water, benchmarks</div>
+        <div class="ibtn-l">Environmental impact</div><div class="ibtn-d">Carbon, water, benchmarks</div>
       </button>
     </div>
     <div class="ss-note">
       <div class="ss-note-ic"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="rgba(255,255,255,.8)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="1.5" width="10" height="11" rx="2"/><path d="M5 5.5h4M5 8h3"/></svg></div>
-      <div>
-        <div class="ss-note-t">What is a Digital Product Passport?</div>
-        <div class="ss-note-b">A verified, independently audited record of this garment's materials, origins, environmental footprint, and end-of-life options. Issued by Terranova World and verified by GS1 Australia.</div>
-      </div>
+      <div><div class="ss-note-t">What is a Digital Product Passport?</div><div class="ss-note-b">A verified, independently audited record of this garment's materials, origins, environmental footprint, and end-of-life options. Issued by Terranova World and verified by GS1 Australia.</div></div>
     </div>
   </div>
   <button class="ss-cta" onclick="enterApp('overview')">View full passport &rarr;</button>
 </div>
 
-<!-- ══ MAIN APP ══ -->
+<!-- MAIN APP -->
 <div class="main-app" id="main-app">
   <div class="vbar">
-    <!-- Home button — returns to scan entry screen -->
-    <div class="vbar-home" onclick="goHome()" title="Back to entry screen">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="rgba(255,255,255,.75)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M2 6.5L7 2l5 4.5V12a.5.5 0 01-.5.5H9V9H5v3.5H2.5A.5.5 0 012 12V6.5z"/>
-      </svg>
-    </div>
-    <div class="vbar-l">
-      <div class="vbar-p"></div>
-      <span class="vbar-t">Scan confirmed · GS1 verified</span>
-    </div>
+    <div class="vbar-home" onclick="goHome()"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="rgba(255,255,255,.75)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.5L7 2l5 4.5V12a.5.5 0 01-.5.5H9V9H5v3.5H2.5A.5.5 0 012 12V6.5z"/></svg></div>
+    <div class="vbar-l"><div class="vbar-p"></div><span class="vbar-t">Scan confirmed, GS1 verified</span></div>
     <span class="vbar-brand">Terranova World</span>
   </div>
-
   <div class="panels">
-
-    <!-- ── OVERVIEW ── -->
+    <!-- OVERVIEW -->
     <div class="panel active" id="pan-overview">
       <div class="ov-hero">
-        <div>
-          <div class="ov-pname">Essential Tee</div>
-          <div class="ov-meta">Sage Green · Size M · Women's</div>
-        </div>
+        <div><div class="ov-pname">Essential Tee</div><div class="ov-meta">Sage Green, Size M, Women's</div></div>
         <div class="ov-ring-wrap">
-          <svg width="76" height="76" viewBox="0 0 76 76">
-            <circle cx="38" cy="38" r="31" fill="none" stroke="#E8E8E8" stroke-width="5.5"/>
-            <circle cx="38" cy="38" r="31" fill="none" stroke="#4DB380" stroke-width="5.5" stroke-linecap="round" stroke-dasharray="194.8" stroke-dashoffset="42.9" transform="rotate(-90 38 38)"/>
-          </svg>
+          <svg width="76" height="76" viewBox="0 0 76 76"><circle cx="38" cy="38" r="31" fill="none" stroke="#E8E8E8" stroke-width="5.5"/><circle cx="38" cy="38" r="31" fill="none" stroke="#4DB380" stroke-width="5.5" stroke-linecap="round" stroke-dasharray="194.8" stroke-dashoffset="42.9" transform="rotate(-90 38 38)"/></svg>
           <div class="ov-ring-c"><div class="ov-grade">B+</div><div class="ov-grade-s">GRADE</div></div>
         </div>
       </div>
-
       <div class="ov-score">
         <div class="ov-score-row"><span class="ov-score-n">78</span><span class="ov-score-d">/100</span></div>
         <div class="ov-score-lbl">Better than 73% of similar garments</div>
         <div class="ov-score-track"><div class="ov-score-fill"></div></div>
       </div>
-
-      <!-- Care instructions — first content after score, above certifications -->
       <span class="slbl">Care instructions</span>
       <div class="care-grid">
-        <div class="care-card">
-          <div class="care-ic" style="background:#EEF7F2"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#1A5C42" stroke-width="1.5" stroke-linecap="round"><path d="M4 8h12M4 8a6 6 0 0012 0"/><path d="M10 3v2"/></svg></div>
-          <div class="care-lbl">30°C cold wash</div>
-        </div>
-        <div class="care-card">
-          <div class="care-ic" style="background:#EEF7F2"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#1A5C42" stroke-width="1.5" stroke-linecap="round"><path d="M6 10a4 4 0 008 0V6H6v4z"/></svg></div>
-          <div class="care-lbl">Gentle cycle</div>
-        </div>
-        <div class="care-card">
-          <div class="care-ic" style="background:#EEF7F2"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#1A5C42" stroke-width="1.5" stroke-linecap="round"><path d="M10 15V7M6 11l4-4 4 4"/><path d="M5 16h10"/></svg></div>
-          <div class="care-lbl">Air dry flat</div>
-        </div>
-        <div class="care-card no">
-          <div class="care-ic" style="background:#FEE2E2"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#DC2626" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l10 10M15 5L5 15"/></svg></div>
-          <div class="care-lbl no">No bleach</div>
-        </div>
+        <div class="care-card"><div class="care-ic" style="background:#EEF7F2"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#1A5C42" stroke-width="1.5" stroke-linecap="round"><path d="M4 8h12M4 8a6 6 0 0012 0"/><path d="M10 3v2"/></svg></div><div class="care-lbl">30°C cold wash</div></div>
+        <div class="care-card"><div class="care-ic" style="background:#EEF7F2"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#1A5C42" stroke-width="1.5" stroke-linecap="round"><path d="M6 10a4 4 0 008 0V6H6v4z"/></svg></div><div class="care-lbl">Gentle cycle</div></div>
+        <div class="care-card"><div class="care-ic" style="background:#EEF7F2"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#1A5C42" stroke-width="1.5" stroke-linecap="round"><path d="M10 15V7M6 11l4-4 4 4"/><path d="M5 16h10"/></svg></div><div class="care-lbl">Air dry flat</div></div>
+        <div class="care-card no"><div class="care-ic" style="background:#FEE2E2"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#DC2626" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l10 10M15 5L5 15"/></svg></div><div class="care-lbl no">No bleach</div></div>
       </div>
       <div class="care-note">Cool iron max 110°C if needed. No dry cleaning.</div>
-
-      <!-- Certifications — below care instructions -->
-      <span class="slbl">Certifications — swipe to see all</span>
+      <span class="slbl">Certifications, swipe to see all</span>
       <div class="cert-strip" id="cert-strip">
-        <div class="cpill"><div class="cpill-dot" style="background:#2D7A55"></div>GOTS · Organic</div>
-        <div class="cpill"><div class="cpill-dot" style="background:#2B6CB0"></div>GRS · Recycled</div>
+        <div class="cpill"><div class="cpill-dot" style="background:#2D7A55"></div>GOTS, Organic</div>
+        <div class="cpill"><div class="cpill-dot" style="background:#2B6CB0"></div>GRS, Recycled</div>
         <div class="cpill"><div class="cpill-dot" style="background:#555"></div>OEKO-TEX 100</div>
-        <div class="cpill"><div class="cpill-dot" style="background:#6B3FA0"></div>SA8000 · Social</div>
+        <div class="cpill"><div class="cpill-dot" style="background:#6B3FA0"></div>SA8000, Social</div>
         <div class="cpill"><div class="cpill-dot" style="background:#1E5A8E"></div>bluesign</div>
         <div class="cpill"><div class="cpill-dot" style="background:#B8860B"></div>Carbon Neutral Ship</div>
       </div>
-
-      <div class="comm-bar">
-        <span class="comm-n">2,847 owners</span>
-        <div class="comm-sep"></div>
-        <span>9.2t CO&#x2082; prevented together</span>
-      </div>
-
-      <!-- Brand commitment (was "Brand update") -->
+      <div class="comm-bar"><span class="comm-n">2,847 owners</span><div class="comm-sep"></div><span>9.2t CO&#x2082; prevented together</span></div>
       <div class="acc">
         <div class="acc-row" onclick="toggleAcc(this)">
           <div class="acc-l"><div class="acc-t">Brand commitment</div><div class="acc-s">Eliminating virgin elastane by 2026</div></div>
@@ -416,20 +438,19 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
         </div>
         <div class="acc-body">
           <div style="font-size:13px;font-weight:500;color:var(--ink);margin-bottom:7px;letter-spacing:-.01em">100% bio-based or recycled elastane across all products by 2026</div>
-          <div style="font-size:12px;color:var(--ink2);line-height:1.65;margin-bottom:14px">We are trialling three bio-based and recycled elastane suppliers to replace the 100% virgin synthetics across our core range. The 5% elastane in this tee is currently virgin synthetic. Future versions will use certified alternatives.</div>
+          <div style="font-size:12px;color:var(--ink2);line-height:1.65;margin-bottom:14px">We are trialling three bio-based and recycled elastane suppliers. The 5% elastane in this tee is currently virgin synthetic. Future versions will use certified alternatives.</div>
           <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--ink3);margin-bottom:6px"><span>Progress to goal</span><span style="font-weight:500;color:var(--ink)">40%</span></div>
           <div style="height:6px;background:var(--line2);border-radius:99px;overflow:hidden;margin-bottom:5px"><div style="height:100%;width:40%;background:var(--green);border-radius:99px"></div></div>
-          <div style="font-size:10px;color:var(--ink4);margin-bottom:14px">Supplier trials complete · Full rollout targeted Q2 2026</div>
+          <div style="font-size:10px;color:var(--ink4);margin-bottom:14px">Supplier trials complete, full rollout targeted Q2 2026</div>
           <div style="display:flex;align-items:center;justify-content:space-between">
             <span style="font-size:12px;color:var(--ink3)" id="flw-ct">847 following</span>
-            <button style="padding:7px 16px;border-radius:99px;border:1.5px solid var(--green);background:transparent;color:var(--green);font-size:12px;font-weight:500;cursor:pointer;font-family:inherit;transition:background .15s,color .15s" id="flw-btn" onclick="toggleFlw(this,'flw-ct',847)">Follow</button>
+            <button style="padding:7px 16px;border-radius:99px;border:1.5px solid var(--green);background:transparent;color:var(--green);font-size:12px;font-weight:500;cursor:pointer;font-family:inherit" id="flw-btn" onclick="toggleFlw(this,'flw-ct',847)">Follow</button>
           </div>
         </div>
       </div>
-
       <div class="acc">
         <div class="acc-row" onclick="toggleAcc(this)">
-          <div class="acc-l"><div class="acc-t">Passport details</div><div class="acc-s">GS1 Digital Link · EPCIS 2.0 · GDSN</div></div>
+          <div class="acc-l"><div class="acc-t">Passport details</div><div class="acc-s">GS1 Digital Link, EPCIS 2.0, GDSN</div></div>
           <div class="acc-ch">&#9660;</div>
         </div>
         <div class="acc-body">
@@ -442,23 +463,17 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
       </div>
       <div class="bsp"></div>
     </div>
-
-    <!-- ── MADE ── -->
+    <!-- MADE -->
     <div class="panel" id="pan-made">
       <span class="slbl">Composition</span>
       <div class="fibre-hero">
-        <div class="fibre-hl">60% Organic Cotton · 35% Recycled Polyester · 5% Elastane</div>
-        <div class="fbar">
-          <div class="fseg" style="flex:60;background:#2D7A55"></div>
-          <div class="fseg" style="flex:35;background:#2B6CB0"></div>
-          <div class="fseg" style="flex:5;background:#B8860B"></div>
-        </div>
+        <div class="fibre-hl">60% Organic Cotton, 35% Recycled Polyester, 5% Elastane</div>
+        <div class="fbar"><div class="fseg" style="flex:60;background:#2D7A55"></div><div class="fseg" style="flex:35;background:#2B6CB0"></div><div class="fseg" style="flex:5;background:#B8860B"></div></div>
       </div>
       <div class="flist" id="flist"></div>
-
       <div class="acc">
         <div class="acc-row" onclick="toggleAcc(this)">
-          <div class="acc-l"><div class="acc-t">Dyes and treatments</div><div class="acc-s">PFAS-free · No restricted substances</div></div>
+          <div class="acc-l"><div class="acc-t">Dyes and treatments</div><div class="acc-s">PFAS-free, No restricted substances</div></div>
           <div class="acc-ch">&#9660;</div>
         </div>
         <div class="acc-body">
@@ -470,75 +485,58 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
           <div class="kv"><span class="kk">PFAS / PFOS</span><span class="kv-g">Absent</span></div>
         </div>
       </div>
-
       <span class="slbl">Production journey</span>
       <div class="jlist" id="jlist"></div>
-
       <span class="slbl">Worker welfare</span>
       <div class="w-row"><div class="w-chk"><svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="#1A5C42" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Living wage paid to all production workers</span></div>
       <div class="w-row"><div class="w-chk"><svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="#1A5C42" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Safe and healthy working conditions verified</span></div>
       <div class="w-row"><div class="w-chk"><svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="#1A5C42" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>No child labour or forced labour</span></div>
       <div class="w-row"><div class="w-chk"><svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="#1A5C42" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Freedom of association and collective bargaining</span></div>
       <div class="w-row"><div class="w-chk"><svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1.5 4.5L3.5 6.5L7.5 2.5" stroke="#1A5C42" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Annual independent social audit conducted</span></div>
-      <div style="font-size:11px;color:var(--ink4);text-align:center;padding:12px 1.5rem">Bureau Veritas · March 2025 · SA8000</div>
+      <div style="font-size:11px;color:var(--ink4);text-align:center;padding:12px 1.5rem">Bureau Veritas, March 2025, SA8000</div>
       <div class="bsp"></div>
     </div>
-
-    <!-- ── IMPACT ── -->
+    <!-- IMPACT -->
     <div class="panel" id="pan-impact">
       <span class="slbl">Environmental rating</span>
       <div class="grade-band">
         <div class="grade-c"><div class="grade-l">B+</div><div class="grade-ss">RATING</div></div>
-        <div>
-          <div class="grade-tit">Above-average performance</div>
-          <div class="grade-desc">Outperforms industry benchmarks on carbon, water, and circular content. ESPR-aligned lifecycle assessment.</div>
-        </div>
+        <div><div class="grade-tit">Above-average performance</div><div class="grade-desc">Outperforms industry benchmarks on carbon, water, and circular content. ESPR-aligned lifecycle assessment.</div></div>
       </div>
-
       <span class="slbl">Carbon footprint</span>
       <div class="stat-block">
         <div><span class="stat-n" style="color:#2D7A55">3.2</span><span class="stat-u" style="color:#4DB380"> kg CO&#x2082;e</span></div>
         <div class="stat-lbl">Carbon footprint per garment</div>
-        <!-- Scope clarification per recommendation 8 -->
-        <div class="stat-scope">Production phase only — material extraction through to point of sale</div>
-        <div class="stat-delta" style="background:#EEF7F2;color:#1A5C42">&#x2193; 62% below industry average</div>
+        <div class="stat-scope">Production phase only, from material extraction to point of sale</div>
+        <div class="stat-delta" style="background:#EEF7F2;color:#1A5C42">62% below industry average</div>
       </div>
-
       <span class="slbl">Water usage</span>
       <div class="stat-block">
         <div><span class="stat-n" style="color:#1E5A8E">1,840</span><span class="stat-u" style="color:#2B6CB0"> L</span></div>
         <div class="stat-lbl">Water consumption per garment</div>
-        <!-- Scope clarification per recommendation 8 -->
-        <div class="stat-scope">Production phase only — material extraction through to point of sale</div>
-        <div class="stat-delta" style="background:#EEF3FB;color:#1E5A8E">&#x2193; 56% below industry average</div>
+        <div class="stat-scope">Production phase only, from material extraction to point of sale</div>
+        <div class="stat-delta" style="background:#EEF3FB;color:#1E5A8E">56% below industry average</div>
       </div>
-
       <div class="acc">
         <div class="acc-row" onclick="toggleAcc(this)">
           <div class="acc-l"><div class="acc-t">About this data</div><div class="acc-s">Methodology, scope and benchmarks</div></div>
           <div class="acc-ch">&#9660;</div>
         </div>
         <div class="acc-body">
-          <div style="font-size:12px;color:var(--ink2);line-height:1.75">
-            <strong style="color:var(--ink);font-weight:500">What is included:</strong> These figures cover the production lifecycle phase — specifically raw material extraction, processing, dyeing, manufacturing, and distribution to point of sale. This is known as a cradle-to-gate assessment.<br><br>
-            <strong style="color:var(--ink);font-weight:500">What is not included:</strong> Figures do not include emissions or water use from washing, drying, and ironing during the garment's use phase, nor from end-of-life disposal. Use-phase impacts can exceed production-phase impacts over a garment's lifetime.<br><br>
-            <strong style="color:var(--ink);font-weight:500">Data sources:</strong> Carbon benchmarks from the Higg Materials Sustainability Index. Water data from the Water Footprint Network. Industry average baseline is a conventional cotton t-shirt.
-          </div>
+          <div style="font-size:12px;color:var(--ink2);line-height:1.75"><strong style="color:var(--ink);font-weight:500">What is included:</strong> Raw material extraction, processing, dyeing, manufacturing, and distribution to point of sale (cradle-to-gate).<br><br><strong style="color:var(--ink);font-weight:500">What is not included:</strong> Washing, drying, and ironing during the use phase, and end-of-life disposal. Use-phase impacts can exceed production-phase impacts over a garment's lifetime.<br><br><strong style="color:var(--ink);font-weight:500">Sources:</strong> Carbon from Higg Materials Sustainability Index. Water from the Water Footprint Network. Benchmark baseline is a conventional cotton t-shirt.</div>
         </div>
       </div>
       <div class="bsp"></div>
     </div>
-
-    <!-- ── END OF LIFE ── -->
+    <!-- END OF LIFE -->
     <div class="panel" id="pan-eol">
       <span class="slbl">End-of-life options</span>
       <div class="eol-list" id="eollist"></div>
       <button class="takeback-btn" id="tb-btn" onclick="bookTakeback(this)">Book free in-store take-back &rarr;</button>
-
       <span class="slbl">Record your action</span>
       <div class="log-wrap">
         <div class="log-s">Help us track real-world garment lifecycles. Your data shapes our sustainability targets.</div>
-        <div class="log-pills" id="log-pills">
+        <div class="log-pills">
           <button class="lpill" onclick="logA(this,'2.1 kg CO&#x2082; saved','Equivalent to 18 km not driven',false)">Recycled</button>
           <button class="lpill" onclick="logA(this,'1.4 kg CO&#x2082; avoided','Equivalent to 12 km not driven',false)">Donated</button>
           <button class="lpill" onclick="logA(this,'1.8 kg CO&#x2082; avoided','2.2 additional years of product life',false)">Resold</button>
@@ -546,101 +544,275 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
           <button class="lpill lf" onclick="logA(this,'1.8 kg CO&#x2082; released','This garment could have been recycled instead',true)">Threw away</button>
         </div>
         <div class="log-result" id="log-res">
-          <div style="display:flex;align-items:baseline;gap:5px">
-            <span class="log-rn" id="log-n">2.1</span>
-            <span class="log-ru" id="log-u">kg CO&#x2082; saved</span>
-          </div>
+          <div style="display:flex;align-items:baseline;gap:5px"><span class="log-rn" id="log-n">2.1</span><span class="log-ru" id="log-u">kg CO&#x2082; saved</span></div>
           <div class="log-req" id="log-eq"></div>
-          <button class="log-change" onclick="resetLog()">&#8592; Change selection</button>
+          <button class="log-change" onclick="resetLog()">Change selection</button>
         </div>
       </div>
-
-      <!-- Transitional label before star ratings — per recommendation 6 -->
-      <div class="star-transition" id="star-lead-wrap" style="display:none">
-        <div class="star-lead">Based on your experience owning this garment, how would you rate it?</div>
-      </div>
+      <div class="star-transition" id="star-lead-wrap" style="display:none"><div class="star-lead">Based on your experience owning this garment, how would you rate it?</div></div>
       <span class="slbl" id="rate-lbl" style="display:none">Rate this garment</span>
       <div class="star-section" id="star-section" style="display:none"></div>
-
       <div class="fb-acc" id="fb-acc" style="display:none">
-        <div class="fb-head" onclick="toggleFb(this)">
-          <span class="fb-hl">Share feedback with Terranova World</span>
-          <div class="fb-hch">&#9660;</div>
-        </div>
+        <div class="fb-head" onclick="toggleFb(this)"><span class="fb-hl">Share feedback with Terranova World</span><div class="fb-hch">&#9660;</div></div>
         <div class="fb-bd" id="fb-bd">
-          <textarea class="fb-ta" id="fb-ta" rows="3" maxlength="500"
-            placeholder="What worked well, what could be better, or any concerns about the sustainability claims..."
-            oninput="updateCount(this)"></textarea>
+          <textarea class="fb-ta" id="fb-ta" rows="3" maxlength="500" placeholder="What worked well, what could be better, or any concerns about the sustainability claims..." oninput="updateCount(this)"></textarea>
           <div class="fb-count" id="fb-count">0 / 500</div>
           <div class="fb-arow"><span>Submit anonymously</span><div class="ftoggle" onclick="this.classList.toggle('on')"></div></div>
           <button class="fb-submit" id="fb-submit" onclick="sendFb()" disabled>Send feedback &rarr;</button>
-          <div class="fb-ok" id="fb-ok">
-            <svg width="20" height="20" viewBox="0 0 20 20" style="display:inline-block;vertical-align:middle;margin-right:5px"><circle cx="10" cy="10" r="9" fill="#EEF7F2" stroke="#A8D5BC" stroke-width="1"/><path d="M6 10l3 3 5-5" stroke="#1A5C42" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Thank you. The team will review your feedback.
-          </div>
+          <div class="fb-ok" id="fb-ok"><svg width="20" height="20" viewBox="0 0 20 20" style="display:inline-block;vertical-align:middle;margin-right:5px"><circle cx="10" cy="10" r="9" fill="#EEF7F2" stroke="#A8D5BC" stroke-width="1"/><path d="M6 10l3 3 5-5" stroke="#1A5C42" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Thank you. The team will review your feedback.</div>
         </div>
       </div>
       <div class="bsp"></div>
     </div>
-
   </div>
-
-  <!-- Bottom nav -->
   <div class="bnav">
-    <button class="nb on" data-p="overview" onclick="switchNav(this)">
-      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="12" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="12" width="7" height="7" rx="1.5"/><rect x="12" y="12" width="7" height="7" rx="1.5"/></svg>
-      <span>Overview</span><div class="nbdot"></div>
-    </button>
-    <button class="nb" data-p="made" onclick="switchNav(this)">
-      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 6h14M4 10h14M4 14h9M4 18h11"/></svg>
-      <span>Made</span><div class="nbdot"></div>
-    </button>
-    <button class="nb" data-p="impact" onclick="switchNav(this)">
-      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17L8 10L12 13L18 4"/><path d="M18 4h-3.5M18 4v3.5"/></svg>
-      <span>Impact</span><div class="nbdot"></div>
-    </button>
-    <button class="nb" data-p="eol" onclick="switchNav(this)">
-      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 11a6.5 6.5 0 01-6.5 6.5H8M4.5 11A6.5 6.5 0 0111 4.5h3.5"/><path d="M8 14.5L4.5 17.5L8 20M14.5 2L18 5L14.5 8"/></svg>
-      <span>End of Life</span><div class="nbdot"></div>
-    </button>
+    <button class="nb on" data-p="overview" onclick="switchNav(this)"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="12" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="12" width="7" height="7" rx="1.5"/><rect x="12" y="12" width="7" height="7" rx="1.5"/></svg><span>Overview</span><div class="nbdot"></div></button>
+    <button class="nb" data-p="made" onclick="switchNav(this)"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 6h14M4 10h14M4 14h9M4 18h11"/></svg><span>Made</span><div class="nbdot"></div></button>
+    <button class="nb" data-p="impact" onclick="switchNav(this)"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17L8 10L12 13L18 4"/><path d="M18 4h-3.5M18 4v3.5"/></svg><span>Impact</span><div class="nbdot"></div></button>
+    <button class="nb" data-p="eol" onclick="switchNav(this)"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 11a6.5 6.5 0 01-6.5 6.5H8M4.5 11A6.5 6.5 0 0111 4.5h3.5"/><path d="M8 14.5L4.5 17.5L8 20M14.5 2L18 5L14.5 8"/></svg><span>End of Life</span><div class="nbdot"></div></button>
+  </div>
+</div>
+
+<!-- DRAGGABLE FAB (visible on scan screen and main app) -->
+<div class="fab" id="fab" onclick="handleFabClick(event)">
+  <button class="fab-btn" aria-label="Open task checklist">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 5h8M7 10h8M7 15h8"/><circle cx="3.5" cy="5" r="1.2" fill="rgba(255,255,255,.9)" stroke="none"/><circle cx="3.5" cy="10" r="1.2" fill="rgba(255,255,255,.9)" stroke="none"/><circle cx="3.5" cy="15" r="1.2" fill="rgba(255,255,255,.9)" stroke="none"/></svg>
+    <div class="fab-label">Tasks</div>
+  </button>
+  <div class="fab-badge" id="fab-badge">0</div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast" onclick="openTaskPanel()">
+  <div class="toast-inner">
+    <div class="toast-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5 6.5-6.5" stroke="#0B3D2E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="toast-text"><div class="toast-title">All 16 tasks complete!</div><div class="toast-sub">Tap to view summary and return to survey</div></div>
+    <div class="toast-arr">&#8250;</div>
+  </div>
+</div>
+
+<!-- TASK PANEL OVERLAY -->
+<div class="task-overlay" id="task-overlay">
+  <div class="task-backdrop" onclick="closeTaskPanel()"></div>
+  <div class="task-panel">
+    <div class="task-panel-handle"></div>
+    <div class="task-panel-hd">
+      <div class="task-panel-title">Task checklist</div>
+      <div class="task-panel-prog" id="panel-prog">0 of 16 done</div>
+      <div class="task-panel-close" onclick="closeTaskPanel()">&#10005;</div>
+    </div>
+    <div class="task-panel-track"><div class="task-panel-fill" id="panel-fill"></div></div>
+    <div class="task-done-banner" id="done-banner">
+      <div class="task-done-title">All tasks complete &#10003;</div>
+      <div class="task-done-sub">Great work! Please close this checklist and return to the Qualtrics survey to complete the questionnaire.</div>
+      <div class="task-done-actions">
+        <button class="task-done-btn-primary" onclick="closeTaskPanel()">Close and return to survey</button>
+        <button class="task-done-btn-secondary" onclick="retakeTasks()">Take the tasks again</button>
+      </div>
+    </div>
+    <div class="task-list" id="task-list"></div>
   </div>
 </div>
 
 </div></div>
 
 <script>
-// ── Navigation ──
+const TASKS=[
+  {tab:'Scan entry screen',desc:'Read the entry screen carefully. Note the product name and the green verification indicator.'},
+  {tab:'Scan entry screen',desc:'Read the "What is a Digital Product Passport?" explainer. Note one thing it tells you.'},
+  {tab:'Scan entry screen',desc:'Select the intent option that best describes why you are here. Note which one you chose and why.'},
+  {tab:'Overview',desc:'Look at the sustainability score and grade at the top right. Note both the number and the letter grade.'},
+  {tab:'Overview',desc:'Read the care instructions grid. Note the recommended wash temperature and the one prohibited action.'},
+  {tab:'Overview',desc:'Swipe through the Certifications strip. Identify what GOTS and SA8000 each relate to.'},
+  {tab:'Overview',desc:'Tap "Brand commitment" to expand it. Note the goal and the progress percentage shown.'},
+  {tab:'Made tab',desc:'Navigate to the Made tab. Tap "Organic Cotton" to expand its detail card. Note the origin and certification.'},
+  {tab:'Made tab',desc:'Tap "Dyes and treatments" to expand the accordion. Check whether PFAS or PFOS is present.'},
+  {tab:'Made tab',desc:'Tap "Dyeing and Finishing" in the production journey. Note the company name and certification.'},
+  {tab:'Impact tab',desc:'Navigate to the Impact tab. Read the carbon footprint figure and the scope note beneath it.'},
+  {tab:'Impact tab',desc:'Read the comparison note under the carbon stat. Note how it compares to the industry average.'},
+  {tab:'End of Life tab',desc:'Navigate to End of Life. Tap "Recycle" to expand the detail card. Read the guidance provided.'},
+  {tab:'End of Life tab',desc:'In "Record your action," select the option you would most likely choose. Note the CO\u2082 result shown.'},
+  {tab:'End of Life tab',desc:'Rate the garment on Overall Quality and Claims Accuracy using the star ratings that appear.'},
+  {tab:'Any screen',desc:'Tap the home icon at the top left of the green bar to return to the entry screen and confirm it works.'},
+];
+
+const checked=new Array(TASKS.length).fill(false);
+let toastTimer=null;
+let isDragging=false;
+let dragDidMove=false;
+
+// Build preview on landing screen
+function buildPreviewTasks(){
+  const c=document.getElementById('tg-preview-tasks');
+  TASKS.forEach((t,i)=>{
+    const d=document.createElement('div');d.className='tg-task-item';
+    d.innerHTML=`<div class="tg-num">${i+1}</div><div class="tg-task-text"><div class="tg-task-tab">${t.tab}</div>${t.desc}</div>`;
+    c.appendChild(d);
+  });
+}
+
+// Build task list in panel
+function buildTaskList(){
+  const c=document.getElementById('task-list');c.innerHTML='';
+  TASKS.forEach((t,i)=>{
+    const d=document.createElement('div');d.className='task-item';
+    const chkIcon=checked[i]?`<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`:'';
+    d.innerHTML=`<div class="task-cb${checked[i]?' done':''}">${chkIcon}</div><div class="task-body"><div class="task-tab-lbl">${t.tab}</div><div class="task-desc${checked[i]?' done':''}">${i+1}. ${t.desc}</div></div>`;
+    d.onclick=()=>toggleTask(i);
+    c.appendChild(d);
+  });
+  updateProgress();
+}
+
+function toggleTask(i){
+  checked[i]=!checked[i];
+  const n=checked.filter(Boolean).length;
+  // Rebuild list
+  buildTaskList();
+  // If just completed all tasks, show toast
+  if(n===TASKS.length){
+    showToast();
+  }
+}
+
+function updateProgress(){
+  const n=checked.filter(Boolean).length;
+  const pct=Math.round((n/TASKS.length)*100);
+  document.getElementById('panel-prog').textContent=n+' of '+TASKS.length+' done';
+  document.getElementById('panel-fill').style.width=pct+'%';
+  document.getElementById('fab-badge').textContent=n;
+  const banner=document.getElementById('done-banner');
+  if(n===TASKS.length){banner.classList.add('vis');}
+  else{banner.classList.remove('vis');}
+}
+
+function retakeTasks(){
+  for(let i=0;i<checked.length;i++)checked[i]=false;
+  buildTaskList();
+  document.getElementById('done-banner').classList.remove('vis');
+  closeTaskPanel();
+}
+
+// Toast notification
+function showToast(){
+  const t=document.getElementById('toast');
+  clearTimeout(toastTimer);
+  t.className='toast show';
+  toastTimer=setTimeout(()=>{
+    t.className='toast hide';
+    setTimeout(()=>{t.className='toast';},300);
+  },6000);
+}
+
+function openTaskPanel(){
+  // Hide toast if showing
+  document.getElementById('toast').className='toast';
+  clearTimeout(toastTimer);
+  buildTaskList();
+  document.getElementById('task-overlay').classList.add('vis');
+}
+function closeTaskPanel(){
+  document.getElementById('task-overlay').classList.remove('vis');
+}
+
+// Screens
+function showScan(){
+  document.getElementById('tg-screen').style.display='none';
+  const scan=document.getElementById('scan-screen');
+  scan.classList.add('vis');
+  // Show FAB on scan screen
+  showFab();
+  positionFab();
+}
+
 function enterApp(t){
-  document.getElementById('scan-screen').style.display='none';
+  document.getElementById('scan-screen').classList.remove('vis');
   document.getElementById('main-app').classList.add('vis');
+  showFab();
   switchPanel(t);syncNav(t);
 }
+
 function goHome(){
-  document.getElementById('scan-screen').style.display='';
   document.getElementById('main-app').classList.remove('vis');
+  document.getElementById('scan-screen').classList.add('vis');
+  showFab();
   document.querySelectorAll('.panel').forEach(p=>{p.scrollTop=0;});
 }
+
+function showFab(){
+  const fab=document.getElementById('fab');
+  fab.classList.add('vis');
+}
+
 function switchNav(btn){
   document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');
-  switchPanel(btn.dataset.p);
+  btn.classList.add('on');switchPanel(btn.dataset.p);
 }
 function switchPanel(p){
   document.querySelectorAll('.panel').forEach(x=>{x.classList.remove('active');x.scrollTop=0;});
   document.getElementById('pan-'+p).classList.add('active');
 }
-function syncNav(p){
-  document.querySelectorAll('.nb').forEach(b=>b.classList.toggle('on',b.dataset.p===p));
-}
-function toggleAcc(row){
-  const b=row.nextElementSibling,c=row.querySelector('.acc-ch');
-  b.classList.toggle('open');c.classList.toggle('open');
+function syncNav(p){document.querySelectorAll('.nb').forEach(b=>b.classList.toggle('on',b.dataset.p===p));}
+function toggleAcc(row){const b=row.nextElementSibling,c=row.querySelector('.acc-ch');b.classList.toggle('open');c.classList.toggle('open');}
+
+// Draggable FAB
+const fab=document.getElementById('fab');
+let fabX=null,fabY=null;
+
+function positionFab(){
+  const phone=document.getElementById('phone');
+  const pr=phone.getBoundingClientRect();
+  const fw=50,fh=50,margin=12;
+  fab.style.right=margin+'px';
+  fab.style.bottom='74px';
+  fab.style.left='';
+  fab.style.top='';
 }
 
-// Cert strip drag-to-scroll
+function handleFabClick(e){
+  if(dragDidMove){dragDidMove=false;return;}
+  openTaskPanel();
+}
+
+function initDrag(clientX,clientY){
+  isDragging=true;dragDidMove=false;
+  const phone=document.getElementById('phone');
+  const pr=phone.getBoundingClientRect();
+  const fr=fab.getBoundingClientRect();
+  // Convert to absolute position within phone
+  fab.style.right='';fab.style.bottom='';
+  fab.style.left=(fr.left-pr.left)+'px';
+  fab.style.top=(fr.top-pr.top)+'px';
+  fabX=clientX-(fr.left-pr.left);
+  fabY=clientY-(fr.top-pr.top);
+}
+function moveDrag(clientX,clientY){
+  if(!isDragging)return;
+  dragDidMove=true;
+  const phone=document.getElementById('phone');
+  const pr=phone.getBoundingClientRect();
+  const fw=fab.offsetWidth,fh=fab.offsetHeight;
+  const margin=8;
+  let nx=clientX-fabX;
+  let ny=clientY-fabY;
+  nx=Math.max(margin,Math.min(pr.width-fw-margin,nx));
+  ny=Math.max(margin,Math.min(pr.height-fh-margin,ny));
+  fab.style.left=nx+'px';
+  fab.style.top=ny+'px';
+}
+function endDrag(){isDragging=false;}
+
+fab.addEventListener('mousedown',e=>{e.preventDefault();initDrag(e.clientX,e.clientY);});
+document.addEventListener('mousemove',e=>{if(isDragging)moveDrag(e.clientX,e.clientY);});
+document.addEventListener('mouseup',endDrag);
+
+fab.addEventListener('touchstart',e=>{const t=e.touches[0];initDrag(t.clientX,t.clientY);},{passive:true});
+fab.addEventListener('touchmove',e=>{const t=e.touches[0];moveDrag(t.clientX,t.clientY);e.preventDefault();},{passive:false});
+fab.addEventListener('touchend',endDrag);
+
+// Cert strip drag
 (function(){
-  const el=document.getElementById('cert-strip');
-  let isDown=false,sx=0,sl=0;
+  const el=document.getElementById('cert-strip');let isDown=false,sx=0,sl=0;
   el.addEventListener('mousedown',e=>{isDown=true;sx=e.pageX-el.offsetLeft;sl=el.scrollLeft;});
   el.addEventListener('mouseleave',()=>{isDown=false;});
   el.addEventListener('mouseup',()=>{isDown=false;});
@@ -649,18 +821,15 @@ function toggleAcc(row){
 
 // Fibres
 const fibres=[
-  {name:'Organic Cotton',pct:60,origin:'Maharashtra, India',cert:'GOTS Certified',color:'#2D7A55',
-   detail:'GOTS-certified organic cotton grown without synthetic pesticides or fertilisers. Sourced from a fair-trade cooperative of 2,400 smallholder farmers. Annual crop and chain-of-custody audits by Control Union Certifications.'},
-  {name:'Recycled Polyester',pct:35,origin:'Taiwan',cert:'GRS Certified',color:'#2B6CB0',
-   detail:'Produced from post-consumer PET plastic bottles. GRS certified. Reduces reliance on virgin petrochemicals by approximately 59% and diverts plastic waste from landfill.'},
-  {name:'Elastane',pct:5,origin:'Germany',cert:'OEKO-TEX 100',color:'#B8860B',
-   detail:'Provides shape retention and stretch. Synthetically produced with no animal derivatives. OEKO-TEX STANDARD 100 certified against 100+ harmful substances. Subject to the brand commitment in the Overview tab — future versions will use bio-based or recycled alternatives.'},
+  {name:'Organic Cotton',pct:60,origin:'Maharashtra, India',cert:'GOTS Certified',color:'#2D7A55',detail:'GOTS-certified organic cotton grown without synthetic pesticides or fertilisers. Sourced from a fair-trade cooperative of 2,400 smallholder farmers. Annual crop and chain-of-custody audits by Control Union Certifications.'},
+  {name:'Recycled Polyester',pct:35,origin:'Taiwan',cert:'GRS Certified',color:'#2B6CB0',detail:'Produced from post-consumer PET plastic bottles. GRS certified. Reduces reliance on virgin petrochemicals by approximately 59% and diverts plastic waste from landfill.'},
+  {name:'Elastane',pct:5,origin:'Germany',cert:'OEKO-TEX 100',color:'#B8860B',detail:'Provides shape retention and stretch. Synthetically produced with no animal derivatives. OEKO-TEX STANDARD 100 certified. Subject to the brand commitment in Overview, where future versions will use bio-based or recycled alternatives.'},
 ];
 const fl=document.getElementById('flist');
 fibres.forEach(f=>{
   const wrap=document.createElement('div');
   const row=document.createElement('div');row.className='f-row';
-  row.innerHTML=`<div class="f-dot" style="background:${f.color}"></div><div class="f-info"><div class="f-name">${f.name}</div><div class="f-sub">${f.cert} · ${f.origin}</div></div><div class="f-pct">${f.pct}%</div><div class="f-ch">&#9660;</div>`;
+  row.innerHTML=`<div class="f-dot" style="background:${f.color}"></div><div class="f-info"><div class="f-name">${f.name}</div><div class="f-sub">${f.cert}, ${f.origin}</div></div><div class="f-pct">${f.pct}%</div><div class="f-ch">&#9660;</div>`;
   const det=document.createElement('div');det.className='f-detail';
   det.innerHTML=`<div class="f-detail-txt">${f.detail}</div>`;
   row.onclick=()=>{det.classList.toggle('open');row.querySelector('.f-ch').classList.toggle('open');};
@@ -679,48 +848,26 @@ const jl=document.getElementById('jlist');
 jd.forEach((j,i)=>{
   const last=i===jd.length-1;
   const it=document.createElement('div');it.className='j-item';
-  it.innerHTML=`<div class="j-l"><div class="j-dot"></div>${!last?'<div class="j-line"></div>':''}</div><div class="j-r" onclick="tJ(this)"><div class="j-top"><div><div class="j-stage">${j.s}</div><div class="j-loc">${j.l} · ${j.d}</div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px"><span class="j-cert">${j.c}</span><div class="j-ch">&#9660;</div></div></div><div class="j-detail"><div class="j-company">${j.co}</div><div class="j-desc">${j.desc}</div></div></div>`;
+  it.innerHTML=`<div class="j-l"><div class="j-dot"></div>${!last?'<div class="j-line"></div>':''}</div><div class="j-r" onclick="tJ(this)"><div class="j-top"><div><div class="j-stage">${j.s}</div><div class="j-loc">${j.l}, ${j.d}</div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px"><span class="j-cert">${j.c}</span><div class="j-ch">&#9660;</div></div></div><div class="j-detail"><div class="j-company">${j.co}</div><div class="j-desc">${j.desc}</div></div></div>`;
   jl.appendChild(it);
 });
 function tJ(el){const d=el.querySelector('.j-detail'),c=el.querySelector('.j-ch');d.classList.toggle('open');c.classList.toggle('open');}
 
-// EOL action rows — now expandable with detail cards
+// EOL
 const eols=[
-  {a:'RS',bg:'#EEF7F2',ic:'#1A5C42',t:'Resell',
-   d:'Still in good condition.',
-   detail:'List on Depop, Vestiaire Collective or Facebook Marketplace. Reselling extends the garment\'s life by an average of 2.2 years and keeps it out of landfill. Tip: photograph in natural light for best results.'},
-  {a:'DN',bg:'#EEF3FB',ic:'#1E5A8E',t:'Donate',
-   d:'Any condition accepted.',
-   detail:'Drop off at 1,200+ Seamless collection points across Australia. All conditions accepted — worn or damaged garments are redirected to textile recycling. Find your nearest collection point at seamlessaustralia.com'},
-  {a:'RP',bg:'#FDF4E3',ic:'#8A6B1E',t:'Repair',
-   d:'Rated Easy to repair.',
-   detail:'Common repairs: seam reinforcement, hem fraying, minor snags. All can be done at home or by a local tailor. Full step-by-step repair guide available at terranovaworld.com/repair — free to download.'},
-  {a:'RC',bg:'#EEF7F2',ic:'#0B3D2E',t:'Recycle',
-   d:'Free in-store take-back.',
-   detail:'Return to any Terranova World store for certified textile-to-textile recycling at no cost. No minimum condition required. Receive 10% off your next purchase as a thank-you. Use the "Book take-back" button below to confirm your visit.'},
+  {a:'RS',bg:'#EEF7F2',ic:'#1A5C42',t:'Resell',d:'Still in good condition.',detail:'List on Depop, Vestiaire Collective or Facebook Marketplace. Reselling extends life by an average of 2.2 years and keeps the garment out of landfill.'},
+  {a:'DN',bg:'#EEF3FB',ic:'#1E5A8E',t:'Donate',d:'Any condition accepted.',detail:'Drop off at 1,200+ Seamless collection points across Australia. All conditions accepted. Worn or damaged garments are redirected to textile recycling. Find your nearest point at seamlessaustralia.com'},
+  {a:'RP',bg:'#FDF4E3',ic:'#8A6B1E',t:'Repair',d:'Rated Easy to repair.',detail:'Common repairs: seam reinforcement, hem fraying, minor snags. All can be done at home or by a local tailor. Full repair guide at terranovaworld.com/repair, free to download.'},
+  {a:'RC',bg:'#EEF7F2',ic:'#0B3D2E',t:'Recycle',d:'Free in-store take-back.',detail:'Return to any Terranova World store for certified textile-to-textile recycling at no cost. No minimum condition required. Receive 10% off your next purchase. Use the booking button below.'},
 ];
 const eolEl=document.getElementById('eollist');
 eols.forEach(o=>{
   const row=document.createElement('div');row.className='eol-row';
-  row.innerHTML=`
-    <div class="eol-top" onclick="toggleEol(this)">
-      <div class="eol-ic" style="background:${o.bg}"><span style="font-size:11px;font-weight:500;color:${o.ic}">${o.a}</span></div>
-      <div style="flex:1"><div class="eol-t">${o.t}</div><div class="eol-d">${o.d}</div></div>
-      <div class="eol-arr">&#8250;</div>
-    </div>
-    <div class="eol-detail">
-      <div class="eol-detail-txt">${o.detail}</div>
-    </div>`;
+  row.innerHTML=`<div class="eol-top" onclick="toggleEol(this)"><div class="eol-ic" style="background:${o.bg}"><span style="font-size:11px;font-weight:500;color:${o.ic}">${o.a}</span></div><div style="flex:1"><div class="eol-t">${o.t}</div><div class="eol-d">${o.d}</div></div><div class="eol-arr">&#8250;</div></div><div class="eol-detail"><div class="eol-detail-txt">${o.detail}</div></div>`;
   eolEl.appendChild(row);
 });
-function toggleEol(top){
-  const det=top.nextElementSibling;
-  const arr=top.querySelector('.eol-arr');
-  det.classList.toggle('open');
-  arr.classList.toggle('open');
-}
-
-function bookTakeback(btn){btn.textContent='Take-back booked ✓';btn.classList.add('done');btn.onclick=null;}
+function toggleEol(top){const det=top.nextElementSibling,arr=top.querySelector('.eol-arr');det.classList.toggle('open');arr.classList.toggle('open');}
+function bookTakeback(btn){btn.textContent='Take-back booked';btn.classList.add('done');btn.onclick=null;}
 
 // Logger
 function logA(btn,nText,eqText,warn){
@@ -733,11 +880,8 @@ function logA(btn,nText,eqText,warn){
   document.getElementById('log-u').textContent=parts.slice(1).join(' ');
   document.getElementById('log-eq').textContent=eqText;
   setTimeout(()=>{
-    const lw=document.getElementById('star-lead-wrap');
-    const rl=document.getElementById('rate-lbl');
-    const ss=document.getElementById('star-section');
-    lw.style.display='block';lw.style.animation='up .3s ease';
-    rl.style.display='block';ss.style.display='block';ss.style.animation='up .3s ease';
+    const lw=document.getElementById('star-lead-wrap'),rl=document.getElementById('rate-lbl'),ss=document.getElementById('star-section');
+    lw.style.display='block';rl.style.display='block';ss.style.display='block';ss.style.animation='up .3s ease';
     buildStars();
     setTimeout(()=>{const fa=document.getElementById('fb-acc');fa.style.display='block';fa.style.animation='up .3s ease';},350);
   },500);
@@ -745,34 +889,20 @@ function logA(btn,nText,eqText,warn){
 function resetLog(){
   document.querySelectorAll('.lpill').forEach(p=>p.classList.remove('sel'));
   document.getElementById('log-res').classList.remove('show');
-  ['star-lead-wrap','rate-lbl','star-section','fb-acc'].forEach(id=>{
-    const el=document.getElementById(id);if(el)el.style.display='none';
-  });
+  ['star-lead-wrap','rate-lbl','star-section','fb-acc'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});
 }
 
 // Stars
-const sCats=[
-  {id:'sq',l:'Overall quality',def:4},
-  {id:'ss',l:'Sustainability',def:5},
-  {id:'sc',l:'Claims accuracy',def:4},
-  {id:'sd',l:'Durability',def:3},
-];
+const sCats=[{id:'sq',l:'Overall quality',def:4},{id:'ss',l:'Sustainability',def:5},{id:'sc',l:'Claims accuracy',def:4},{id:'sd',l:'Durability',def:3}];
 const sVals={};
 function buildStars(){
-  const sw=document.getElementById('star-section');
-  if(sw.querySelector('.star-row'))return;
-  sCats.forEach(c=>{
-    sVals[c.id]=c.def;
-    const row=document.createElement('div');row.className='star-row';
-    row.innerHTML=`<span class="star-lbl">${c.l}</span><div class="stars-g" id="${c.id}"></div>`;
-    sw.appendChild(row);renderStars(c.id,c.def);
-  });
+  const sw=document.getElementById('star-section');if(sw.querySelector('.star-row'))return;
+  sCats.forEach(c=>{sVals[c.id]=c.def;const row=document.createElement('div');row.className='star-row';row.innerHTML=`<span class="star-lbl">${c.l}</span><div class="stars-g" id="${c.id}"></div>`;sw.appendChild(row);renderStars(c.id,c.def);});
 }
 function renderStars(id,val){
   const el=document.getElementById(id);if(!el)return;el.innerHTML='';
   for(let i=1;i<=5;i++){
-    const b=document.createElement('button');b.className='star-btn';
-    const f=i<=val;
+    const b=document.createElement('button');b.className='star-btn';const f=i<=val;
     b.innerHTML=`<svg width="22" height="22" viewBox="0 0 22 22"><path d="M11 2l2.4 4.8 5.3.8-3.8 3.7.9 5.3-4.8-2.5-4.8 2.5.9-5.3-3.8-3.7 5.3-.8z" fill="${f?'#C19A3C':'none'}" stroke="${f?'#C19A3C':'#DDD'}" stroke-width="1.3" stroke-linejoin="round"/></svg>`;
     b.setAttribute('aria-label',`${i} star`);
     b.onclick=(()=>{const v=i;return()=>{sVals[id]=v;renderStars(id,v);}})();
@@ -781,31 +911,23 @@ function renderStars(id,val){
 }
 
 // Feedback
-function updateCount(ta){
-  document.getElementById('fb-count').textContent=`${ta.value.length} / 500`;
-  document.getElementById('fb-submit').disabled=ta.value.trim().length===0;
-}
+function updateCount(ta){document.getElementById('fb-count').textContent=`${ta.value.length} / 500`;document.getElementById('fb-submit').disabled=ta.value.trim().length===0;}
 function toggleFb(hd){const bd=document.getElementById('fb-bd'),ch=hd.querySelector('.fb-hch');bd.classList.toggle('open');ch.classList.toggle('open');}
 function sendFb(){
   const ta=document.getElementById('fb-ta');if(!ta.value.trim())return;
-  ta.style.display='none';
-  document.querySelector('.fb-count').style.display='none';
-  document.querySelector('.fb-arow').style.display='none';
-  document.getElementById('fb-submit').style.display='none';
-  document.getElementById('fb-ok').classList.add('show');
+  ta.style.display='none';document.querySelector('.fb-count').style.display='none';document.querySelector('.fb-arow').style.display='none';document.getElementById('fb-submit').style.display='none';document.getElementById('fb-ok').classList.add('show');
 }
 
 // Follow
 function toggleFlw(btn,ctId,base){
   const ct=document.getElementById(ctId);
-  if(btn.dataset.f==='1'){
-    btn.dataset.f='';btn.style.cssText='padding:7px 16px;border-radius:99px;border:1.5px solid var(--green);background:transparent;color:var(--green);font-size:12px;font-weight:500;cursor:pointer;font-family:inherit';
-    btn.textContent='Follow';ct.textContent=base+' following';
-  } else {
-    btn.dataset.f='1';btn.style.cssText='padding:7px 16px;border-radius:99px;border:1.5px solid #0B3D2E;background:#0B3D2E;color:#fff;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit';
-    btn.textContent='Following ✓';ct.textContent=(base+1)+' following';
-  }
+  if(btn.dataset.f==='1'){btn.dataset.f='';btn.style.cssText='padding:7px 16px;border-radius:99px;border:1.5px solid var(--green);background:transparent;color:var(--green);font-size:12px;font-weight:500;cursor:pointer;font-family:inherit';btn.textContent='Follow';ct.textContent=base+' following';}
+  else{btn.dataset.f='1';btn.style.cssText='padding:7px 16px;border-radius:99px;border:1.5px solid #0B3D2E;background:#0B3D2E;color:#fff;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit';btn.textContent='Following';ct.textContent=(base+1)+' following';}
 }
+
+// Init
+buildPreviewTasks();
+positionFab();
 </script>
 </body>
 </html>
