@@ -24,10 +24,6 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
 @keyframes up{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 @keyframes pop{0%{transform:scale(.95)}60%{transform:scale(1.03)}100%{transform:scale(1)}}
-@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes toastIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-@keyframes toastOut{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(12px)}}
 
 .wrap{display:flex;justify-content:center;align-items:flex-start;padding:2rem 1rem;min-height:100vh}
 .phone{width:100%;max-width:375px;background:var(--white);border-radius:36px;overflow:hidden;
@@ -113,72 +109,22 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
 .nbdot{width:4px;height:4px;border-radius:50%;background:var(--green);opacity:0;margin:0 auto}
 .nb.on .nbdot{opacity:1}
 
-/* DRAGGABLE FAB */
-.fab{position:absolute;z-index:50;touch-action:none;display:none;user-select:none;right:16px;bottom:74px}
-.fab.vis{display:block}
-.fab-btn{width:50px;height:50px;border-radius:50%;background:var(--green);box-shadow:0 4px 16px rgba(11,61,46,.35),0 1px 4px rgba(0,0,0,.15);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:none;cursor:pointer;position:relative;pointer-events:none}
-.fab-badge{position:absolute;top:-3px;right:-3px;width:19px;height:19px;border-radius:50%;background:#4DB380;border:2px solid var(--white);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;color:var(--green);font-variant-numeric:tabular-nums;pointer-events:none}
-.fab-label{font-size:8px;color:rgba(255,255,255,.65);letter-spacing:.04em;text-align:center;line-height:1;pointer-events:none}
-
-/* TASK OVERLAY */
-.task-overlay{position:absolute;inset:0;z-index:100;display:none;flex-direction:column;pointer-events:none}
-.task-overlay.vis{display:flex;pointer-events:all}
-.task-bd{position:absolute;inset:0;background:rgba(0,0,0,.35);animation:fadeIn .2s ease;cursor:pointer}
-.task-panel{position:absolute;bottom:0;left:0;right:0;background:var(--white);border-radius:24px 24px 0 0;display:flex;flex-direction:column;max-height:90%;animation:slideUp .28s cubic-bezier(.32,.72,0,1)}
-.tp-handle{width:36px;height:4px;border-radius:99px;background:var(--line2);margin:10px auto 0;flex-shrink:0}
-.tp-hd{display:flex;align-items:center;justify-content:space-between;padding:14px 1.5rem 10px;flex-shrink:0}
-.tp-title{font-size:15px;font-weight:500;color:var(--ink);letter-spacing:-.02em}
-.tp-prog{font-size:12px;color:var(--ink3);font-variant-numeric:tabular-nums}
-.tp-close{width:28px;height:28px;border-radius:50%;background:var(--bg);border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;color:var(--ink4);flex-shrink:0}
-.tp-track{height:3px;background:var(--line2);margin:0 1.5rem 4px;border-radius:99px;overflow:hidden;flex-shrink:0}
-.tp-fill{height:100%;border-radius:99px;background:#4DB380;transition:width .4s cubic-bezier(.4,0,.2,1);width:0%}
-
-/* Completion banner */
-.tp-done{display:none;margin:8px 1.5rem 4px;padding:14px;background:var(--green-lt);border:1px solid var(--green-bd);border-radius:var(--r-md);flex-shrink:0}
-.tp-done.vis{display:block;animation:up .3s ease}
-.tp-done-title{font-size:14px;font-weight:500;color:var(--green);letter-spacing:-.01em;margin-bottom:3px}
-.tp-done-sub{font-size:12px;color:var(--green-mid);line-height:1.5;margin-bottom:12px}
-
-/* Waiting state */
-.tp-wait{background:var(--white);border:1.5px solid var(--green-bd);border-radius:var(--r-sm);padding:12px 14px;text-align:center;margin-bottom:10px}
-.tp-wait-lbl{font-size:11px;font-weight:500;color:var(--green-mid);margin-bottom:5px}
-.tp-wait-msg{font-size:12px;color:var(--ink3);line-height:1.55;margin-bottom:10px}
-.tp-countdown{font-size:28px;font-weight:500;color:var(--green);font-variant-numeric:tabular-nums;letter-spacing:.04em;line-height:1}
-.tp-countdown-sub{font-size:10px;color:var(--ink4);margin-top:3px}
-
-/* Code reveal */
-.tp-code-wrap{background:var(--white);border:1.5px solid var(--green-bd);border-radius:var(--r-sm);padding:12px 14px;text-align:center;margin-bottom:10px}
-.tp-code-lbl{font-size:11px;font-weight:500;color:var(--green-mid);margin-bottom:8px}
-.tp-code{font-size:26px;font-weight:500;color:var(--green);letter-spacing:.1em;font-family:'SF Mono','Roboto Mono',monospace;line-height:1;margin-bottom:5px}
-.tp-code-note{font-size:11px;color:var(--ink3);line-height:1.5}
-
-.tp-actions{display:flex;flex-direction:column;gap:8px}
-.tp-btn-primary{display:block;width:100%;padding:12px;background:var(--green);border:none;border-radius:var(--r-sm);font-size:13px;font-weight:500;color:#fff;cursor:pointer;font-family:inherit;letter-spacing:-.01em;text-align:center;transition:background .15s}
-.tp-btn-primary:active{background:#082E22}
-.tp-btn-secondary{display:block;width:100%;padding:11px;background:transparent;border:1.5px solid var(--green-bd);border-radius:var(--r-sm);font-size:13px;font-weight:500;color:var(--green-mid);cursor:pointer;font-family:inherit;letter-spacing:-.01em;text-align:center}
-
-/* Task list */
-.tp-list{overflow-y:auto;-webkit-overflow-scrolling:touch;padding:8px 1.5rem 1.5rem;flex:1;min-height:0}
-.tp-item{display:flex;align-items:flex-start;gap:12px;padding:11px 0;border-bottom:1px solid var(--line);cursor:pointer;transition:opacity .15s}
-.tp-item:last-child{border-bottom:none}
-.tp-item:active{opacity:.65}
-.tp-cb{width:22px;height:22px;border-radius:6px;border:1.5px solid var(--line2);background:var(--white);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;transition:background .15s,border-color .15s}
-.tp-cb.done{background:var(--green);border-color:var(--green)}
-.tp-body{flex:1}
-.tp-tab-lbl{font-size:10px;font-weight:500;color:var(--ink4);letter-spacing:.05em;text-transform:uppercase;margin-bottom:2px}
-.tp-desc{font-size:13px;color:var(--ink);line-height:1.5}
-.tp-desc.done{color:var(--ink4);text-decoration:line-through}
-
-/* Toast */
-.toast{position:absolute;bottom:80px;left:16px;right:16px;z-index:200;pointer-events:none;display:none}
-.toast.show{display:block;animation:toastIn .3s ease forwards}
-.toast.hide{display:block;animation:toastOut .3s ease forwards}
-.toast-inner{background:var(--green);border-radius:14px;padding:12px 16px;display:flex;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(11,61,46,.3);pointer-events:all;cursor:pointer}
-.toast-icon{width:28px;height:28px;border-radius:50%;background:#4DB380;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.toast-text{flex:1}
-.toast-title{font-size:12px;font-weight:500;color:#fff;letter-spacing:-.01em;margin-bottom:1px}
-.toast-sub{font-size:11px;color:rgba(255,255,255,.6)}
-.toast-arr{font-size:14px;color:rgba(255,255,255,.5);flex-shrink:0}
+/* TASK BANNER */
+.task-banner{background:var(--green-lt);border-bottom:1.5px solid var(--green-bd);flex-shrink:0;padding:10px 1.25rem 12px}
+.tb-bar{height:3px;background:var(--green-bd);border-radius:99px;overflow:hidden;margin-bottom:10px}
+.tb-fill{height:100%;border-radius:99px;background:var(--green);transition:width .4s cubic-bezier(.4,0,.2,1)}
+.tb-top{display:flex;align-items:flex-start;gap:10px}
+.tb-num{font-size:10px;font-weight:500;color:var(--green-mid);letter-spacing:.04em;white-space:nowrap;margin-top:2px;flex-shrink:0}
+.tb-desc{flex:1;font-size:12px;color:var(--ink2);line-height:1.5}
+.tb-done-btn{flex-shrink:0;padding:6px 14px;border-radius:99px;background:var(--green);border:none;font-size:12px;font-weight:500;color:#fff;cursor:pointer;font-family:inherit;transition:background .15s,opacity .15s;opacity:.3;pointer-events:none;white-space:nowrap}
+.tb-done-btn.ready{opacity:1;pointer-events:all;animation:pop .25s ease}
+.tb-done-btn.ready:active{background:#082E22}
+.tb-code-wrap{margin-top:10px;background:var(--white);border:1.5px solid var(--green-bd);border-radius:var(--r-sm);padding:12px 14px;text-align:center}
+.tb-code-lbl{font-size:11px;font-weight:500;color:var(--green-mid);margin-bottom:8px}
+.tb-code-val{font-size:24px;font-weight:500;color:var(--green);letter-spacing:.1em;font-family:'SF Mono','Roboto Mono',monospace;line-height:1;margin-bottom:5px}
+.tb-code-note{font-size:11px;color:var(--ink3);line-height:1.5}
+.tb-copy-btn{display:block;width:100%;margin-top:10px;padding:11px;background:var(--green);border:none;border-radius:var(--r-sm);font-size:13px;font-weight:500;color:#fff;cursor:pointer;font-family:inherit;letter-spacing:-.01em;text-align:center;transition:background .15s}
+.tb-copy-btn:active{background:#082E22}
 
 /* Shared atoms */
 .slbl{display:block;font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);padding:0 1.5rem;margin-top:1.75rem;margin-bottom:.85rem}
@@ -352,16 +298,15 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
   <div class="tg-hero">
     <div class="tg-badge"><div class="tg-bdot"></div><span class="tg-btxt">Research Study, Swinburne University</span></div>
     <div class="tg-title">Your tasks</div>
-    <div class="tg-sub">Please read through all 16 tasks before you begin.</div>
+    <div class="tg-sub">Read through the 16 tasks below. Each task will appear one at a time as you explore, so you do not need to memorise anything.</div>
     <div class="tg-meta">
       <div class="tg-pill"><svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="6.5" cy="6.5" r="5"/><path d="M6.5 4v2.5L8 8"/></svg>About 10 minutes</div>
       <div class="tg-pill"><svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h9M2 6.5h9M2 10h5"/></svg>16 tasks</div>
     </div>
   </div>
   <div class="tg-body">
-    <div class="tg-intro">You are about to explore a <strong>Digital Product Passport (DPP)</strong>, a digital record of a garment's materials, production journey, environmental impact, and end-of-life options. This is a design model only; no real transaction is required.<br><br>Work through the tasks in order. Tick each one off using the green checklist button visible throughout the app. When all tasks are done, a completion code will appear for you to enter in the Qualtrics survey.</div>
+    <div class="tg-intro">You are about to explore a <strong>Digital Product Passport (DPP)</strong>, a digital record of a garment's materials, production journey, environmental impact, and end-of-life options. This is a design model only; no real transaction is required.<br><br>Each task will be shown to you one at a time in a banner at the top of the screen. A <strong>Done, next task</strong> button in the banner will activate once the app detects you have completed the action described. Tap it to move to the next task.</div>
     <div class="tg-tasks" id="tg-preview"></div>
-    <div class="tg-note"><strong>Tip:</strong> The checklist button can be dragged to any position on screen so it never blocks what you are reading.</div>
   </div>
   <button class="tg-cta" onclick="showScan()">I have read the tasks, begin &rarr;</button>
 </div>
@@ -395,11 +340,12 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
         <div class="ibtn-l">Environmental impact</div><div class="ibtn-d">Carbon, water, benchmarks</div>
       </button>
     </div>
-    <div class="ss-note">
+    <div class="ss-note" id="dpp-explainer" onclick="sc('dppExplainerRead')" style="cursor:pointer">
       <div class="ss-note-ic"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="rgba(255,255,255,.8)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="1.5" width="10" height="11" rx="2"/><path d="M5 5.5h4M5 8h3"/></svg></div>
       <div><div class="ss-note-t">What is a Digital Product Passport?</div><div class="ss-note-b">A verified, independently audited record of this garment's materials, origins, environmental footprint, and end-of-life options. Issued by Terranova World and verified by GS1 Australia.</div></div>
     </div>
   </div>
+  <div class="task-banner" id="task-banner-scan"></div>
   <button class="ss-cta" onclick="enterApp('overview')">View full passport &rarr;</button>
 </div>
 
@@ -410,6 +356,7 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
     <div class="vbar-l"><div class="vbar-p"></div><span class="vbar-t">Scan confirmed, GS1 verified</span></div>
     <span class="vbar-brand">Terranova World</span>
   </div>
+  <div class="task-banner" id="task-banner-main"></div>
   <div class="panels">
     <!-- OVERVIEW -->
     <div class="panel active" id="pan-overview">
@@ -427,10 +374,10 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
       </div>
       <span class="slbl">Care instructions</span>
       <div class="care-grid">
-        <div class="care-card"><div class="care-ic" style="background:#EEF7F2"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#1A5C42" stroke-width="1.5" stroke-linecap="round"><path d="M4 8h12M4 8a6 6 0 0012 0"/><path d="M10 3v2"/></svg></div><div class="care-lbl">30°C cold wash</div></div>
-        <div class="care-card"><div class="care-ic" style="background:#EEF7F2"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#1A5C42" stroke-width="1.5" stroke-linecap="round"><path d="M6 10a4 4 0 008 0V6H6v4z"/></svg></div><div class="care-lbl">Gentle cycle</div></div>
-        <div class="care-card"><div class="care-ic" style="background:#EEF7F2"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#1A5C42" stroke-width="1.5" stroke-linecap="round"><path d="M10 15V7M6 11l4-4 4 4"/><path d="M5 16h10"/></svg></div><div class="care-lbl">Air dry flat</div></div>
-        <div class="care-card no"><div class="care-ic" style="background:#FEE2E2"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#DC2626" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l10 10M15 5L5 15"/></svg></div><div class="care-lbl no">No bleach</div></div>
+        <div class="care-card" onclick="sc('careViewed')" style="cursor:pointer"><div class="care-ic" style="background:#EEF7F2"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#1A5C42" stroke-width="1.5" stroke-linecap="round"><path d="M4 8h12M4 8a6 6 0 0012 0"/><path d="M10 3v2"/></svg></div><div class="care-lbl">30°C cold wash</div></div>
+        <div class="care-card" onclick="sc('careViewed')" style="cursor:pointer"><div class="care-ic" style="background:#EEF7F2"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#1A5C42" stroke-width="1.5" stroke-linecap="round"><path d="M6 10a4 4 0 008 0V6H6v4z"/></svg></div><div class="care-lbl">Gentle cycle</div></div>
+        <div class="care-card" onclick="sc('careViewed')" style="cursor:pointer"><div class="care-ic" style="background:#EEF7F2"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#1A5C42" stroke-width="1.5" stroke-linecap="round"><path d="M10 15V7M6 11l4-4 4 4"/><path d="M5 16h10"/></svg></div><div class="care-lbl">Air dry flat</div></div>
+        <div class="care-card no" onclick="sc('careViewed')" style="cursor:pointer"><div class="care-ic" style="background:#FEE2E2"><svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#DC2626" stroke-width="1.8" stroke-linecap="round"><path d="M5 5l10 10M15 5L5 15"/></svg></div><div class="care-lbl no">No bleach</div></div>
       </div>
       <div class="care-note">Cool iron max 110°C if needed. No dry cleaning.</div>
       <span class="slbl">Certifications, swipe to see all</span>
@@ -444,7 +391,7 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
       </div>
       <div class="comm-bar"><span class="comm-n">2,847 owners</span><div class="comm-sep"></div><span>9.2t CO&#x2082; prevented together</span></div>
       <div class="acc">
-        <div class="acc-row" onclick="toggleAcc(this)">
+        <div class="acc-row" data-sc="brandCommitmentExpanded" onclick="toggleAcc(this)">
           <div class="acc-l"><div class="acc-t">Brand commitment</div><div class="acc-s">Eliminating virgin elastane by 2026</div></div>
           <div class="acc-ch">&#9660;</div>
         </div>
@@ -484,7 +431,7 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
       </div>
       <div class="flist" id="flist"></div>
       <div class="acc">
-        <div class="acc-row" onclick="toggleAcc(this)">
+        <div class="acc-row" data-sc="dyesExpanded" onclick="toggleAcc(this)">
           <div class="acc-l"><div class="acc-t">Dyes and treatments</div><div class="acc-s">PFAS-free, No restricted substances</div></div>
           <div class="acc-ch">&#9660;</div>
         </div>
@@ -530,7 +477,7 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
         <div class="stat-delta" style="background:#EEF3FB;color:#1E5A8E">56% below industry average</div>
       </div>
       <div class="acc">
-        <div class="acc-row" onclick="toggleAcc(this)">
+        <div class="acc-row" data-sc="aboutDataExpanded" onclick="toggleAcc(this)">
           <div class="acc-l"><div class="acc-t">About this data</div><div class="acc-s">Methodology, scope and benchmarks</div></div>
           <div class="acc-ch">&#9660;</div>
         </div>
@@ -585,280 +532,142 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
   </div>
 </div>
 
-<!-- FAB -->
-<div class="fab" id="fab" onclick="handleFabClick(event)">
-  <button class="fab-btn" aria-label="Open task checklist">
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 5h8M7 10h8M7 15h8"/><circle cx="3.5" cy="5" r="1.2" fill="rgba(255,255,255,.9)" stroke="none"/><circle cx="3.5" cy="10" r="1.2" fill="rgba(255,255,255,.9)" stroke="none"/><circle cx="3.5" cy="15" r="1.2" fill="rgba(255,255,255,.9)" stroke="none"/></svg>
-    <div class="fab-label">Tasks</div>
-  </button>
-  <div class="fab-badge" id="fab-badge">0</div>
-</div>
-
-<!-- TOAST -->
-<div class="toast" id="toast" onclick="openTaskPanel()">
-  <div class="toast-inner">
-    <div class="toast-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5 6.5-6.5" stroke="#0B3D2E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-    <div class="toast-text"><div class="toast-title">All 16 tasks ticked!</div><div class="toast-sub">Tap to check your progress</div></div>
-    <div class="toast-arr">&#8250;</div>
-  </div>
-</div>
-
-<!-- TASK OVERLAY -->
-<div class="task-overlay" id="task-overlay">
-  <div class="task-bd" onclick="closeTaskPanel()"></div>
-  <div class="task-panel">
-    <div class="tp-handle"></div>
-    <div class="tp-hd">
-      <div class="tp-title">Task checklist</div>
-      <div class="tp-prog" id="tp-prog">0 of 16 done</div>
-      <div class="tp-close" onclick="closeTaskPanel()">&#10005;</div>
-    </div>
-    <div class="tp-track"><div class="tp-fill" id="tp-fill"></div></div>
-    <!-- Completion banner (hidden until all tasks done) -->
-    <div class="tp-done" id="tp-done">
-      <div class="tp-done-title">All tasks ticked &#10003;</div>
-      <div class="tp-done-sub">Great work exploring the passport.</div>
-      <!-- Waiting state -->
-      <div id="tp-wait" style="display:none">
-        <div class="tp-wait">
-          <div class="tp-wait-lbl">Please continue exploring the app</div>
-          <div class="tp-wait-msg" id="tp-wait-msg">Your completion code will appear once you have spent enough time with the passport. Keep exploring or re-read any sections while you wait.</div>
-          <div class="tp-countdown" id="tp-countdown">6m 0s</div>
-          <div class="tp-countdown-sub" id="tp-countdown-sub">Time remaining</div>
-        </div>
-        <div class="tp-actions">
-          <button class="tp-btn-secondary" onclick="retakeTasks()">Take the tasks again</button>
-        </div>
-      </div>
-      <!-- Code reveal -->
-      <div id="tp-code" style="display:none">
-        <div class="tp-code-wrap">
-          <div class="tp-code-lbl">Enter this code in the Qualtrics survey to continue</div>
-          <div class="tp-code">DPP-2026-TW</div>
-          <div class="tp-code-note">Copy this code exactly as shown, then return to the survey.</div>
-        </div>
-        <div class="tp-actions">
-          <button class="tp-btn-primary" id="copy-btn" onclick="copyCode()">Copy code</button>
-          <button class="tp-btn-secondary" onclick="retakeTasks()">Take the tasks again</button>
-        </div>
-      </div>
-    </div>
-    <div class="tp-list" id="tp-list"></div>
-  </div>
-</div>
-
 </div></div>
 <script>
-// ── Constants ──
+// ── Completion code ──
 const COMPLETION_CODE = 'DPP-2026-TW';
-const MIN_MS = 360000; // 6 minutes in milliseconds
 
-// ── State ──
-const checked = new Array(16).fill(false);
-let appStartTime      = null;
-let countdownInterval = null; // post-timer poller: fires every 2s after timer expires
-let displayInterval   = null; // drives the visible countdown number in the task panel
-let isDragging = false;
-let dragMoved  = false;
-let dragOffX   = 0;
-let dragOffY   = 0;
-let toastTimer = null;
-
-// ── System checks (12 required interactions) ──
+// ── System checks (16 required interactions, one per task) ──
 const sysChecks = {
-  scanViewed:        false,
-  appEntered:        false,
-  tabOverview:       false,
-  tabMade:           false,
-  tabImpact:         false,
-  tabEol:            false,
-  overviewAccordion: false,
-  fibreExpanded:     false,
-  journeyExpanded:   false,
-  eolExpanded:       false,
-  logPillSelected:   false,
-  starGiven:         false,
+  scanViewed:              false, // task 1
+  dppExplainerRead:        false, // task 2
+  appEntered:              false, // task 3
+  tabOverview:             false, // task 4
+  careViewed:              false, // task 5
+  certStripSwiped:         false, // task 6
+  brandCommitmentExpanded: false, // task 7
+  fibreExpanded:           false, // task 8
+  dyesExpanded:            false, // task 9
+  journeyExpanded:         false, // task 10
+  tabImpact:               false, // task 11
+  aboutDataExpanded:       false, // task 12
+  recycleExpanded:         false, // task 13
+  logPillSelected:         false, // task 14
+  qualityRated:            false, // task 15 (part a)
+  claimsRated:             false, // task 15 (part b)
+  homeVisited:             false, // task 16
 };
-function sc(key) { sysChecks[key] = true; }
 
-// ── Tab sc key map ──
-const TAB_SC = { overview: 'tabOverview', made: 'tabMade', impact: 'tabImpact', eol: 'tabEol' };
-
-// ── Master gate check ──
-function allConditionsMet() {
-  return Object.values(sysChecks).every(Boolean);
+// Fire a system check and refresh the banner
+function sc(key) {
+  if (!sysChecks.hasOwnProperty(key)) return;
+  sysChecks[key] = true;
+  renderBanner();
+  // Auto-advance task 3 (appEntered) — the intent tile tap already moves the screen forward
+  if (currentTask === 2 && key === 'appEntered') {
+    currentTask++;
+    renderBanner();
+  }
 }
 
-// ── Task data ──
+// ── Task data (16 tasks, each with one system check key or a function) ──
 const TASKS = [
-  {tab:'Scan entry screen', desc:'Read the entry screen carefully. Note the product name and the green verification indicator.'},
-  {tab:'Scan entry screen', desc:'Read the "What is a Digital Product Passport?" explainer. Note one thing it tells you.'},
-  {tab:'Scan entry screen', desc:'Select the intent option that best describes why you are here. Note which one you chose and why.'},
-  {tab:'Overview',          desc:'Look at the sustainability score and grade at the top right. Note both the number and the letter grade.'},
-  {tab:'Overview',          desc:'Read the care instructions grid. Note the recommended wash temperature and the one prohibited action.'},
-  {tab:'Overview',          desc:'Swipe through the Certifications strip. Identify what GOTS and SA8000 each relate to.'},
-  {tab:'Overview',          desc:'Tap "Brand commitment" to expand it. Note the goal and the progress percentage shown.'},
-  {tab:'Made tab',          desc:'Navigate to the Made tab. Tap "Organic Cotton" to expand its detail card. Note the origin and certification.'},
-  {tab:'Made tab',          desc:'Tap "Dyes and treatments" to expand the accordion. Check whether PFAS or PFOS is present.'},
-  {tab:'Made tab',          desc:'Tap "Dyeing and Finishing" in the production journey. Note the company name and certification.'},
-  {tab:'Impact tab',        desc:'Navigate to the Impact tab. Read the carbon footprint figure and the scope note beneath it.'},
-  {tab:'Impact tab',        desc:'Read the comparison note under the carbon stat. Note how it compares to the industry average.'},
-  {tab:'End of Life tab',   desc:'Navigate to End of Life. Tap "Recycle" to expand the detail card. Read the guidance provided.'},
-  {tab:'End of Life tab',   desc:'In "Record your action," select the option you would most likely choose. Note the CO\u2082 result shown.'},
-  {tab:'End of Life tab',   desc:'Rate the garment on Overall Quality and Claims Accuracy using the star ratings that appear.'},
-  {tab:'Any screen',        desc:'Tap the home icon at the top left of the green bar to return to the entry screen and confirm it works.'},
+  {tab:'Scan screen',     desc:'Read the entry screen. Note the product name and the green verification indicator at the top.',
+   check:'scanViewed'},
+  {tab:'Scan screen',     desc:'Tap the "What is a Digital Product Passport?" card above to read it. Note one thing it tells you.',
+   check:'dppExplainerRead'},
+  {tab:'Scan screen',     desc:'Select the option that best describes why you are here, or tap "View full passport" to continue.',
+   check:'appEntered'},
+  {tab:'Overview',        desc:'Tap the Overview tab in the navigation bar below. Read the sustainability score and grade at the top right. Note both the number and the letter grade.',
+   check:'tabOverview'},
+  {tab:'Overview',        desc:'Still on the Overview tab, tap any care instruction card. Note the recommended wash temperature and the one action that is not allowed.',
+   check:'careViewed'},
+  {tab:'Overview',        desc:'Still on the Overview tab, swipe the Certifications strip left to see all certifications. Note what GOTS and SA8000 each relate to.',
+   check:'certStripSwiped'},
+  {tab:'Overview',        desc:'Still on the Overview tab, tap "Brand commitment" to expand it. Note the goal and the progress percentage shown.',
+   check:'brandCommitmentExpanded'},
+  {tab:'Made tab',        desc:'Tap the Made tab in the navigation bar below, then tap "Organic Cotton" to expand it. Note the origin and certification.',
+   check:'fibreExpanded'},
+  {tab:'Made tab',        desc:'Still on the Made tab, tap "Dyes and treatments" to expand it. Check whether PFAS or PFOS is present.',
+   check:'dyesExpanded'},
+  {tab:'Made tab',        desc:'Still on the Made tab, tap "Dyeing and Finishing" in the production journey. Note the company name and certification shown.',
+   check:'journeyExpanded'},
+  {tab:'Impact tab',      desc:'Tap the Impact tab in the navigation bar below. Read the carbon footprint figure and the scope note beneath it.',
+   check:'tabImpact'},
+  {tab:'Impact tab',      desc:'Still on the Impact tab, tap "About this data" to expand it. Read how the carbon and water figures were calculated.',
+   check:'aboutDataExpanded'},
+  {tab:'End of Life tab', desc:'Tap the End of Life tab in the navigation bar below, then tap "Recycle" to expand its detail card. Read the guidance provided.',
+   check:'recycleExpanded'},
+  {tab:'End of Life tab', desc:'Still on the End of Life tab, in "Record your action" select the option you would most likely choose. Note the CO\u2082 result shown.',
+   check:'logPillSelected'},
+  {tab:'End of Life tab', desc:'Still on the End of Life tab, rate the garment on Overall Quality and Claims Accuracy using the star ratings that appear.',
+   check: () => sysChecks.qualityRated && sysChecks.claimsRated},
+  {tab:'Any screen',      desc:'Tap the home icon at the top left of the green bar to return to the entry screen.',
+   check:'homeVisited'},
 ];
 
-// ── Build landing preview ──
-function buildPreview() {
-  const c = document.getElementById('tg-preview');
-  TASKS.forEach((t, i) => {
-    const d = document.createElement('div');
-    d.className = 'tg-item';
-    d.innerHTML = `<div class="tg-num">${i+1}</div><div class="tg-txt"><div class="tg-tab">${t.tab}</div>${t.desc}</div>`;
-    c.appendChild(d);
+// ── Task banner state ──
+let currentTask = 0;
+
+function taskCheckMet(i) {
+  if (i >= TASKS.length) return false;
+  const chk = TASKS[i].check;
+  return typeof chk === 'function' ? chk() : sysChecks[chk] === true;
+}
+
+function renderBanner() {
+  const ids = ['task-banner-scan', 'task-banner-main'];
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+
+    if (currentTask >= TASKS.length) {
+      // All tasks done — show code
+      el.innerHTML =
+        '<div class="tb-bar"><div class="tb-fill" style="width:100%"></div></div>' +
+        '<div class="tb-code-wrap">' +
+          '<div class="tb-code-lbl">All tasks complete. Enter this code in the Qualtrics survey.</div>' +
+          '<div class="tb-code-val">' + COMPLETION_CODE + '</div>' +
+          '<div class="tb-code-note">Copy this code exactly as shown, then return to the survey.</div>' +
+          '<button class="tb-copy-btn" id="tb-copy-' + id + '" onclick="copyCodeBanner(\'' + id + '\')">Copy code</button>' +
+        '</div>';
+      return;
+    }
+
+    const task = TASKS[currentTask];
+    const met  = taskCheckMet(currentTask);
+    const pct  = Math.round(currentTask / TASKS.length * 100);
+
+    el.innerHTML =
+      '<div class="tb-bar"><div class="tb-fill" style="width:' + pct + '%"></div></div>' +
+      '<div class="tb-top">' +
+        '<span class="tb-num">Task ' + (currentTask + 1) + ' of ' + TASKS.length + '</span>' +
+        '<span class="tb-desc">' + task.desc + '</span>' +
+        '<button class="tb-done-btn' + (met ? ' ready' : '') + '" onclick="advanceTask()">Done</button>' +
+      '</div>';
   });
 }
 
-// ── Build task list in panel ──
-function buildList() {
-  const c = document.getElementById('tp-list');
-  c.innerHTML = '';
-  TASKS.forEach((t, i) => {
-    const d = document.createElement('div');
-    d.className = 'tp-item';
-    const tick = checked[i]
-      ? `<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`
-      : '';
-    d.innerHTML = `<div class="tp-cb${checked[i]?' done':''}">${tick}</div><div class="tp-body"><div class="tp-tab-lbl">${t.tab}</div><div class="tp-desc${checked[i]?' done':''}">${i+1}. ${t.desc}</div></div>`;
-    d.onclick = () => toggleTask(i);
-    c.appendChild(d);
-  });
-  updateProgress();
+function advanceTask() {
+  if (currentTask >= TASKS.length) return;
+  if (!taskCheckMet(currentTask)) return;
+  currentTask++;
+  renderBanner();
 }
 
-function toggleTask(i) {
-  checked[i] = !checked[i];
-  buildList();
-  if (checked.every(Boolean) && !document.getElementById('task-overlay').classList.contains('vis')) {
-    showToast();
-  }
-}
-
-function updateProgress() {
-  const n = checked.filter(Boolean).length;
-  document.getElementById('tp-prog').textContent = n + ' of 16 done';
-  document.getElementById('tp-fill').style.width = Math.round(n / 16 * 100) + '%';
-  document.getElementById('fab-badge').textContent = n;
-  const banner = document.getElementById('tp-done');
-  if (n === 16) {
-    banner.classList.add('vis');
-    runTimeGate();
-  } else {
-    banner.classList.remove('vis');
-  }
-}
-
-// ── Time and conditions gate ──
-function runTimeGate() {
-  const waitEl = document.getElementById('tp-wait');
-  const codeEl = document.getElementById('tp-code');
-  if (!waitEl || !codeEl) return;
-
-  const elapsed   = appStartTime ? Date.now() - appStartTime : 0;
-  const remaining = MIN_MS - elapsed;
-
-  if (remaining > 0) {
-    // Timer still running — show countdown regardless of other conditions
-    waitEl.style.display = 'block';
-    codeEl.style.display = 'none';
-    // Reset sub-text in case it was changed by a previous "keep exploring" state
-    const subEl = document.getElementById('tp-countdown-sub');
-    if (subEl) subEl.textContent = 'Time remaining';
-    tick(remaining);
-    if (!displayInterval) {
-      displayInterval = setInterval(() => {
-        const r = MIN_MS - (appStartTime ? Date.now() - appStartTime : 0);
-        if (r <= 0) {
-          clearInterval(displayInterval);
-          displayInterval = null;
-          runTimeGate(); // timer just expired — re-evaluate
-        } else {
-          tick(r);
-        }
-      }, 1000);
-    }
-
-  } else if (allConditionsMet()) {
-    // Timer expired and all conditions satisfied — reveal the code
-    waitEl.style.display = 'none';
-    codeEl.style.display = 'block';
-    clearInterval(displayInterval);
-    displayInterval = null;
-    clearInterval(countdownInterval);
-    countdownInterval = null;
-
-  } else {
-    // Timer expired but not all conditions met — prompt without specifics
-    waitEl.style.display = 'block';
-    codeEl.style.display = 'none';
-    clearInterval(displayInterval);
-    displayInterval = null;
-    const cdEl  = document.getElementById('tp-countdown');
-    const subEl = document.getElementById('tp-countdown-sub');
-    if (cdEl)  cdEl.textContent  = 'Keep exploring';
-    if (subEl) subEl.textContent = 'A few more sections need your attention';
-    // Poll every 2 seconds to catch when conditions are eventually satisfied
-    if (!countdownInterval) {
-      countdownInterval = setInterval(() => {
-        if (allConditionsMet()) {
-          clearInterval(countdownInterval);
-          countdownInterval = null;
-          runTimeGate();
-        }
-      }, 2000);
-    }
-  }
-}
-
-function tick(ms) {
-  const el = document.getElementById('tp-countdown');
-  if (!el) return;
-  const s = Math.ceil(ms / 1000);
-  const m = Math.floor(s / 60);
-  const sec = s % 60;
-  el.textContent = m > 0 ? `${m}m ${sec}s` : `${sec}s`;
-}
-
-function retakeTasks() {
-  checked.fill(false);
-  // Do NOT clear the interval — the 6-minute clock keeps running from "begin"
-  closeTaskPanel();
-}
-
-// ── Toast ──
-function showToast() {
-  const t = document.getElementById('toast');
-  clearTimeout(toastTimer);
-  t.className = 'toast show';
-  toastTimer = setTimeout(() => {
-    t.className = 'toast hide';
-    setTimeout(() => { t.className = 'toast'; }, 300);
-  }, 6000);
-}
-
-// ── Copy code ──
-function copyCode() {
-  const btn = document.getElementById('copy-btn');
+// ── Copy code (banner version) ──
+function copyCodeBanner(sourceId) {
+  const btnId = 'tb-copy-' + sourceId;
+  const btn   = document.getElementById(btnId);
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(COMPLETION_CODE)
-      .then(() => flashCopy(btn, true))
-      .catch(() => fallbackCopy(btn));
+      .then(() => flashCopyBanner(btn, true))
+      .catch(() => fallbackCopyBanner(btn));
   } else {
-    fallbackCopy(btn);
+    fallbackCopyBanner(btn);
   }
 }
-function fallbackCopy(btn) {
+function fallbackCopyBanner(btn) {
   try {
     const ta = document.createElement('textarea');
     ta.value = COMPLETION_CODE;
@@ -866,54 +675,52 @@ function fallbackCopy(btn) {
     document.body.appendChild(ta);
     ta.focus();
     ta.select();
-    ta.setSelectionRange(0, 99999); // iOS Safari
+    ta.setSelectionRange(0, 99999);
     const ok = document.execCommand('copy');
     document.body.removeChild(ta);
-    flashCopy(btn, ok);
+    flashCopyBanner(btn, ok);
   } catch(e) {
-    flashCopy(btn, false);
+    flashCopyBanner(btn, false);
   }
 }
-function flashCopy(btn, success) {
+function flashCopyBanner(btn, success) {
   if (!btn) return;
-  btn.textContent = success ? 'Copied!' : 'Copy failed — copy the code manually';
+  btn.textContent = success ? 'Copied!' : 'Copy failed — select and copy the code manually';
   setTimeout(() => { btn.textContent = 'Copy code'; }, 3000);
 }
 
-// ── Panel ──
-function openTaskPanel() {
-  document.getElementById('toast').className = 'toast';
-  clearTimeout(toastTimer);
-  buildList();
-  document.getElementById('task-overlay').classList.add('vis');
-}
-function closeTaskPanel() {
-  document.getElementById('task-overlay').classList.remove('vis');
-  // Stop the on-screen display tick — no point updating a hidden element
-  clearInterval(displayInterval);
-  displayInterval = null;
-  // Background countdownInterval keeps running — do NOT clear it here
+// ── Task data for landing preview ──
+function buildPreview() {
+  const c = document.getElementById('tg-preview');
+  TASKS.forEach((t, i) => {
+    const d = document.createElement('div');
+    d.className = 'tg-item';
+    d.innerHTML = '<div class="tg-num">' + (i+1) + '</div><div class="tg-txt"><div class="tg-tab">' + t.tab + '</div>' + t.desc + '</div>';
+    c.appendChild(d);
+  });
 }
 
 // ── Screen transitions ──
 function showScan() {
-  appStartTime = Date.now();
   sc('scanViewed');
   document.getElementById('tg-screen').style.display = 'none';
   document.getElementById('scan-screen').classList.add('vis');
-  document.getElementById('fab').classList.add('vis');
+  renderBanner();
 }
 function enterApp(t) {
   sc('appEntered');
   document.getElementById('scan-screen').classList.remove('vis');
   document.getElementById('main-app').classList.add('vis');
-  document.getElementById('fab').classList.add('vis');
-  switchPanel(t); syncNav(t);
+  switchPanel(t);
+  syncNav(t);
+  renderBanner();
 }
 function goHome() {
+  sc('homeVisited');
   document.getElementById('main-app').classList.remove('vis');
   document.getElementById('scan-screen').classList.add('vis');
   document.querySelectorAll('.panel').forEach(p => { p.scrollTop = 0; });
+  renderBanner();
 }
 function switchNav(btn) {
   document.querySelectorAll('.nb').forEach(b => b.classList.remove('on'));
@@ -923,110 +730,131 @@ function switchNav(btn) {
 function switchPanel(p) {
   document.querySelectorAll('.panel').forEach(x => { x.classList.remove('active'); x.scrollTop = 0; });
   document.getElementById('pan-' + p).classList.add('active');
-  if (TAB_SC[p]) sc(TAB_SC[p]);
+  const tabMap = { overview:'tabOverview', made:'tabMade', impact:'tabImpact', eol:'tabEol' };
+  if (tabMap[p]) sc(tabMap[p]);
 }
 function syncNav(p) {
   document.querySelectorAll('.nb').forEach(b => b.classList.toggle('on', b.dataset.p === p));
 }
+
+// ── Accordion toggle — reads data-sc attribute for targeted check ──
 function toggleAcc(row) {
-  const b = row.nextElementSibling, c = row.querySelector('.acc-ch');
-  b.classList.toggle('open'); c.classList.toggle('open');
-  if (document.getElementById('pan-overview').classList.contains('active')) sc('overviewAccordion');
+  const b = row.nextElementSibling;
+  const c = row.querySelector('.acc-ch');
+  b.classList.toggle('open');
+  c.classList.toggle('open');
+  const key = row.getAttribute('data-sc');
+  if (key) sc(key);
 }
 
-// ── Draggable FAB ──
-const fab = document.getElementById('fab');
-function fabPos(x, y) {
-  const ph = document.getElementById('phone').getBoundingClientRect();
-  const fw = fab.offsetWidth, fh = fab.offsetHeight, m = 8;
-  fab.style.left  = Math.max(m, Math.min(ph.width  - fw - m, x - ph.left)) + 'px';
-  fab.style.top   = Math.max(m, Math.min(ph.height - fh - m, y - ph.top))  + 'px';
-  fab.style.right  = 'auto';
-  fab.style.bottom = 'auto';
-}
-function onDragStart(cx, cy) {
-  isDragging = true; dragMoved = false;
-  const r = fab.getBoundingClientRect();
-  dragOffX = cx - r.left - r.width / 2;
-  dragOffY = cy - r.top  - r.height / 2;
-}
-function onDragMove(cx, cy) {
-  if (!isDragging) return;
-  dragMoved = true;
-  fabPos(cx - dragOffX, cy - dragOffY);
-}
-function onDragEnd() { isDragging = false; }
-function handleFabClick(e) { if (!dragMoved) openTaskPanel(); }
-
-fab.addEventListener('mousedown', e => { e.preventDefault(); onDragStart(e.clientX, e.clientY); });
-document.addEventListener('mousemove', e => { if (isDragging) onDragMove(e.clientX, e.clientY); });
-document.addEventListener('mouseup', onDragEnd);
-fab.addEventListener('touchstart', e => { const t = e.touches[0]; onDragStart(t.clientX, t.clientY); }, {passive:true});
-fab.addEventListener('touchmove',  e => { const t = e.touches[0]; onDragMove(t.clientX, t.clientY); e.preventDefault(); }, {passive:false});
-fab.addEventListener('touchend', onDragEnd);
-
-// ── Cert strip drag ──
-(function(){
+// ── Cert strip scroll check ──
+(function() {
   const el = document.getElementById('cert-strip');
+  if (!el) return;
+  // Mouse drag scroll
   let down = false, sx = 0, sl = 0;
   el.addEventListener('mousedown', e => { down = true; sx = e.pageX - el.offsetLeft; sl = el.scrollLeft; });
   el.addEventListener('mouseleave', () => { down = false; });
   el.addEventListener('mouseup',    () => { down = false; });
-  el.addEventListener('mousemove',  e => { if (!down) return; e.preventDefault(); el.scrollLeft = sl - (e.pageX - el.offsetLeft - sx) * 1.2; });
+  el.addEventListener('mousemove',  e => {
+    if (!down) return;
+    e.preventDefault();
+    el.scrollLeft = sl - (e.pageX - el.offsetLeft - sx) * 1.2;
+  });
+  // Fire certStripSwiped on any scroll past a small threshold
+  el.addEventListener('scroll', function() {
+    if (this.scrollLeft > 20) sc('certStripSwiped');
+  }, { passive: true });
 })();
 
 // ── Fibres ──
 const fibres = [
-  {name:'Organic Cotton',    pct:60, origin:'Maharashtra, India', cert:'GOTS Certified', color:'#2D7A55',
+  {name:'Organic Cotton',     pct:60, origin:'Maharashtra, India', cert:'GOTS Certified', color:'#2D7A55',
    detail:'GOTS-certified organic cotton grown without synthetic pesticides or fertilisers. Sourced from a fair-trade cooperative of 2,400 smallholder farmers. Annual crop and chain-of-custody audits by Control Union Certifications.'},
-  {name:'Recycled Polyester', pct:35, origin:'Taiwan',            cert:'GRS Certified',  color:'#2B6CB0',
+  {name:'Recycled Polyester', pct:35, origin:'Taiwan',             cert:'GRS Certified',  color:'#2B6CB0',
    detail:'Produced from post-consumer PET plastic bottles. GRS certified. Reduces reliance on virgin petrochemicals by approximately 59% and diverts plastic waste from landfill.'},
-  {name:'Elastane',           pct:5,  origin:'Germany',           cert:'OEKO-TEX 100',   color:'#B8860B',
+  {name:'Elastane',           pct:5,  origin:'Germany',            cert:'OEKO-TEX 100',   color:'#B8860B',
    detail:'Provides shape retention and stretch. Synthetically produced with no animal derivatives. OEKO-TEX STANDARD 100 certified. Subject to the brand commitment in Overview — future versions will use bio-based or recycled alternatives.'},
 ];
 fibres.forEach(f => {
   const wrap = document.createElement('div');
   const row  = document.createElement('div'); row.className = 'f-row';
-  row.innerHTML = `<div class="f-dot" style="background:${f.color}"></div><div class="f-info"><div class="f-name">${f.name}</div><div class="f-sub">${f.cert}, ${f.origin}</div></div><div class="f-pct">${f.pct}%</div><div class="f-ch">&#9660;</div>`;
-  const det  = document.createElement('div'); det.className = 'f-detail';
-  det.innerHTML = `<div class="f-detail-txt">${f.detail}</div>`;
-  row.onclick = () => { sc('fibreExpanded'); det.classList.toggle('open'); row.querySelector('.f-ch').classList.toggle('open'); };
-  wrap.appendChild(row); wrap.appendChild(det);
+  row.innerHTML =
+    '<div class="f-dot" style="background:' + f.color + '"></div>' +
+    '<div class="f-info"><div class="f-name">' + f.name + '</div><div class="f-sub">' + f.cert + ', ' + f.origin + '</div></div>' +
+    '<div class="f-pct">' + f.pct + '%</div><div class="f-ch">&#9660;</div>';
+  const det = document.createElement('div'); det.className = 'f-detail';
+  det.innerHTML = '<div class="f-detail-txt">' + f.detail + '</div>';
+  row.onclick = () => {
+    sc('fibreExpanded');
+    det.classList.toggle('open');
+    row.querySelector('.f-ch').classList.toggle('open');
+  };
+  wrap.appendChild(row);
+  wrap.appendChild(det);
   document.getElementById('flist').appendChild(wrap);
 });
 
-// ── Journey ──
+// ── Production journey ──
 const journey = [
-  {s:'Raw Material',           l:'Maharashtra, India',       d:'Aug 2024', c:'GOTS',         co:'Chetna Organic Farms',   desc:'Organic cotton grown without synthetic pesticides. Fair-trade cooperative of 2,400 smallholder farmers. Annual crop and chain-of-custody audits by Control Union Certifications.'},
-  {s:'Spinning and Weaving',   l:'Gujarat, India',           d:'Sep 2024', c:'OCS',          co:'Arvind Mills Ltd.',       desc:'Ring-spun yarn for superior durability. Closed-loop water recycling reduces freshwater consumption by 60%. ISO 14001:2015 certified.'},
-  {s:'Dyeing and Finishing',   l:'Ho Chi Minh City, Vietnam',d:'Oct 2024', c:'OEKO-TEX',     co:'EcoColour Co.',           desc:'Low-impact reactive dyes. PFAS-free anti-wrinkle finish. On-site wastewater treatment to drinking-water standards before discharge.'},
-  {s:'Cut, Make and Trim',     l:'Ho Chi Minh City, Vietnam',d:'Nov 2024', c:'SA8000',        co:'Green Stitch Apparel',    desc:'Living wage paid to all 1,240 workers. 87% female workforce. SA8000 certified since 2019. Annual audit by Bureau Veritas.'},
-  {s:'Distribution',           l:'Melbourne, Australia',     d:'Dec 2024', c:'Carbon Neutral', co:'Pacific Eco Logistics',  desc:'Sea freight only. Approximately 95% fewer emissions than air freight. Transport: 0.41 kg CO\u2082e per unit. Offset via GreenFleet QLD reforestation, ISO 14064 verified.'},
+  {s:'Raw Material',         l:'Maharashtra, India',        d:'Aug 2024', c:'GOTS',          co:'Chetna Organic Farms',  desc:'Organic cotton grown without synthetic pesticides. Fair-trade cooperative of 2,400 smallholder farmers. Annual crop and chain-of-custody audits by Control Union Certifications.'},
+  {s:'Spinning and Weaving', l:'Gujarat, India',            d:'Sep 2024', c:'OCS',           co:'Arvind Mills Ltd.',     desc:'Ring-spun yarn for superior durability. Closed-loop water recycling reduces freshwater consumption by 60%. ISO 14001:2015 certified.'},
+  {s:'Dyeing and Finishing', l:'Ho Chi Minh City, Vietnam', d:'Oct 2024', c:'OEKO-TEX',      co:'EcoColour Co.',         desc:'Low-impact reactive dyes. PFAS-free anti-wrinkle finish. On-site wastewater treatment to drinking-water standards before discharge.'},
+  {s:'Cut, Make and Trim',   l:'Ho Chi Minh City, Vietnam', d:'Nov 2024', c:'SA8000',        co:'Green Stitch Apparel',  desc:'Living wage paid to all 1,240 workers. 87% female workforce. SA8000 certified since 2019. Annual audit by Bureau Veritas.'},
+  {s:'Distribution',         l:'Melbourne, Australia',      d:'Dec 2024', c:'Carbon Neutral', co:'Pacific Eco Logistics', desc:'Sea freight only. Approximately 95% fewer emissions than air freight. Transport: 0.41 kg CO\u2082e per unit. Offset via GreenFleet QLD reforestation, ISO 14064 verified.'},
 ];
 journey.forEach((j, i) => {
   const last = i === journey.length - 1;
   const it = document.createElement('div'); it.className = 'j-item';
-  it.innerHTML = `<div class="j-l"><div class="j-dot"></div>${!last ? '<div class="j-line"></div>' : ''}</div><div class="j-r" onclick="tJ(this)"><div class="j-top"><div><div class="j-stage">${j.s}</div><div class="j-loc">${j.l}, ${j.d}</div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px"><span class="j-cert">${j.c}</span><div class="j-ch">&#9660;</div></div></div><div class="j-detail"><div class="j-company">${j.co}</div><div class="j-desc">${j.desc}</div></div></div>`;
+  it.innerHTML =
+    '<div class="j-l"><div class="j-dot"></div>' + (!last ? '<div class="j-line"></div>' : '') + '</div>' +
+    '<div class="j-r" onclick="tJ(this)">' +
+      '<div class="j-top">' +
+        '<div><div class="j-stage">' + j.s + '</div><div class="j-loc">' + j.l + ', ' + j.d + '</div></div>' +
+        '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px"><span class="j-cert">' + j.c + '</span><div class="j-ch">&#9660;</div></div>' +
+      '</div>' +
+      '<div class="j-detail"><div class="j-company">' + j.co + '</div><div class="j-desc">' + j.desc + '</div></div>' +
+    '</div>';
   document.getElementById('jlist').appendChild(it);
 });
-function tJ(el) { sc('journeyExpanded'); const d = el.querySelector('.j-detail'), c = el.querySelector('.j-ch'); d.classList.toggle('open'); c.classList.toggle('open'); }
+function tJ(el) {
+  sc('journeyExpanded');
+  el.querySelector('.j-detail').classList.toggle('open');
+  el.querySelector('.j-ch').classList.toggle('open');
+}
 
-// ── EOL rows ──
+// ── End of life options ──
 const eols = [
-  {a:'RS', bg:'#EEF7F2', ic:'#1A5C42', t:'Resell',  d:'Still in good condition.',    detail:'List on Depop, Vestiaire Collective or Facebook Marketplace. Reselling extends life by an average of 2.2 years and keeps the garment out of landfill.'},
-  {a:'DN', bg:'#EEF3FB', ic:'#1E5A8E', t:'Donate',  d:'Any condition accepted.',     detail:'Drop off at 1,200+ Seamless collection points across Australia. All conditions accepted. Worn or damaged garments are redirected to textile recycling. Find your nearest point at seamlessaustralia.com'},
-  {a:'RP', bg:'#FDF4E3', ic:'#8A6B1E', t:'Repair',  d:'Rated Easy to repair.',       detail:'Common repairs: seam reinforcement, hem fraying, minor snags. All can be done at home or by a local tailor. Full repair guide at terranovaworld.com/repair, free to download.'},
-  {a:'RC', bg:'#EEF7F2', ic:'#0B3D2E', t:'Recycle', d:'Free in-store take-back.',    detail:'Return to any Terranova World store for certified textile-to-textile recycling at no cost. No minimum condition required. Receive 10% off your next purchase. Use the booking button below.'},
+  {a:'RS', bg:'#EEF7F2', ic:'#1A5C42', t:'Resell',  d:'Still in good condition.',  detail:'List on Depop, Vestiaire Collective or Facebook Marketplace. Reselling extends life by an average of 2.2 years and keeps the garment out of landfill.'},
+  {a:'DN', bg:'#EEF3FB', ic:'#1E5A8E', t:'Donate',  d:'Any condition accepted.',   detail:'Drop off at 1,200+ Seamless collection points across Australia. All conditions accepted. Worn or damaged garments are redirected to textile recycling. Find your nearest point at seamlessaustralia.com'},
+  {a:'RP', bg:'#FDF4E3', ic:'#8A6B1E', t:'Repair',  d:'Rated Easy to repair.',     detail:'Common repairs: seam reinforcement, hem fraying, minor snags. All can be done at home or by a local tailor. Full repair guide at terranovaworld.com/repair, free to download.'},
+  {a:'RC', bg:'#EEF7F2', ic:'#0B3D2E', t:'Recycle', d:'Free in-store take-back.',  detail:'Return to any Terranova World store for certified textile-to-textile recycling at no cost. No minimum condition required. Receive 10% off your next purchase. Use the booking button below.'},
 ];
 eols.forEach(o => {
   const row = document.createElement('div'); row.className = 'eol-row';
-  row.innerHTML = `<div class="eol-top" onclick="toggleEol(this)"><div class="eol-ic" style="background:${o.bg}"><span style="font-size:11px;font-weight:500;color:${o.ic}">${o.a}</span></div><div style="flex:1"><div class="eol-t">${o.t}</div><div class="eol-d">${o.d}</div></div><div class="eol-arr">&#8250;</div></div><div class="eol-detail"><div class="eol-detail-txt">${o.detail}</div></div>`;
+  row.innerHTML =
+    '<div class="eol-top" onclick="toggleEol(this,\'' + o.t + '\')">' +
+      '<div class="eol-ic" style="background:' + o.bg + '"><span style="font-size:11px;font-weight:500;color:' + o.ic + '">' + o.a + '</span></div>' +
+      '<div style="flex:1"><div class="eol-t">' + o.t + '</div><div class="eol-d">' + o.d + '</div></div>' +
+      '<div class="eol-arr">&#8250;</div>' +
+    '</div>' +
+    '<div class="eol-detail"><div class="eol-detail-txt">' + o.detail + '</div></div>';
   document.getElementById('eollist').appendChild(row);
 });
-function toggleEol(top) { sc('eolExpanded'); const d = top.nextElementSibling, a = top.querySelector('.eol-arr'); d.classList.toggle('open'); a.classList.toggle('open'); }
-function bookTakeback(btn) { btn.textContent = 'Take-back booked'; btn.classList.add('done'); btn.onclick = null; }
+function toggleEol(top, label) {
+  const d = top.nextElementSibling;
+  const a = top.querySelector('.eol-arr');
+  d.classList.toggle('open');
+  a.classList.toggle('open');
+  if (label === 'Recycle') sc('recycleExpanded');
+}
+function bookTakeback(btn) {
+  btn.textContent = 'Take-back booked';
+  btn.classList.add('done');
+  btn.onclick = null;
+}
 
-// ── Logger ──
+// ── Record your action ──
 function logA(btn, nText, eqText, warn) {
   sc('logPillSelected');
   document.querySelectorAll('.lpill').forEach(p => p.classList.remove('sel'));
@@ -1041,48 +869,77 @@ function logA(btn, nText, eqText, warn) {
     const lw = document.getElementById('star-lead-wrap');
     const rl = document.getElementById('rate-lbl');
     const ss = document.getElementById('star-section');
-    lw.style.display = 'block'; rl.style.display = 'block';
-    ss.style.display = 'block'; ss.style.animation = 'up .3s ease';
+    lw.style.display = 'block';
+    rl.style.display = 'block';
+    ss.style.display = 'block';
+    ss.style.animation = 'up .3s ease';
     buildStars();
-    setTimeout(() => { const fa = document.getElementById('fb-acc'); fa.style.display = 'block'; fa.style.animation = 'up .3s ease'; }, 350);
+    setTimeout(() => {
+      const fa = document.getElementById('fb-acc');
+      fa.style.display = 'block';
+      fa.style.animation = 'up .3s ease';
+    }, 350);
   }, 500);
 }
 function resetLog() {
   document.querySelectorAll('.lpill').forEach(p => p.classList.remove('sel'));
   document.getElementById('log-res').classList.remove('show');
   ['star-lead-wrap','rate-lbl','star-section','fb-acc'].forEach(id => {
-    const el = document.getElementById(id); if (el) el.style.display = 'none';
+    const el = document.getElementById(id);
+    if (el) el.style.display = 'none';
   });
 }
 
-// ── Stars ──
-const sCats = [{id:'sqq',l:'Overall quality',def:0},{id:'sss',l:'Sustainability',def:0},{id:'scc',l:'Claims accuracy',def:0},{id:'sdd',l:'Durability',def:0}];
+// ── Star ratings ──
+// Category IDs use distinct names (not 'sc') to avoid any conflict with the sc() function
+const sCats = [
+  {id:'sqq', l:'Overall quality',  scKey:'qualityRated'},
+  {id:'sss', l:'Sustainability',    scKey:null},
+  {id:'scc', l:'Claims accuracy',   scKey:'claimsRated'},
+  {id:'sdd', l:'Durability',        scKey:null},
+];
 const sVals = {};
 function buildStars() {
   const sw = document.getElementById('star-section');
   if (sw.querySelector('.star-row')) return;
-  sCats.forEach(c => {
-    sVals[c.id] = c.def;
+  sCats.forEach(cat => {
+    sVals[cat.id] = 0;
     const row = document.createElement('div'); row.className = 'star-row';
-    row.innerHTML = `<span class="star-lbl">${c.l}</span><div class="stars-g" id="${c.id}"></div>`;
-    sw.appendChild(row); renderStars(c.id, c.def);
+    row.innerHTML = '<span class="star-lbl">' + cat.l + '</span><div class="stars-g" id="' + cat.id + '"></div>';
+    sw.appendChild(row);
+    renderStars(cat.id, 0);
   });
 }
 function renderStars(id, val) {
   const el = document.getElementById(id); if (!el) return; el.innerHTML = '';
+  const cat = sCats.find(c => c.id === id);
   for (let i = 1; i <= 5; i++) {
     const b = document.createElement('button'); b.className = 'star-btn';
-    const f = i <= val;
-    b.innerHTML = `<svg width="22" height="22" viewBox="0 0 22 22"><path d="M11 2l2.4 4.8 5.3.8-3.8 3.7.9 5.3-4.8-2.5-4.8 2.5.9-5.3-3.8-3.7 5.3-.8z" fill="${f?'#C19A3C':'none'}" stroke="${f?'#C19A3C':'#DDD'}" stroke-width="1.3" stroke-linejoin="round"/></svg>`;
-    b.setAttribute('aria-label', `${i} star`);
-    b.onclick = (v => () => { sc('starGiven'); sVals[id] = v; renderStars(id, v); })(i);
+    const filled = i <= val;
+    b.innerHTML = '<svg width="22" height="22" viewBox="0 0 22 22"><path d="M11 2l2.4 4.8 5.3.8-3.8 3.7.9 5.3-4.8-2.5-4.8 2.5.9-5.3-3.8-3.7 5.3-.8z" fill="' + (filled ? '#C19A3C' : 'none') + '" stroke="' + (filled ? '#C19A3C' : '#DDD') + '" stroke-width="1.3" stroke-linejoin="round"/></svg>';
+    b.setAttribute('aria-label', i + ' star');
+    b.onclick = (function(catRef, starVal) {
+      return function() {
+        sVals[catRef.id] = starVal;
+        renderStars(catRef.id, starVal);
+        if (catRef.scKey) sc(catRef.scKey);
+      };
+    })(cat, i);
     el.appendChild(b);
   }
 }
 
-// ── Feedback ──
-function updateCount(ta) { document.getElementById('fb-count').textContent = `${ta.value.length} / 500`; document.getElementById('fb-submit').disabled = ta.value.trim().length === 0; }
-function toggleFb(hd) { const bd = document.getElementById('fb-bd'), ch = hd.querySelector('.fb-hch'); bd.classList.toggle('open'); ch.classList.toggle('open'); }
+// ── Feedback form ──
+function updateCount(ta) {
+  document.getElementById('fb-count').textContent = ta.value.length + ' / 500';
+  document.getElementById('fb-submit').disabled = ta.value.trim().length === 0;
+}
+function toggleFb(hd) {
+  const bd = document.getElementById('fb-bd');
+  const ch = hd.querySelector('.fb-hch');
+  bd.classList.toggle('open');
+  ch.classList.toggle('open');
+}
 function sendFb() {
   const ta = document.getElementById('fb-ta'); if (!ta.value.trim()) return;
   ta.style.display = 'none';
@@ -1092,20 +949,25 @@ function sendFb() {
   document.getElementById('fb-ok').classList.add('show');
 }
 
-// ── Follow ──
+// ── Follow brand commitment ──
 function toggleFlw(btn, ctId, base) {
   const ct = document.getElementById(ctId);
   if (btn.dataset.f === '1') {
-    btn.dataset.f = ''; btn.style.cssText = 'padding:7px 16px;border-radius:99px;border:1.5px solid var(--green);background:transparent;color:var(--green);font-size:12px;font-weight:500;cursor:pointer;font-family:inherit';
-    btn.textContent = 'Follow'; ct.textContent = base + ' following';
+    btn.dataset.f = '';
+    btn.style.cssText = 'padding:7px 16px;border-radius:99px;border:1.5px solid var(--green);background:transparent;color:var(--green);font-size:12px;font-weight:500;cursor:pointer;font-family:inherit';
+    btn.textContent = 'Follow';
+    ct.textContent = base + ' following';
   } else {
-    btn.dataset.f = '1'; btn.style.cssText = 'padding:7px 16px;border-radius:99px;border:1.5px solid #0B3D2E;background:#0B3D2E;color:#fff;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit';
-    btn.textContent = 'Following'; ct.textContent = (base + 1) + ' following';
+    btn.dataset.f = '1';
+    btn.style.cssText = 'padding:7px 16px;border-radius:99px;border:1.5px solid #0B3D2E;background:#0B3D2E;color:#fff;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit';
+    btn.textContent = 'Following';
+    ct.textContent = (base + 1) + ' following';
   }
 }
 
 // ── Init ──
 buildPreview();
+renderBanner();
 </script>
 </body>
 </html>
