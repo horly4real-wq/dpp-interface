@@ -477,7 +477,7 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
         <div class="stat-delta" style="background:#EEF3FB;color:#1E5A8E">56% below industry average</div>
       </div>
       <div class="acc">
-        <div class="acc-row" data-sc="aboutDataExpanded" onclick="toggleAcc(this)">
+        <div class="acc-row" onclick="toggleAcc(this)">
           <div class="acc-l"><div class="acc-t">About this data</div><div class="acc-s">Methodology, scope and benchmarks</div></div>
           <div class="acc-ch">&#9660;</div>
         </div>
@@ -516,7 +516,7 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
         <div class="fb-bd" id="fb-bd">
           <textarea class="fb-ta" id="fb-ta" rows="3" maxlength="500" placeholder="What worked well, what could be better, or any concerns about the sustainability claims..." oninput="updateCount(this)"></textarea>
           <div class="fb-count" id="fb-count">0 / 500</div>
-          <div class="fb-arow" id="fb-arow"><span>Submit anonymously</span><div class="ftoggle" onclick="this.classList.toggle('on')"></div></div>
+          <div class="fb-arow" id="fb-arow"><span>Submit anonymously</span><div class="ftoggle on" onclick="this.classList.toggle('on')"></div></div>
           <button class="fb-submit" id="fb-submit" onclick="sendFb()" disabled>Send feedback &rarr;</button>
           <div class="fb-ok" id="fb-ok"><svg width="20" height="20" viewBox="0 0 20 20" style="display:inline-block;vertical-align:middle;margin-right:5px"><circle cx="10" cy="10" r="9" fill="#EEF7F2" stroke="#A8D5BC" stroke-width="1"/><path d="M6 10l3 3 5-5" stroke="#1A5C42" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Thank you. The team will review your feedback.</div>
         </div>
@@ -550,11 +550,11 @@ const sysChecks = {
   dyesExpanded:            false, // task 9
   journeyExpanded:         false, // task 10
   tabImpact:               false, // task 11
-  aboutDataExpanded:       false, // task 12
-  recycleExpanded:         false, // task 13
-  logPillSelected:         false, // task 14
-  qualityRated:            false, // task 15 (part a)
-  claimsRated:             false, // task 15 (part b)
+  recycleExpanded:         false, // task 12
+  logPillSelected:         false, // task 13
+  qualityRated:            false, // task 14 (part a)
+  claimsRated:             false, // task 14 (part b)
+  feedbackSent:            false, // task 15
   homeVisited:             false, // task 16
 };
 
@@ -594,14 +594,14 @@ const TASKS = [
    check:'journeyExpanded'},
   {tab:'Impact tab',      desc:'Tap the Impact tab in the navigation bar below. Read the carbon footprint figure and the scope note beneath it.',
    check:'tabImpact'},
-  {tab:'Impact tab',      desc:'Still on the Impact tab, tap "About this data" to expand it. Read how the carbon and water figures were calculated.',
-   check:'aboutDataExpanded'},
   {tab:'End of Life tab', desc:'Tap the End of Life tab in the navigation bar below, then tap "Recycle" to expand its detail card. Read the guidance provided.',
    check:'recycleExpanded'},
   {tab:'End of Life tab', desc:'Still on the End of Life tab, in "Record your action" select the option you would most likely choose. Note the CO\u2082 result shown.',
    check:'logPillSelected'},
   {tab:'End of Life tab', desc:'Still on the End of Life tab, rate the garment on Overall Quality and Claims Accuracy using the star ratings that appear.',
    check: () => sysChecks.qualityRated && sysChecks.claimsRated},
+  {tab:'End of Life tab', desc:'Still on the End of Life tab, scroll down to "Share feedback with Terranova World," expand it, and share your thoughts on the product based on everything you have read about it, imagining you own it or are considering buying it. Tap "Send feedback" when done.',
+   check:'feedbackSent'},
   {tab:'Any screen',      desc:'Tap the home icon at the top left of the green bar to return to the entry screen.',
    check:'homeVisited'},
 ];
@@ -942,6 +942,13 @@ function toggleFb(hd) {
 }
 function sendFb() {
   const ta = document.getElementById('fb-ta'); if (!ta.value.trim()) return;
+  // Pass feedback text to parent Qualtrics page via postMessage
+  try {
+    window.parent.postMessage({ type: 'appFeedback', value: ta.value.trim() }, '*');
+  } catch(e) { /* silently ignore if not in an iframe */ }
+  // Fire system check so task 15 Done button activates
+  sc('feedbackSent');
+  // Hide form, show confirmation
   ta.style.display = 'none';
   document.getElementById('fb-count').style.display = 'none';
   document.getElementById('fb-arow').style.display = 'none';
