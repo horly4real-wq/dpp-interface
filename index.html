@@ -10,7 +10,6 @@
 <style>
 :root{
   --green:#0B3D2E;--green-mid:#1A5C42;--green-lt:#EEF7F2;--green-bd:#C8E6D5;
-  --blue-lt:#EEF3FB;--blue-bd:#C3D9F5;--blue:#1E5A8E;
   --amber-lt:#FDF4E3;--amber-bd:#EDD59A;--amber:#8A6B1E;
   --red-lt:#FFF1F1;--red-bd:#FECACA;--red:#DC2626;
   --ink:#111;--ink2:#555;--ink3:#888;--ink4:#BBB;
@@ -42,13 +41,13 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
   .bnav{padding-bottom:calc(10px + env(safe-area-inset-bottom))}
 }
 
-/* TASK GUIDE LANDING */
+/* TASK GUIDE */
 .tg-screen{display:flex;flex-direction:column;flex:1;min-height:0;overflow:hidden}
 .tg-hero{background:var(--green);padding:2rem 1.5rem 1.5rem;flex-shrink:0;position:relative;overflow:hidden}
 .tg-hero::after{content:'';position:absolute;right:-50px;top:-50px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.04);pointer-events:none}
 .tg-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);border:.5px solid rgba(255,255,255,.2);border-radius:99px;padding:4px 12px;margin-bottom:14px}
-.tg-badge-dot{width:6px;height:6px;border-radius:50%;background:#4DB380}
-.tg-badge-txt{font-size:11px;color:rgba(255,255,255,.7);letter-spacing:.03em}
+.tg-bdot{width:6px;height:6px;border-radius:50%;background:#4DB380}
+.tg-btxt{font-size:11px;color:rgba(255,255,255,.7);letter-spacing:.03em}
 .tg-title{font-size:26px;font-weight:500;color:#fff;letter-spacing:-.03em;line-height:1.1;margin-bottom:6px}
 .tg-sub{font-size:14px;color:rgba(255,255,255,.48);line-height:1.5}
 .tg-meta{display:flex;align-items:center;gap:16px;margin-top:14px}
@@ -57,13 +56,12 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
 .tg-intro{font-size:13px;color:var(--ink2);line-height:1.65;margin-bottom:1.25rem}
 .tg-intro strong{color:var(--ink);font-weight:500}
 .tg-tasks{margin-bottom:1.25rem}
-.tg-task-item{display:flex;align-items:flex-start;gap:11px;padding:10px 0;border-bottom:1px solid var(--line)}
-.tg-task-item:last-child{border-bottom:none}
+.tg-item{display:flex;align-items:flex-start;gap:11px;padding:10px 0;border-bottom:1px solid var(--line)}
+.tg-item:last-child{border-bottom:none}
 .tg-num{width:24px;height:24px;border-radius:50%;background:var(--green-lt);border:1px solid var(--green-bd);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--green-mid);flex-shrink:0;margin-top:1px}
-.tg-task-text{flex:1;font-size:12px;color:var(--ink2);line-height:1.55}
-.tg-task-tab{font-size:10px;font-weight:500;color:var(--ink4);letter-spacing:.03em;margin-bottom:2px}
+.tg-txt{flex:1;font-size:12px;color:var(--ink2);line-height:1.55}
+.tg-tab{font-size:10px;font-weight:500;color:var(--ink4);letter-spacing:.03em;margin-bottom:2px}
 .tg-note{background:var(--amber-lt);border:1px solid var(--amber-bd);border-radius:var(--r-md);padding:12px 14px;margin-bottom:1.25rem;font-size:12px;color:var(--amber);line-height:1.6}
-.tg-note strong{font-weight:500}
 .tg-cta{display:block;width:100%;padding:17px;background:var(--green);border:none;cursor:pointer;font-size:15px;font-weight:500;color:#fff;letter-spacing:-.01em;text-align:center;flex-shrink:0;font-family:inherit;transition:background .15s}
 .tg-cta:active{background:#082E22}
 
@@ -74,7 +72,7 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
 .ss-hero::after{content:'';position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.04);pointer-events:none}
 .ss-vrow{display:flex;align-items:center;gap:6px;margin-bottom:1.25rem}
 .ss-vdot{width:7px;height:7px;border-radius:50%;background:#4DB380;animation:pulse 2.5s ease-in-out infinite}
-.ss-vtext{font-size:11px;color:rgba(255,255,255,.5);letter-spacing:.03em}
+.ss-vtxt{font-size:11px;color:rgba(255,255,255,.5);letter-spacing:.03em}
 .ss-pname{font-size:32px;font-weight:500;color:#fff;letter-spacing:-.04em;line-height:1;margin-bottom:5px}
 .ss-pmeta{font-size:14px;color:rgba(255,255,255,.42);letter-spacing:-.01em}
 .ss-gtin{font-size:9px;color:rgba(255,255,255,.15);margin-top:12px;font-family:'SF Mono','Roboto Mono',monospace;letter-spacing:.05em}
@@ -116,48 +114,62 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
 .nb.on .nbdot{opacity:1}
 
 /* DRAGGABLE FAB */
-.fab{position:absolute;z-index:50;cursor:grab;touch-action:none;display:none;user-select:none}
+.fab{position:absolute;z-index:50;touch-action:none;display:none;user-select:none;right:16px;bottom:74px}
 .fab.vis{display:block}
-.fab:active{cursor:grabbing}
-.fab-btn{width:50px;height:50px;border-radius:50%;background:var(--green);box-shadow:0 4px 16px rgba(11,61,46,.35),0 1px 4px rgba(0,0,0,.15);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:none;cursor:pointer;transition:box-shadow .15s;position:relative}
-.fab-btn:active{box-shadow:0 2px 8px rgba(11,61,46,.3)}
+.fab-btn{width:50px;height:50px;border-radius:50%;background:var(--green);box-shadow:0 4px 16px rgba(11,61,46,.35),0 1px 4px rgba(0,0,0,.15);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:none;cursor:pointer;position:relative;pointer-events:none}
 .fab-badge{position:absolute;top:-3px;right:-3px;width:19px;height:19px;border-radius:50%;background:#4DB380;border:2px solid var(--white);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;color:var(--green);font-variant-numeric:tabular-nums;pointer-events:none}
 .fab-label{font-size:8px;color:rgba(255,255,255,.65);letter-spacing:.04em;text-align:center;line-height:1;pointer-events:none}
 
-/* TASK PANEL OVERLAY */
+/* TASK OVERLAY */
 .task-overlay{position:absolute;inset:0;z-index:100;display:none;flex-direction:column;pointer-events:none}
 .task-overlay.vis{display:flex;pointer-events:all}
-.task-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.35);animation:fadeIn .2s ease;cursor:pointer}
-.task-panel{position:absolute;bottom:0;left:0;right:0;background:var(--white);border-radius:24px 24px 0 0;display:flex;flex-direction:column;max-height:88%;animation:slideUp .28s cubic-bezier(.32,.72,0,1)}
-.task-panel-handle{width:36px;height:4px;border-radius:99px;background:var(--line2);margin:10px auto 0;flex-shrink:0}
-.task-panel-hd{display:flex;align-items:center;justify-content:space-between;padding:14px 1.5rem 10px;flex-shrink:0}
-.task-panel-title{font-size:15px;font-weight:500;color:var(--ink);letter-spacing:-.02em}
-.task-panel-prog{font-size:12px;color:var(--ink3);font-variant-numeric:tabular-nums}
-.task-panel-close{width:28px;height:28px;border-radius:50%;background:var(--bg);border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;color:var(--ink4);flex-shrink:0}
-.task-panel-track{height:3px;background:var(--line2);margin:0 1.5rem;border-radius:99px;overflow:hidden;flex-shrink:0;margin-bottom:2px}
-.task-panel-fill{height:100%;border-radius:99px;background:#4DB380;transition:width .4s cubic-bezier(.4,0,.2,1);width:0%}
+.task-bd{position:absolute;inset:0;background:rgba(0,0,0,.35);animation:fadeIn .2s ease;cursor:pointer}
+.task-panel{position:absolute;bottom:0;left:0;right:0;background:var(--white);border-radius:24px 24px 0 0;display:flex;flex-direction:column;max-height:90%;animation:slideUp .28s cubic-bezier(.32,.72,0,1)}
+.tp-handle{width:36px;height:4px;border-radius:99px;background:var(--line2);margin:10px auto 0;flex-shrink:0}
+.tp-hd{display:flex;align-items:center;justify-content:space-between;padding:14px 1.5rem 10px;flex-shrink:0}
+.tp-title{font-size:15px;font-weight:500;color:var(--ink);letter-spacing:-.02em}
+.tp-prog{font-size:12px;color:var(--ink3);font-variant-numeric:tabular-nums}
+.tp-close{width:28px;height:28px;border-radius:50%;background:var(--bg);border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;color:var(--ink4);flex-shrink:0}
+.tp-track{height:3px;background:var(--line2);margin:0 1.5rem 4px;border-radius:99px;overflow:hidden;flex-shrink:0}
+.tp-fill{height:100%;border-radius:99px;background:#4DB380;transition:width .4s cubic-bezier(.4,0,.2,1);width:0%}
 
 /* Completion banner */
-.task-done-banner{display:none;margin:12px 1.5rem 4px;padding:16px;background:var(--green-lt);border:1px solid var(--green-bd);border-radius:var(--r-md);flex-shrink:0}
-.task-done-banner.vis{display:block;animation:up .3s ease}
-.task-done-title{font-size:14px;font-weight:500;color:var(--green);letter-spacing:-.01em;margin-bottom:4px}
-.task-done-sub{font-size:12px;color:var(--green-mid);line-height:1.55;margin-bottom:12px}
-.task-done-actions{display:flex;flex-direction:column;gap:8px}
-.task-done-btn-primary{display:block;width:100%;padding:12px;background:var(--green);border:none;border-radius:var(--r-sm);font-size:13px;font-weight:500;color:#fff;cursor:pointer;font-family:inherit;letter-spacing:-.01em;text-align:center}
-.task-done-btn-secondary{display:block;width:100%;padding:11px;background:transparent;border:1.5px solid var(--green-bd);border-radius:var(--r-sm);font-size:13px;font-weight:500;color:var(--green-mid);cursor:pointer;font-family:inherit;letter-spacing:-.01em;text-align:center}
+.tp-done{display:none;margin:8px 1.5rem 4px;padding:14px;background:var(--green-lt);border:1px solid var(--green-bd);border-radius:var(--r-md);flex-shrink:0}
+.tp-done.vis{display:block;animation:up .3s ease}
+.tp-done-title{font-size:14px;font-weight:500;color:var(--green);letter-spacing:-.01em;margin-bottom:3px}
+.tp-done-sub{font-size:12px;color:var(--green-mid);line-height:1.5;margin-bottom:12px}
 
-.task-list{overflow-y:auto;-webkit-overflow-scrolling:touch;padding:8px 1.5rem 1.5rem;flex:1;min-height:0}
-.task-item{display:flex;align-items:flex-start;gap:12px;padding:11px 0;border-bottom:1px solid var(--line);cursor:pointer;transition:opacity .15s}
-.task-item:last-child{border-bottom:none}
-.task-item:active{opacity:.65}
-.task-cb{width:22px;height:22px;border-radius:6px;border:1.5px solid var(--line2);background:var(--white);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;transition:background .15s,border-color .15s}
-.task-cb.done{background:var(--green);border-color:var(--green)}
-.task-body{flex:1}
-.task-tab-lbl{font-size:10px;font-weight:500;color:var(--ink4);letter-spacing:.05em;text-transform:uppercase;margin-bottom:2px}
-.task-desc{font-size:13px;color:var(--ink);line-height:1.5}
-.task-desc.done{color:var(--ink4);text-decoration:line-through}
+/* Waiting state */
+.tp-wait{background:var(--white);border:1.5px solid var(--green-bd);border-radius:var(--r-sm);padding:12px 14px;text-align:center;margin-bottom:10px}
+.tp-wait-lbl{font-size:11px;font-weight:500;color:var(--green-mid);margin-bottom:5px}
+.tp-wait-msg{font-size:12px;color:var(--ink3);line-height:1.55;margin-bottom:10px}
+.tp-countdown{font-size:28px;font-weight:500;color:var(--green);font-variant-numeric:tabular-nums;letter-spacing:.04em;line-height:1}
+.tp-countdown-sub{font-size:10px;color:var(--ink4);margin-top:3px}
 
-/* Toast notification */
+/* Code reveal */
+.tp-code-wrap{background:var(--white);border:1.5px solid var(--green-bd);border-radius:var(--r-sm);padding:12px 14px;text-align:center;margin-bottom:10px}
+.tp-code-lbl{font-size:11px;font-weight:500;color:var(--green-mid);margin-bottom:8px}
+.tp-code{font-size:26px;font-weight:500;color:var(--green);letter-spacing:.1em;font-family:'SF Mono','Roboto Mono',monospace;line-height:1;margin-bottom:5px}
+.tp-code-note{font-size:11px;color:var(--ink3);line-height:1.5}
+
+.tp-actions{display:flex;flex-direction:column;gap:8px}
+.tp-btn-primary{display:block;width:100%;padding:12px;background:var(--green);border:none;border-radius:var(--r-sm);font-size:13px;font-weight:500;color:#fff;cursor:pointer;font-family:inherit;letter-spacing:-.01em;text-align:center;transition:background .15s}
+.tp-btn-primary:active{background:#082E22}
+.tp-btn-secondary{display:block;width:100%;padding:11px;background:transparent;border:1.5px solid var(--green-bd);border-radius:var(--r-sm);font-size:13px;font-weight:500;color:var(--green-mid);cursor:pointer;font-family:inherit;letter-spacing:-.01em;text-align:center}
+
+/* Task list */
+.tp-list{overflow-y:auto;-webkit-overflow-scrolling:touch;padding:8px 1.5rem 1.5rem;flex:1;min-height:0}
+.tp-item{display:flex;align-items:flex-start;gap:12px;padding:11px 0;border-bottom:1px solid var(--line);cursor:pointer;transition:opacity .15s}
+.tp-item:last-child{border-bottom:none}
+.tp-item:active{opacity:.65}
+.tp-cb{width:22px;height:22px;border-radius:6px;border:1.5px solid var(--line2);background:var(--white);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;transition:background .15s,border-color .15s}
+.tp-cb.done{background:var(--green);border-color:var(--green)}
+.tp-body{flex:1}
+.tp-tab-lbl{font-size:10px;font-weight:500;color:var(--ink4);letter-spacing:.05em;text-transform:uppercase;margin-bottom:2px}
+.tp-desc{font-size:13px;color:var(--ink);line-height:1.5}
+.tp-desc.done{color:var(--ink4);text-decoration:line-through}
+
+/* Toast */
 .toast{position:absolute;bottom:80px;left:16px;right:16px;z-index:200;pointer-events:none;display:none}
 .toast.show{display:block;animation:toastIn .3s ease forwards}
 .toast.hide{display:block;animation:toastOut .3s ease forwards}
@@ -211,10 +223,10 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
 .cert-strip{display:flex;gap:8px;overflow-x:auto;padding:0 1.5rem 1rem;scroll-padding:1.5rem;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;scrollbar-width:none;cursor:grab}
 .cert-strip::-webkit-scrollbar{display:none}
 .cert-strip:active{cursor:grabbing}
-.cpill{flex-shrink:0;display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:99px;background:var(--white);border:1.5px solid var(--line2);font-size:12px;font-weight:500;color:var(--ink2);white-space:nowrap;transition:border-color .15s,background .15s;cursor:pointer;min-height:36px}
+.cpill{flex-shrink:0;display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:99px;background:var(--white);border:1.5px solid var(--line2);font-size:12px;font-weight:500;color:var(--ink2);white-space:nowrap;cursor:pointer;min-height:36px}
 .cpill:active{background:var(--bg);border-color:var(--ink4)}
 .cpill-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.comm-bar{margin:0 1.5rem 0;padding:13px 16px;background:var(--bg);border-radius:var(--r-md);display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink3)}
+.comm-bar{margin:0 1.5rem;padding:13px 16px;background:var(--bg);border-radius:var(--r-md);display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink3)}
 .comm-n{font-weight:500;color:var(--green-mid);font-size:13px}
 .comm-sep{width:3px;height:3px;border-radius:50%;background:var(--line2)}
 .fibre-hero{padding:1.5rem 1.5rem .5rem}
@@ -338,7 +350,7 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
 <!-- TASK GUIDE LANDING -->
 <div class="tg-screen" id="tg-screen">
   <div class="tg-hero">
-    <div class="tg-badge"><div class="tg-badge-dot"></div><span class="tg-badge-txt">Research Study, Swinburne University</span></div>
+    <div class="tg-badge"><div class="tg-bdot"></div><span class="tg-btxt">Research Study, Swinburne University</span></div>
     <div class="tg-title">Your tasks</div>
     <div class="tg-sub">Please read through all 16 tasks before you begin.</div>
     <div class="tg-meta">
@@ -347,9 +359,9 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
     </div>
   </div>
   <div class="tg-body">
-    <div class="tg-intro">You are about to explore a <strong>Digital Product Passport (DPP)</strong>, a digital record of a garment's materials, production journey, environmental impact, and end-of-life options. This is a design model only; no real transaction is required.<br><br>Work through the tasks in order. You can <strong>tick each task off as you complete it</strong> using the green checklist button visible at all times in the app. When all tasks are done, you will be prompted to return to the survey.</div>
-    <div class="tg-tasks" id="tg-preview-tasks"></div>
-    <div class="tg-note"><strong>Tip:</strong> The task checklist is always accessible via the green button on screen. You can move it by dragging it to any position that works for you.</div>
+    <div class="tg-intro">You are about to explore a <strong>Digital Product Passport (DPP)</strong>, a digital record of a garment's materials, production journey, environmental impact, and end-of-life options. This is a design model only; no real transaction is required.<br><br>Work through the tasks in order. Tick each one off using the green checklist button visible throughout the app. When all tasks are done, a completion code will appear for you to enter in the Qualtrics survey.</div>
+    <div class="tg-tasks" id="tg-preview"></div>
+    <div class="tg-note"><strong>Tip:</strong> The checklist button can be dragged to any position on screen so it never blocks what you are reading.</div>
   </div>
   <button class="tg-cta" onclick="showScan()">I have read the tasks, begin &rarr;</button>
 </div>
@@ -357,7 +369,7 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
 <!-- SCAN SCREEN -->
 <div class="scan-screen" id="scan-screen">
   <div class="ss-hero">
-    <div class="ss-vrow"><div class="ss-vdot"></div><span class="ss-vtext">GS1 Digital Link, Verified product</span></div>
+    <div class="ss-vrow"><div class="ss-vdot"></div><span class="ss-vtxt">GS1 Digital Link, Verified product</span></div>
     <div class="ss-pname">Essential Tee</div>
     <div class="ss-pmeta">Sage Green, Size M, Women's, SS25</div>
     <div class="ss-gtin">DPP-AU-2025-TX-00847261, GTIN 9312345678901</div>
@@ -544,7 +556,7 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
           <button class="lpill lf" onclick="logA(this,'1.8 kg CO&#x2082; released','This garment could have been recycled instead',true)">Threw away</button>
         </div>
         <div class="log-result" id="log-res">
-          <div style="display:flex;align-items:baseline;gap:5px"><span class="log-rn" id="log-n">2.1</span><span class="log-ru" id="log-u">kg CO&#x2082; saved</span></div>
+          <div style="display:flex;align-items:baseline;gap:5px"><span class="log-rn" id="log-n"></span><span class="log-ru" id="log-u"></span></div>
           <div class="log-req" id="log-eq"></div>
           <button class="log-change" onclick="resetLog()">Change selection</button>
         </div>
@@ -557,7 +569,7 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
         <div class="fb-bd" id="fb-bd">
           <textarea class="fb-ta" id="fb-ta" rows="3" maxlength="500" placeholder="What worked well, what could be better, or any concerns about the sustainability claims..." oninput="updateCount(this)"></textarea>
           <div class="fb-count" id="fb-count">0 / 500</div>
-          <div class="fb-arow"><span>Submit anonymously</span><div class="ftoggle" onclick="this.classList.toggle('on')"></div></div>
+          <div class="fb-arow" id="fb-arow"><span>Submit anonymously</span><div class="ftoggle" onclick="this.classList.toggle('on')"></div></div>
           <button class="fb-submit" id="fb-submit" onclick="sendFb()" disabled>Send feedback &rarr;</button>
           <div class="fb-ok" id="fb-ok"><svg width="20" height="20" viewBox="0 0 20 20" style="display:inline-block;vertical-align:middle;margin-right:5px"><circle cx="10" cy="10" r="9" fill="#EEF7F2" stroke="#A8D5BC" stroke-width="1"/><path d="M6 10l3 3 5-5" stroke="#1A5C42" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Thank you. The team will review your feedback.</div>
         </div>
@@ -573,7 +585,7 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
   </div>
 </div>
 
-<!-- DRAGGABLE FAB (visible on scan screen and main app) -->
+<!-- FAB -->
 <div class="fab" id="fab" onclick="handleFabClick(event)">
   <button class="fab-btn" aria-label="Open task checklist">
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 5h8M7 10h8M7 15h8"/><circle cx="3.5" cy="5" r="1.2" fill="rgba(255,255,255,.9)" stroke="none"/><circle cx="3.5" cy="10" r="1.2" fill="rgba(255,255,255,.9)" stroke="none"/><circle cx="3.5" cy="15" r="1.2" fill="rgba(255,255,255,.9)" stroke="none"/></svg>
@@ -586,348 +598,514 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
 <div class="toast" id="toast" onclick="openTaskPanel()">
   <div class="toast-inner">
     <div class="toast-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5 6.5-6.5" stroke="#0B3D2E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-    <div class="toast-text"><div class="toast-title">All 16 tasks complete!</div><div class="toast-sub">Tap to view summary and return to survey</div></div>
+    <div class="toast-text"><div class="toast-title">All 16 tasks ticked!</div><div class="toast-sub">Tap to check your progress</div></div>
     <div class="toast-arr">&#8250;</div>
   </div>
 </div>
 
-<!-- TASK PANEL OVERLAY -->
+<!-- TASK OVERLAY -->
 <div class="task-overlay" id="task-overlay">
-  <div class="task-backdrop" onclick="closeTaskPanel()"></div>
+  <div class="task-bd" onclick="closeTaskPanel()"></div>
   <div class="task-panel">
-    <div class="task-panel-handle"></div>
-    <div class="task-panel-hd">
-      <div class="task-panel-title">Task checklist</div>
-      <div class="task-panel-prog" id="panel-prog">0 of 16 done</div>
-      <div class="task-panel-close" onclick="closeTaskPanel()">&#10005;</div>
+    <div class="tp-handle"></div>
+    <div class="tp-hd">
+      <div class="tp-title">Task checklist</div>
+      <div class="tp-prog" id="tp-prog">0 of 16 done</div>
+      <div class="tp-close" onclick="closeTaskPanel()">&#10005;</div>
     </div>
-    <div class="task-panel-track"><div class="task-panel-fill" id="panel-fill"></div></div>
-    <div class="task-done-banner" id="done-banner">
-      <div class="task-done-title">All tasks complete &#10003;</div>
-      <div class="task-done-sub">Great work! Please close this checklist and return to the Qualtrics survey to complete the questionnaire.</div>
-      <div class="task-done-actions">
-        <button class="task-done-btn-primary" onclick="closeTaskPanel()">Close and return to survey</button>
-        <button class="task-done-btn-secondary" onclick="retakeTasks()">Take the tasks again</button>
+    <div class="tp-track"><div class="tp-fill" id="tp-fill"></div></div>
+    <!-- Completion banner (hidden until all tasks done) -->
+    <div class="tp-done" id="tp-done">
+      <div class="tp-done-title">All tasks ticked &#10003;</div>
+      <div class="tp-done-sub">Great work exploring the passport.</div>
+      <!-- Waiting state -->
+      <div id="tp-wait" style="display:none">
+        <div class="tp-wait">
+          <div class="tp-wait-lbl">Please continue exploring the app</div>
+          <div class="tp-wait-msg" id="tp-wait-msg">Your completion code will appear once you have spent enough time with the passport. Keep exploring or re-read any sections while you wait.</div>
+          <div class="tp-countdown" id="tp-countdown">6m 0s</div>
+          <div class="tp-countdown-sub" id="tp-countdown-sub">Time remaining</div>
+        </div>
+        <div class="tp-actions">
+          <button class="tp-btn-secondary" onclick="retakeTasks()">Take the tasks again</button>
+        </div>
+      </div>
+      <!-- Code reveal -->
+      <div id="tp-code" style="display:none">
+        <div class="tp-code-wrap">
+          <div class="tp-code-lbl">Enter this code in the Qualtrics survey to continue</div>
+          <div class="tp-code">DPP-2026-TW</div>
+          <div class="tp-code-note">Copy this code exactly as shown, then return to the survey.</div>
+        </div>
+        <div class="tp-actions">
+          <button class="tp-btn-primary" id="copy-btn" onclick="copyCode()">Copy code</button>
+          <button class="tp-btn-secondary" onclick="retakeTasks()">Take the tasks again</button>
+        </div>
       </div>
     </div>
-    <div class="task-list" id="task-list"></div>
+    <div class="tp-list" id="tp-list"></div>
   </div>
 </div>
 
 </div></div>
-
 <script>
-const TASKS=[
-  {tab:'Scan entry screen',desc:'Read the entry screen carefully. Note the product name and the green verification indicator.'},
-  {tab:'Scan entry screen',desc:'Read the "What is a Digital Product Passport?" explainer. Note one thing it tells you.'},
-  {tab:'Scan entry screen',desc:'Select the intent option that best describes why you are here. Note which one you chose and why.'},
-  {tab:'Overview',desc:'Look at the sustainability score and grade at the top right. Note both the number and the letter grade.'},
-  {tab:'Overview',desc:'Read the care instructions grid. Note the recommended wash temperature and the one prohibited action.'},
-  {tab:'Overview',desc:'Swipe through the Certifications strip. Identify what GOTS and SA8000 each relate to.'},
-  {tab:'Overview',desc:'Tap "Brand commitment" to expand it. Note the goal and the progress percentage shown.'},
-  {tab:'Made tab',desc:'Navigate to the Made tab. Tap "Organic Cotton" to expand its detail card. Note the origin and certification.'},
-  {tab:'Made tab',desc:'Tap "Dyes and treatments" to expand the accordion. Check whether PFAS or PFOS is present.'},
-  {tab:'Made tab',desc:'Tap "Dyeing and Finishing" in the production journey. Note the company name and certification.'},
-  {tab:'Impact tab',desc:'Navigate to the Impact tab. Read the carbon footprint figure and the scope note beneath it.'},
-  {tab:'Impact tab',desc:'Read the comparison note under the carbon stat. Note how it compares to the industry average.'},
-  {tab:'End of Life tab',desc:'Navigate to End of Life. Tap "Recycle" to expand the detail card. Read the guidance provided.'},
-  {tab:'End of Life tab',desc:'In "Record your action," select the option you would most likely choose. Note the CO\u2082 result shown.'},
-  {tab:'End of Life tab',desc:'Rate the garment on Overall Quality and Claims Accuracy using the star ratings that appear.'},
-  {tab:'Any screen',desc:'Tap the home icon at the top left of the green bar to return to the entry screen and confirm it works.'},
+// ── Constants ──
+const COMPLETION_CODE = 'DPP-2026-TW';
+const MIN_MS = 360000; // 6 minutes in milliseconds
+
+// ── State ──
+const checked = new Array(16).fill(false);
+let appStartTime      = null;
+let countdownInterval = null; // post-timer poller: fires every 2s after timer expires
+let displayInterval   = null; // drives the visible countdown number in the task panel
+let isDragging = false;
+let dragMoved  = false;
+let dragOffX   = 0;
+let dragOffY   = 0;
+let toastTimer = null;
+
+// ── System checks (12 required interactions) ──
+const sysChecks = {
+  scanViewed:        false,
+  appEntered:        false,
+  tabOverview:       false,
+  tabMade:           false,
+  tabImpact:         false,
+  tabEol:            false,
+  overviewAccordion: false,
+  fibreExpanded:     false,
+  journeyExpanded:   false,
+  eolExpanded:       false,
+  logPillSelected:   false,
+  starGiven:         false,
+};
+function sc(key) { sysChecks[key] = true; }
+
+// ── Tab sc key map ──
+const TAB_SC = { overview: 'tabOverview', made: 'tabMade', impact: 'tabImpact', eol: 'tabEol' };
+
+// ── Master gate check ──
+function allConditionsMet() {
+  return Object.values(sysChecks).every(Boolean);
+}
+
+// ── Task data ──
+const TASKS = [
+  {tab:'Scan entry screen', desc:'Read the entry screen carefully. Note the product name and the green verification indicator.'},
+  {tab:'Scan entry screen', desc:'Read the "What is a Digital Product Passport?" explainer. Note one thing it tells you.'},
+  {tab:'Scan entry screen', desc:'Select the intent option that best describes why you are here. Note which one you chose and why.'},
+  {tab:'Overview',          desc:'Look at the sustainability score and grade at the top right. Note both the number and the letter grade.'},
+  {tab:'Overview',          desc:'Read the care instructions grid. Note the recommended wash temperature and the one prohibited action.'},
+  {tab:'Overview',          desc:'Swipe through the Certifications strip. Identify what GOTS and SA8000 each relate to.'},
+  {tab:'Overview',          desc:'Tap "Brand commitment" to expand it. Note the goal and the progress percentage shown.'},
+  {tab:'Made tab',          desc:'Navigate to the Made tab. Tap "Organic Cotton" to expand its detail card. Note the origin and certification.'},
+  {tab:'Made tab',          desc:'Tap "Dyes and treatments" to expand the accordion. Check whether PFAS or PFOS is present.'},
+  {tab:'Made tab',          desc:'Tap "Dyeing and Finishing" in the production journey. Note the company name and certification.'},
+  {tab:'Impact tab',        desc:'Navigate to the Impact tab. Read the carbon footprint figure and the scope note beneath it.'},
+  {tab:'Impact tab',        desc:'Read the comparison note under the carbon stat. Note how it compares to the industry average.'},
+  {tab:'End of Life tab',   desc:'Navigate to End of Life. Tap "Recycle" to expand the detail card. Read the guidance provided.'},
+  {tab:'End of Life tab',   desc:'In "Record your action," select the option you would most likely choose. Note the CO\u2082 result shown.'},
+  {tab:'End of Life tab',   desc:'Rate the garment on Overall Quality and Claims Accuracy using the star ratings that appear.'},
+  {tab:'Any screen',        desc:'Tap the home icon at the top left of the green bar to return to the entry screen and confirm it works.'},
 ];
 
-const checked=new Array(TASKS.length).fill(false);
-let toastTimer=null;
-let isDragging=false;
-let dragDidMove=false;
-
-// Build preview on landing screen
-function buildPreviewTasks(){
-  const c=document.getElementById('tg-preview-tasks');
-  TASKS.forEach((t,i)=>{
-    const d=document.createElement('div');d.className='tg-task-item';
-    d.innerHTML=`<div class="tg-num">${i+1}</div><div class="tg-task-text"><div class="tg-task-tab">${t.tab}</div>${t.desc}</div>`;
+// ── Build landing preview ──
+function buildPreview() {
+  const c = document.getElementById('tg-preview');
+  TASKS.forEach((t, i) => {
+    const d = document.createElement('div');
+    d.className = 'tg-item';
+    d.innerHTML = `<div class="tg-num">${i+1}</div><div class="tg-txt"><div class="tg-tab">${t.tab}</div>${t.desc}</div>`;
     c.appendChild(d);
   });
 }
 
-// Build task list in panel
-function buildTaskList(){
-  const c=document.getElementById('task-list');c.innerHTML='';
-  TASKS.forEach((t,i)=>{
-    const d=document.createElement('div');d.className='task-item';
-    const chkIcon=checked[i]?`<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`:'';
-    d.innerHTML=`<div class="task-cb${checked[i]?' done':''}">${chkIcon}</div><div class="task-body"><div class="task-tab-lbl">${t.tab}</div><div class="task-desc${checked[i]?' done':''}">${i+1}. ${t.desc}</div></div>`;
-    d.onclick=()=>toggleTask(i);
+// ── Build task list in panel ──
+function buildList() {
+  const c = document.getElementById('tp-list');
+  c.innerHTML = '';
+  TASKS.forEach((t, i) => {
+    const d = document.createElement('div');
+    d.className = 'tp-item';
+    const tick = checked[i]
+      ? `<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`
+      : '';
+    d.innerHTML = `<div class="tp-cb${checked[i]?' done':''}">${tick}</div><div class="tp-body"><div class="tp-tab-lbl">${t.tab}</div><div class="tp-desc${checked[i]?' done':''}">${i+1}. ${t.desc}</div></div>`;
+    d.onclick = () => toggleTask(i);
     c.appendChild(d);
   });
   updateProgress();
 }
 
-function toggleTask(i){
-  checked[i]=!checked[i];
-  const n=checked.filter(Boolean).length;
-  // Rebuild list
-  buildTaskList();
-  // If just completed all tasks, show toast
-  if(n===TASKS.length){
+function toggleTask(i) {
+  checked[i] = !checked[i];
+  buildList();
+  if (checked.every(Boolean) && !document.getElementById('task-overlay').classList.contains('vis')) {
     showToast();
   }
 }
 
-function updateProgress(){
-  const n=checked.filter(Boolean).length;
-  const pct=Math.round((n/TASKS.length)*100);
-  document.getElementById('panel-prog').textContent=n+' of '+TASKS.length+' done';
-  document.getElementById('panel-fill').style.width=pct+'%';
-  document.getElementById('fab-badge').textContent=n;
-  const banner=document.getElementById('done-banner');
-  if(n===TASKS.length){banner.classList.add('vis');}
-  else{banner.classList.remove('vis');}
+function updateProgress() {
+  const n = checked.filter(Boolean).length;
+  document.getElementById('tp-prog').textContent = n + ' of 16 done';
+  document.getElementById('tp-fill').style.width = Math.round(n / 16 * 100) + '%';
+  document.getElementById('fab-badge').textContent = n;
+  const banner = document.getElementById('tp-done');
+  if (n === 16) {
+    banner.classList.add('vis');
+    runTimeGate();
+  } else {
+    banner.classList.remove('vis');
+  }
 }
 
-function retakeTasks(){
-  for(let i=0;i<checked.length;i++)checked[i]=false;
-  buildTaskList();
-  document.getElementById('done-banner').classList.remove('vis');
+// ── Time and conditions gate ──
+function runTimeGate() {
+  const waitEl = document.getElementById('tp-wait');
+  const codeEl = document.getElementById('tp-code');
+  if (!waitEl || !codeEl) return;
+
+  const elapsed   = appStartTime ? Date.now() - appStartTime : 0;
+  const remaining = MIN_MS - elapsed;
+
+  if (remaining > 0) {
+    // Timer still running — show countdown regardless of other conditions
+    waitEl.style.display = 'block';
+    codeEl.style.display = 'none';
+    // Reset sub-text in case it was changed by a previous "keep exploring" state
+    const subEl = document.getElementById('tp-countdown-sub');
+    if (subEl) subEl.textContent = 'Time remaining';
+    tick(remaining);
+    if (!displayInterval) {
+      displayInterval = setInterval(() => {
+        const r = MIN_MS - (appStartTime ? Date.now() - appStartTime : 0);
+        if (r <= 0) {
+          clearInterval(displayInterval);
+          displayInterval = null;
+          runTimeGate(); // timer just expired — re-evaluate
+        } else {
+          tick(r);
+        }
+      }, 1000);
+    }
+
+  } else if (allConditionsMet()) {
+    // Timer expired and all conditions satisfied — reveal the code
+    waitEl.style.display = 'none';
+    codeEl.style.display = 'block';
+    clearInterval(displayInterval);
+    displayInterval = null;
+    clearInterval(countdownInterval);
+    countdownInterval = null;
+
+  } else {
+    // Timer expired but not all conditions met — prompt without specifics
+    waitEl.style.display = 'block';
+    codeEl.style.display = 'none';
+    clearInterval(displayInterval);
+    displayInterval = null;
+    const cdEl  = document.getElementById('tp-countdown');
+    const subEl = document.getElementById('tp-countdown-sub');
+    if (cdEl)  cdEl.textContent  = 'Keep exploring';
+    if (subEl) subEl.textContent = 'A few more sections need your attention';
+    // Poll every 2 seconds to catch when conditions are eventually satisfied
+    if (!countdownInterval) {
+      countdownInterval = setInterval(() => {
+        if (allConditionsMet()) {
+          clearInterval(countdownInterval);
+          countdownInterval = null;
+          runTimeGate();
+        }
+      }, 2000);
+    }
+  }
+}
+
+function tick(ms) {
+  const el = document.getElementById('tp-countdown');
+  if (!el) return;
+  const s = Math.ceil(ms / 1000);
+  const m = Math.floor(s / 60);
+  const sec = s % 60;
+  el.textContent = m > 0 ? `${m}m ${sec}s` : `${sec}s`;
+}
+
+function retakeTasks() {
+  checked.fill(false);
+  // Do NOT clear the interval — the 6-minute clock keeps running from "begin"
   closeTaskPanel();
 }
 
-// Toast notification
-function showToast(){
-  const t=document.getElementById('toast');
+// ── Toast ──
+function showToast() {
+  const t = document.getElementById('toast');
   clearTimeout(toastTimer);
-  t.className='toast show';
-  toastTimer=setTimeout(()=>{
-    t.className='toast hide';
-    setTimeout(()=>{t.className='toast';},300);
-  },6000);
+  t.className = 'toast show';
+  toastTimer = setTimeout(() => {
+    t.className = 'toast hide';
+    setTimeout(() => { t.className = 'toast'; }, 300);
+  }, 6000);
 }
 
-function openTaskPanel(){
-  // Hide toast if showing
-  document.getElementById('toast').className='toast';
+// ── Copy code ──
+function copyCode() {
+  const btn = document.getElementById('copy-btn');
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(COMPLETION_CODE)
+      .then(() => flashCopy(btn, true))
+      .catch(() => fallbackCopy(btn));
+  } else {
+    fallbackCopy(btn);
+  }
+}
+function fallbackCopy(btn) {
+  try {
+    const ta = document.createElement('textarea');
+    ta.value = COMPLETION_CODE;
+    ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0;';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    ta.setSelectionRange(0, 99999); // iOS Safari
+    const ok = document.execCommand('copy');
+    document.body.removeChild(ta);
+    flashCopy(btn, ok);
+  } catch(e) {
+    flashCopy(btn, false);
+  }
+}
+function flashCopy(btn, success) {
+  if (!btn) return;
+  btn.textContent = success ? 'Copied!' : 'Copy failed — copy the code manually';
+  setTimeout(() => { btn.textContent = 'Copy code'; }, 3000);
+}
+
+// ── Panel ──
+function openTaskPanel() {
+  document.getElementById('toast').className = 'toast';
   clearTimeout(toastTimer);
-  buildTaskList();
+  buildList();
   document.getElementById('task-overlay').classList.add('vis');
 }
-function closeTaskPanel(){
+function closeTaskPanel() {
   document.getElementById('task-overlay').classList.remove('vis');
+  // Stop the on-screen display tick — no point updating a hidden element
+  clearInterval(displayInterval);
+  displayInterval = null;
+  // Background countdownInterval keeps running — do NOT clear it here
 }
 
-// Screens
-function showScan(){
-  document.getElementById('tg-screen').style.display='none';
-  const scan=document.getElementById('scan-screen');
-  scan.classList.add('vis');
-  // Show FAB on scan screen
-  showFab();
-  positionFab();
+// ── Screen transitions ──
+function showScan() {
+  appStartTime = Date.now();
+  sc('scanViewed');
+  document.getElementById('tg-screen').style.display = 'none';
+  document.getElementById('scan-screen').classList.add('vis');
+  document.getElementById('fab').classList.add('vis');
 }
-
-function enterApp(t){
+function enterApp(t) {
+  sc('appEntered');
   document.getElementById('scan-screen').classList.remove('vis');
   document.getElementById('main-app').classList.add('vis');
-  showFab();
-  switchPanel(t);syncNav(t);
+  document.getElementById('fab').classList.add('vis');
+  switchPanel(t); syncNav(t);
 }
-
-function goHome(){
+function goHome() {
   document.getElementById('main-app').classList.remove('vis');
   document.getElementById('scan-screen').classList.add('vis');
-  showFab();
-  document.querySelectorAll('.panel').forEach(p=>{p.scrollTop=0;});
+  document.querySelectorAll('.panel').forEach(p => { p.scrollTop = 0; });
+}
+function switchNav(btn) {
+  document.querySelectorAll('.nb').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  switchPanel(btn.dataset.p);
+}
+function switchPanel(p) {
+  document.querySelectorAll('.panel').forEach(x => { x.classList.remove('active'); x.scrollTop = 0; });
+  document.getElementById('pan-' + p).classList.add('active');
+  if (TAB_SC[p]) sc(TAB_SC[p]);
+}
+function syncNav(p) {
+  document.querySelectorAll('.nb').forEach(b => b.classList.toggle('on', b.dataset.p === p));
+}
+function toggleAcc(row) {
+  const b = row.nextElementSibling, c = row.querySelector('.acc-ch');
+  b.classList.toggle('open'); c.classList.toggle('open');
+  if (document.getElementById('pan-overview').classList.contains('active')) sc('overviewAccordion');
 }
 
-function showFab(){
-  const fab=document.getElementById('fab');
-  fab.classList.add('vis');
+// ── Draggable FAB ──
+const fab = document.getElementById('fab');
+function fabPos(x, y) {
+  const ph = document.getElementById('phone').getBoundingClientRect();
+  const fw = fab.offsetWidth, fh = fab.offsetHeight, m = 8;
+  fab.style.left  = Math.max(m, Math.min(ph.width  - fw - m, x - ph.left)) + 'px';
+  fab.style.top   = Math.max(m, Math.min(ph.height - fh - m, y - ph.top))  + 'px';
+  fab.style.right  = 'auto';
+  fab.style.bottom = 'auto';
 }
-
-function switchNav(btn){
-  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');switchPanel(btn.dataset.p);
+function onDragStart(cx, cy) {
+  isDragging = true; dragMoved = false;
+  const r = fab.getBoundingClientRect();
+  dragOffX = cx - r.left - r.width / 2;
+  dragOffY = cy - r.top  - r.height / 2;
 }
-function switchPanel(p){
-  document.querySelectorAll('.panel').forEach(x=>{x.classList.remove('active');x.scrollTop=0;});
-  document.getElementById('pan-'+p).classList.add('active');
+function onDragMove(cx, cy) {
+  if (!isDragging) return;
+  dragMoved = true;
+  fabPos(cx - dragOffX, cy - dragOffY);
 }
-function syncNav(p){document.querySelectorAll('.nb').forEach(b=>b.classList.toggle('on',b.dataset.p===p));}
-function toggleAcc(row){const b=row.nextElementSibling,c=row.querySelector('.acc-ch');b.classList.toggle('open');c.classList.toggle('open');}
+function onDragEnd() { isDragging = false; }
+function handleFabClick(e) { if (!dragMoved) openTaskPanel(); }
 
-// Draggable FAB
-const fab=document.getElementById('fab');
-let fabX=null,fabY=null;
+fab.addEventListener('mousedown', e => { e.preventDefault(); onDragStart(e.clientX, e.clientY); });
+document.addEventListener('mousemove', e => { if (isDragging) onDragMove(e.clientX, e.clientY); });
+document.addEventListener('mouseup', onDragEnd);
+fab.addEventListener('touchstart', e => { const t = e.touches[0]; onDragStart(t.clientX, t.clientY); }, {passive:true});
+fab.addEventListener('touchmove',  e => { const t = e.touches[0]; onDragMove(t.clientX, t.clientY); e.preventDefault(); }, {passive:false});
+fab.addEventListener('touchend', onDragEnd);
 
-function positionFab(){
-  const phone=document.getElementById('phone');
-  const pr=phone.getBoundingClientRect();
-  const fw=50,fh=50,margin=12;
-  fab.style.right=margin+'px';
-  fab.style.bottom='74px';
-  fab.style.left='';
-  fab.style.top='';
-}
-
-function handleFabClick(e){
-  if(dragDidMove){dragDidMove=false;return;}
-  openTaskPanel();
-}
-
-function initDrag(clientX,clientY){
-  isDragging=true;dragDidMove=false;
-  const phone=document.getElementById('phone');
-  const pr=phone.getBoundingClientRect();
-  const fr=fab.getBoundingClientRect();
-  // Convert to absolute position within phone
-  fab.style.right='';fab.style.bottom='';
-  fab.style.left=(fr.left-pr.left)+'px';
-  fab.style.top=(fr.top-pr.top)+'px';
-  fabX=clientX-(fr.left-pr.left);
-  fabY=clientY-(fr.top-pr.top);
-}
-function moveDrag(clientX,clientY){
-  if(!isDragging)return;
-  dragDidMove=true;
-  const phone=document.getElementById('phone');
-  const pr=phone.getBoundingClientRect();
-  const fw=fab.offsetWidth,fh=fab.offsetHeight;
-  const margin=8;
-  let nx=clientX-fabX;
-  let ny=clientY-fabY;
-  nx=Math.max(margin,Math.min(pr.width-fw-margin,nx));
-  ny=Math.max(margin,Math.min(pr.height-fh-margin,ny));
-  fab.style.left=nx+'px';
-  fab.style.top=ny+'px';
-}
-function endDrag(){isDragging=false;}
-
-fab.addEventListener('mousedown',e=>{e.preventDefault();initDrag(e.clientX,e.clientY);});
-document.addEventListener('mousemove',e=>{if(isDragging)moveDrag(e.clientX,e.clientY);});
-document.addEventListener('mouseup',endDrag);
-
-fab.addEventListener('touchstart',e=>{const t=e.touches[0];initDrag(t.clientX,t.clientY);},{passive:true});
-fab.addEventListener('touchmove',e=>{const t=e.touches[0];moveDrag(t.clientX,t.clientY);e.preventDefault();},{passive:false});
-fab.addEventListener('touchend',endDrag);
-
-// Cert strip drag
+// ── Cert strip drag ──
 (function(){
-  const el=document.getElementById('cert-strip');let isDown=false,sx=0,sl=0;
-  el.addEventListener('mousedown',e=>{isDown=true;sx=e.pageX-el.offsetLeft;sl=el.scrollLeft;});
-  el.addEventListener('mouseleave',()=>{isDown=false;});
-  el.addEventListener('mouseup',()=>{isDown=false;});
-  el.addEventListener('mousemove',e=>{if(!isDown)return;e.preventDefault();const x=e.pageX-el.offsetLeft;el.scrollLeft=sl-(x-sx)*1.2;});
+  const el = document.getElementById('cert-strip');
+  let down = false, sx = 0, sl = 0;
+  el.addEventListener('mousedown', e => { down = true; sx = e.pageX - el.offsetLeft; sl = el.scrollLeft; });
+  el.addEventListener('mouseleave', () => { down = false; });
+  el.addEventListener('mouseup',    () => { down = false; });
+  el.addEventListener('mousemove',  e => { if (!down) return; e.preventDefault(); el.scrollLeft = sl - (e.pageX - el.offsetLeft - sx) * 1.2; });
 })();
 
-// Fibres
-const fibres=[
-  {name:'Organic Cotton',pct:60,origin:'Maharashtra, India',cert:'GOTS Certified',color:'#2D7A55',detail:'GOTS-certified organic cotton grown without synthetic pesticides or fertilisers. Sourced from a fair-trade cooperative of 2,400 smallholder farmers. Annual crop and chain-of-custody audits by Control Union Certifications.'},
-  {name:'Recycled Polyester',pct:35,origin:'Taiwan',cert:'GRS Certified',color:'#2B6CB0',detail:'Produced from post-consumer PET plastic bottles. GRS certified. Reduces reliance on virgin petrochemicals by approximately 59% and diverts plastic waste from landfill.'},
-  {name:'Elastane',pct:5,origin:'Germany',cert:'OEKO-TEX 100',color:'#B8860B',detail:'Provides shape retention and stretch. Synthetically produced with no animal derivatives. OEKO-TEX STANDARD 100 certified. Subject to the brand commitment in Overview, where future versions will use bio-based or recycled alternatives.'},
+// ── Fibres ──
+const fibres = [
+  {name:'Organic Cotton',    pct:60, origin:'Maharashtra, India', cert:'GOTS Certified', color:'#2D7A55',
+   detail:'GOTS-certified organic cotton grown without synthetic pesticides or fertilisers. Sourced from a fair-trade cooperative of 2,400 smallholder farmers. Annual crop and chain-of-custody audits by Control Union Certifications.'},
+  {name:'Recycled Polyester', pct:35, origin:'Taiwan',            cert:'GRS Certified',  color:'#2B6CB0',
+   detail:'Produced from post-consumer PET plastic bottles. GRS certified. Reduces reliance on virgin petrochemicals by approximately 59% and diverts plastic waste from landfill.'},
+  {name:'Elastane',           pct:5,  origin:'Germany',           cert:'OEKO-TEX 100',   color:'#B8860B',
+   detail:'Provides shape retention and stretch. Synthetically produced with no animal derivatives. OEKO-TEX STANDARD 100 certified. Subject to the brand commitment in Overview — future versions will use bio-based or recycled alternatives.'},
 ];
-const fl=document.getElementById('flist');
-fibres.forEach(f=>{
-  const wrap=document.createElement('div');
-  const row=document.createElement('div');row.className='f-row';
-  row.innerHTML=`<div class="f-dot" style="background:${f.color}"></div><div class="f-info"><div class="f-name">${f.name}</div><div class="f-sub">${f.cert}, ${f.origin}</div></div><div class="f-pct">${f.pct}%</div><div class="f-ch">&#9660;</div>`;
-  const det=document.createElement('div');det.className='f-detail';
-  det.innerHTML=`<div class="f-detail-txt">${f.detail}</div>`;
-  row.onclick=()=>{det.classList.toggle('open');row.querySelector('.f-ch').classList.toggle('open');};
-  wrap.appendChild(row);wrap.appendChild(det);fl.appendChild(wrap);
+fibres.forEach(f => {
+  const wrap = document.createElement('div');
+  const row  = document.createElement('div'); row.className = 'f-row';
+  row.innerHTML = `<div class="f-dot" style="background:${f.color}"></div><div class="f-info"><div class="f-name">${f.name}</div><div class="f-sub">${f.cert}, ${f.origin}</div></div><div class="f-pct">${f.pct}%</div><div class="f-ch">&#9660;</div>`;
+  const det  = document.createElement('div'); det.className = 'f-detail';
+  det.innerHTML = `<div class="f-detail-txt">${f.detail}</div>`;
+  row.onclick = () => { sc('fibreExpanded'); det.classList.toggle('open'); row.querySelector('.f-ch').classList.toggle('open'); };
+  wrap.appendChild(row); wrap.appendChild(det);
+  document.getElementById('flist').appendChild(wrap);
 });
 
-// Journey
-const jd=[
-  {s:'Raw Material',l:'Maharashtra, India',d:'Aug 2024',c:'GOTS',co:'Chetna Organic Farms',desc:'Organic cotton grown without synthetic pesticides. Fair-trade cooperative of 2,400 smallholder farmers. Annual crop and chain-of-custody audits by Control Union Certifications.'},
-  {s:'Spinning and Weaving',l:'Gujarat, India',d:'Sep 2024',c:'OCS',co:'Arvind Mills Ltd.',desc:'Ring-spun yarn for superior durability. Closed-loop water recycling reduces freshwater consumption by 60%. ISO 14001:2015 certified.'},
-  {s:'Dyeing and Finishing',l:'Ho Chi Minh City, Vietnam',d:'Oct 2024',c:'OEKO-TEX',co:'EcoColour Co.',desc:'Low-impact reactive dyes. PFAS-free anti-wrinkle finish. On-site wastewater treatment to drinking-water standards before discharge.'},
-  {s:'Cut, Make and Trim',l:'Ho Chi Minh City, Vietnam',d:'Nov 2024',c:'SA8000',co:'Green Stitch Apparel',desc:'Living wage paid to all 1,240 workers. 87% female workforce. SA8000 certified since 2019. Annual audit by Bureau Veritas.'},
-  {s:'Distribution',l:'Melbourne, Australia',d:'Dec 2024',c:'Carbon Neutral',co:'Pacific Eco Logistics',desc:'Sea freight only. Approximately 95% fewer emissions than air freight. Transport: 0.41 kg CO\u2082e per unit. Offset via GreenFleet QLD reforestation, ISO 14064 verified.'},
+// ── Journey ──
+const journey = [
+  {s:'Raw Material',           l:'Maharashtra, India',       d:'Aug 2024', c:'GOTS',         co:'Chetna Organic Farms',   desc:'Organic cotton grown without synthetic pesticides. Fair-trade cooperative of 2,400 smallholder farmers. Annual crop and chain-of-custody audits by Control Union Certifications.'},
+  {s:'Spinning and Weaving',   l:'Gujarat, India',           d:'Sep 2024', c:'OCS',          co:'Arvind Mills Ltd.',       desc:'Ring-spun yarn for superior durability. Closed-loop water recycling reduces freshwater consumption by 60%. ISO 14001:2015 certified.'},
+  {s:'Dyeing and Finishing',   l:'Ho Chi Minh City, Vietnam',d:'Oct 2024', c:'OEKO-TEX',     co:'EcoColour Co.',           desc:'Low-impact reactive dyes. PFAS-free anti-wrinkle finish. On-site wastewater treatment to drinking-water standards before discharge.'},
+  {s:'Cut, Make and Trim',     l:'Ho Chi Minh City, Vietnam',d:'Nov 2024', c:'SA8000',        co:'Green Stitch Apparel',    desc:'Living wage paid to all 1,240 workers. 87% female workforce. SA8000 certified since 2019. Annual audit by Bureau Veritas.'},
+  {s:'Distribution',           l:'Melbourne, Australia',     d:'Dec 2024', c:'Carbon Neutral', co:'Pacific Eco Logistics',  desc:'Sea freight only. Approximately 95% fewer emissions than air freight. Transport: 0.41 kg CO\u2082e per unit. Offset via GreenFleet QLD reforestation, ISO 14064 verified.'},
 ];
-const jl=document.getElementById('jlist');
-jd.forEach((j,i)=>{
-  const last=i===jd.length-1;
-  const it=document.createElement('div');it.className='j-item';
-  it.innerHTML=`<div class="j-l"><div class="j-dot"></div>${!last?'<div class="j-line"></div>':''}</div><div class="j-r" onclick="tJ(this)"><div class="j-top"><div><div class="j-stage">${j.s}</div><div class="j-loc">${j.l}, ${j.d}</div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px"><span class="j-cert">${j.c}</span><div class="j-ch">&#9660;</div></div></div><div class="j-detail"><div class="j-company">${j.co}</div><div class="j-desc">${j.desc}</div></div></div>`;
-  jl.appendChild(it);
+journey.forEach((j, i) => {
+  const last = i === journey.length - 1;
+  const it = document.createElement('div'); it.className = 'j-item';
+  it.innerHTML = `<div class="j-l"><div class="j-dot"></div>${!last ? '<div class="j-line"></div>' : ''}</div><div class="j-r" onclick="tJ(this)"><div class="j-top"><div><div class="j-stage">${j.s}</div><div class="j-loc">${j.l}, ${j.d}</div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px"><span class="j-cert">${j.c}</span><div class="j-ch">&#9660;</div></div></div><div class="j-detail"><div class="j-company">${j.co}</div><div class="j-desc">${j.desc}</div></div></div>`;
+  document.getElementById('jlist').appendChild(it);
 });
-function tJ(el){const d=el.querySelector('.j-detail'),c=el.querySelector('.j-ch');d.classList.toggle('open');c.classList.toggle('open');}
+function tJ(el) { sc('journeyExpanded'); const d = el.querySelector('.j-detail'), c = el.querySelector('.j-ch'); d.classList.toggle('open'); c.classList.toggle('open'); }
 
-// EOL
-const eols=[
-  {a:'RS',bg:'#EEF7F2',ic:'#1A5C42',t:'Resell',d:'Still in good condition.',detail:'List on Depop, Vestiaire Collective or Facebook Marketplace. Reselling extends life by an average of 2.2 years and keeps the garment out of landfill.'},
-  {a:'DN',bg:'#EEF3FB',ic:'#1E5A8E',t:'Donate',d:'Any condition accepted.',detail:'Drop off at 1,200+ Seamless collection points across Australia. All conditions accepted. Worn or damaged garments are redirected to textile recycling. Find your nearest point at seamlessaustralia.com'},
-  {a:'RP',bg:'#FDF4E3',ic:'#8A6B1E',t:'Repair',d:'Rated Easy to repair.',detail:'Common repairs: seam reinforcement, hem fraying, minor snags. All can be done at home or by a local tailor. Full repair guide at terranovaworld.com/repair, free to download.'},
-  {a:'RC',bg:'#EEF7F2',ic:'#0B3D2E',t:'Recycle',d:'Free in-store take-back.',detail:'Return to any Terranova World store for certified textile-to-textile recycling at no cost. No minimum condition required. Receive 10% off your next purchase. Use the booking button below.'},
+// ── EOL rows ──
+const eols = [
+  {a:'RS', bg:'#EEF7F2', ic:'#1A5C42', t:'Resell',  d:'Still in good condition.',    detail:'List on Depop, Vestiaire Collective or Facebook Marketplace. Reselling extends life by an average of 2.2 years and keeps the garment out of landfill.'},
+  {a:'DN', bg:'#EEF3FB', ic:'#1E5A8E', t:'Donate',  d:'Any condition accepted.',     detail:'Drop off at 1,200+ Seamless collection points across Australia. All conditions accepted. Worn or damaged garments are redirected to textile recycling. Find your nearest point at seamlessaustralia.com'},
+  {a:'RP', bg:'#FDF4E3', ic:'#8A6B1E', t:'Repair',  d:'Rated Easy to repair.',       detail:'Common repairs: seam reinforcement, hem fraying, minor snags. All can be done at home or by a local tailor. Full repair guide at terranovaworld.com/repair, free to download.'},
+  {a:'RC', bg:'#EEF7F2', ic:'#0B3D2E', t:'Recycle', d:'Free in-store take-back.',    detail:'Return to any Terranova World store for certified textile-to-textile recycling at no cost. No minimum condition required. Receive 10% off your next purchase. Use the booking button below.'},
 ];
-const eolEl=document.getElementById('eollist');
-eols.forEach(o=>{
-  const row=document.createElement('div');row.className='eol-row';
-  row.innerHTML=`<div class="eol-top" onclick="toggleEol(this)"><div class="eol-ic" style="background:${o.bg}"><span style="font-size:11px;font-weight:500;color:${o.ic}">${o.a}</span></div><div style="flex:1"><div class="eol-t">${o.t}</div><div class="eol-d">${o.d}</div></div><div class="eol-arr">&#8250;</div></div><div class="eol-detail"><div class="eol-detail-txt">${o.detail}</div></div>`;
-  eolEl.appendChild(row);
+eols.forEach(o => {
+  const row = document.createElement('div'); row.className = 'eol-row';
+  row.innerHTML = `<div class="eol-top" onclick="toggleEol(this)"><div class="eol-ic" style="background:${o.bg}"><span style="font-size:11px;font-weight:500;color:${o.ic}">${o.a}</span></div><div style="flex:1"><div class="eol-t">${o.t}</div><div class="eol-d">${o.d}</div></div><div class="eol-arr">&#8250;</div></div><div class="eol-detail"><div class="eol-detail-txt">${o.detail}</div></div>`;
+  document.getElementById('eollist').appendChild(row);
 });
-function toggleEol(top){const det=top.nextElementSibling,arr=top.querySelector('.eol-arr');det.classList.toggle('open');arr.classList.toggle('open');}
-function bookTakeback(btn){btn.textContent='Take-back booked';btn.classList.add('done');btn.onclick=null;}
+function toggleEol(top) { sc('eolExpanded'); const d = top.nextElementSibling, a = top.querySelector('.eol-arr'); d.classList.toggle('open'); a.classList.toggle('open'); }
+function bookTakeback(btn) { btn.textContent = 'Take-back booked'; btn.classList.add('done'); btn.onclick = null; }
 
-// Logger
-function logA(btn,nText,eqText,warn){
-  document.querySelectorAll('.lpill').forEach(p=>p.classList.remove('sel'));
+// ── Logger ──
+function logA(btn, nText, eqText, warn) {
+  sc('logPillSelected');
+  document.querySelectorAll('.lpill').forEach(p => p.classList.remove('sel'));
   btn.classList.add('sel');
-  const r=document.getElementById('log-res');
-  r.className='log-result'+(warn?' warn':'')+' show';
-  const parts=nText.split(' ');
-  document.getElementById('log-n').textContent=parts[0];
-  document.getElementById('log-u').textContent=parts.slice(1).join(' ');
-  document.getElementById('log-eq').textContent=eqText;
-  setTimeout(()=>{
-    const lw=document.getElementById('star-lead-wrap'),rl=document.getElementById('rate-lbl'),ss=document.getElementById('star-section');
-    lw.style.display='block';rl.style.display='block';ss.style.display='block';ss.style.animation='up .3s ease';
+  const r = document.getElementById('log-res');
+  r.className = 'log-result' + (warn ? ' warn' : '') + ' show';
+  const parts = nText.split(' ');
+  document.getElementById('log-n').textContent = parts[0];
+  document.getElementById('log-u').textContent = parts.slice(1).join(' ');
+  document.getElementById('log-eq').textContent = eqText;
+  setTimeout(() => {
+    const lw = document.getElementById('star-lead-wrap');
+    const rl = document.getElementById('rate-lbl');
+    const ss = document.getElementById('star-section');
+    lw.style.display = 'block'; rl.style.display = 'block';
+    ss.style.display = 'block'; ss.style.animation = 'up .3s ease';
     buildStars();
-    setTimeout(()=>{const fa=document.getElementById('fb-acc');fa.style.display='block';fa.style.animation='up .3s ease';},350);
-  },500);
+    setTimeout(() => { const fa = document.getElementById('fb-acc'); fa.style.display = 'block'; fa.style.animation = 'up .3s ease'; }, 350);
+  }, 500);
 }
-function resetLog(){
-  document.querySelectorAll('.lpill').forEach(p=>p.classList.remove('sel'));
+function resetLog() {
+  document.querySelectorAll('.lpill').forEach(p => p.classList.remove('sel'));
   document.getElementById('log-res').classList.remove('show');
-  ['star-lead-wrap','rate-lbl','star-section','fb-acc'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display='none';});
+  ['star-lead-wrap','rate-lbl','star-section','fb-acc'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.style.display = 'none';
+  });
 }
 
-// Stars
-const sCats=[{id:'sq',l:'Overall quality',def:4},{id:'ss',l:'Sustainability',def:5},{id:'sc',l:'Claims accuracy',def:4},{id:'sd',l:'Durability',def:3}];
-const sVals={};
-function buildStars(){
-  const sw=document.getElementById('star-section');if(sw.querySelector('.star-row'))return;
-  sCats.forEach(c=>{sVals[c.id]=c.def;const row=document.createElement('div');row.className='star-row';row.innerHTML=`<span class="star-lbl">${c.l}</span><div class="stars-g" id="${c.id}"></div>`;sw.appendChild(row);renderStars(c.id,c.def);});
+// ── Stars ──
+const sCats = [{id:'sqq',l:'Overall quality',def:0},{id:'sss',l:'Sustainability',def:0},{id:'scc',l:'Claims accuracy',def:0},{id:'sdd',l:'Durability',def:0}];
+const sVals = {};
+function buildStars() {
+  const sw = document.getElementById('star-section');
+  if (sw.querySelector('.star-row')) return;
+  sCats.forEach(c => {
+    sVals[c.id] = c.def;
+    const row = document.createElement('div'); row.className = 'star-row';
+    row.innerHTML = `<span class="star-lbl">${c.l}</span><div class="stars-g" id="${c.id}"></div>`;
+    sw.appendChild(row); renderStars(c.id, c.def);
+  });
 }
-function renderStars(id,val){
-  const el=document.getElementById(id);if(!el)return;el.innerHTML='';
-  for(let i=1;i<=5;i++){
-    const b=document.createElement('button');b.className='star-btn';const f=i<=val;
-    b.innerHTML=`<svg width="22" height="22" viewBox="0 0 22 22"><path d="M11 2l2.4 4.8 5.3.8-3.8 3.7.9 5.3-4.8-2.5-4.8 2.5.9-5.3-3.8-3.7 5.3-.8z" fill="${f?'#C19A3C':'none'}" stroke="${f?'#C19A3C':'#DDD'}" stroke-width="1.3" stroke-linejoin="round"/></svg>`;
-    b.setAttribute('aria-label',`${i} star`);
-    b.onclick=(()=>{const v=i;return()=>{sVals[id]=v;renderStars(id,v);}})();
+function renderStars(id, val) {
+  const el = document.getElementById(id); if (!el) return; el.innerHTML = '';
+  for (let i = 1; i <= 5; i++) {
+    const b = document.createElement('button'); b.className = 'star-btn';
+    const f = i <= val;
+    b.innerHTML = `<svg width="22" height="22" viewBox="0 0 22 22"><path d="M11 2l2.4 4.8 5.3.8-3.8 3.7.9 5.3-4.8-2.5-4.8 2.5.9-5.3-3.8-3.7 5.3-.8z" fill="${f?'#C19A3C':'none'}" stroke="${f?'#C19A3C':'#DDD'}" stroke-width="1.3" stroke-linejoin="round"/></svg>`;
+    b.setAttribute('aria-label', `${i} star`);
+    b.onclick = (v => () => { sc('starGiven'); sVals[id] = v; renderStars(id, v); })(i);
     el.appendChild(b);
   }
 }
 
-// Feedback
-function updateCount(ta){document.getElementById('fb-count').textContent=`${ta.value.length} / 500`;document.getElementById('fb-submit').disabled=ta.value.trim().length===0;}
-function toggleFb(hd){const bd=document.getElementById('fb-bd'),ch=hd.querySelector('.fb-hch');bd.classList.toggle('open');ch.classList.toggle('open');}
-function sendFb(){
-  const ta=document.getElementById('fb-ta');if(!ta.value.trim())return;
-  ta.style.display='none';document.querySelector('.fb-count').style.display='none';document.querySelector('.fb-arow').style.display='none';document.getElementById('fb-submit').style.display='none';document.getElementById('fb-ok').classList.add('show');
+// ── Feedback ──
+function updateCount(ta) { document.getElementById('fb-count').textContent = `${ta.value.length} / 500`; document.getElementById('fb-submit').disabled = ta.value.trim().length === 0; }
+function toggleFb(hd) { const bd = document.getElementById('fb-bd'), ch = hd.querySelector('.fb-hch'); bd.classList.toggle('open'); ch.classList.toggle('open'); }
+function sendFb() {
+  const ta = document.getElementById('fb-ta'); if (!ta.value.trim()) return;
+  ta.style.display = 'none';
+  document.getElementById('fb-count').style.display = 'none';
+  document.getElementById('fb-arow').style.display = 'none';
+  document.getElementById('fb-submit').style.display = 'none';
+  document.getElementById('fb-ok').classList.add('show');
 }
 
-// Follow
-function toggleFlw(btn,ctId,base){
-  const ct=document.getElementById(ctId);
-  if(btn.dataset.f==='1'){btn.dataset.f='';btn.style.cssText='padding:7px 16px;border-radius:99px;border:1.5px solid var(--green);background:transparent;color:var(--green);font-size:12px;font-weight:500;cursor:pointer;font-family:inherit';btn.textContent='Follow';ct.textContent=base+' following';}
-  else{btn.dataset.f='1';btn.style.cssText='padding:7px 16px;border-radius:99px;border:1.5px solid #0B3D2E;background:#0B3D2E;color:#fff;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit';btn.textContent='Following';ct.textContent=(base+1)+' following';}
+// ── Follow ──
+function toggleFlw(btn, ctId, base) {
+  const ct = document.getElementById(ctId);
+  if (btn.dataset.f === '1') {
+    btn.dataset.f = ''; btn.style.cssText = 'padding:7px 16px;border-radius:99px;border:1.5px solid var(--green);background:transparent;color:var(--green);font-size:12px;font-weight:500;cursor:pointer;font-family:inherit';
+    btn.textContent = 'Follow'; ct.textContent = base + ' following';
+  } else {
+    btn.dataset.f = '1'; btn.style.cssText = 'padding:7px 16px;border-radius:99px;border:1.5px solid #0B3D2E;background:#0B3D2E;color:#fff;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit';
+    btn.textContent = 'Following'; ct.textContent = (base + 1) + ' following';
+  }
 }
 
-// Init
-buildPreviewTasks();
-positionFab();
+// ── Init ──
+buildPreview();
 </script>
 </body>
 </html>
