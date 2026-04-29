@@ -469,7 +469,7 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
       <div class="ob-sub">We will guide you the whole way.</div>
     </div>
     <div class="ob-body">
-      <p class="ob-p">A <strong>green bar at the top</strong> will show you what to do next, one step at a time. Each task will tell you exactly <strong>which section to go to</strong> and <strong>what to do</strong> when you get there. The <strong>Done</strong> button in the bar will light up once you have done it. Tap <strong>Done</strong> to move to the next task.</p>
+      <p class="ob-p">A <strong>green bar at the top</strong> will show you what to do next, one step at a time, as shown below. Each task will tell you exactly <strong>which section to go to</strong> and <strong>what to do</strong> when you get there. The <strong>Done</strong> button in the bar will light up once you have done it. Tap <strong>Done</strong> to move to the next task.</p>
       <div class="ob-nav-illo" style="background:var(--green-lt);border-color:var(--green-bd)">
         <div class="ob-nav-illo-lbl" style="color:var(--green-mid)">The green task bar at the top</div>
         <div style="background:var(--white);border-radius:8px;padding:10px 12px">
@@ -481,7 +481,7 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
           </div>
         </div>
       </div>
-      <p class="ob-p">Use the buttons <strong>at the bottom of the screen</strong> to move between the four sections of the passport.</p>
+      <p class="ob-p">Use the buttons <strong>at the bottom of the screen</strong> to move between the four sections of the passport, as shown below.</p>
       <div class="ob-nav-illo">
         <div class="ob-nav-illo-lbl">Buttons at the bottom of the screen</div>
         <div class="ob-nav-tabs">
@@ -511,20 +511,20 @@ html,body{height:100%;background:#ECEAE5;overscroll-behavior:none}
     </div>
   </div>
 
-  <!-- STEP 5: Your 16 tasks -->
+  <!-- STEP 5: You have 16 tasks -->
   <div class="ob-step" id="ob-step-5">
     <div class="ob-hero">
       <div class="ob-dots"><div class="ob-dot"></div><div class="ob-dot"></div><div class="ob-dot"></div><div class="ob-dot"></div><div class="ob-dot on"></div></div>
       <div class="ob-title">You have 16 tasks.</div>
-      <div class="ob-sub">Read them here. You do not need to memorise them.</div>
+      <div class="ob-sub">Focus on one task at a time. That is all you need to do.</div>
     </div>
     <div class="ob-body">
-      <p class="ob-p">Each task will appear one at a time in the green bar as you explore. Here is a preview of all 16 so you know what to expect.</p>
+      <p class="ob-p">Each task will appear one at a time in the green bar at the top of the screen. Read the task, do what it says, and tap <strong>Done</strong> to move to the next one.</p>
       <div class="ob-demo" style="background:var(--green-lt);border-color:var(--green-bd);margin-bottom:1rem">
         <div class="ob-demo-t" style="color:var(--green);font-size:14px">&#128161; Remember as you go through the app:</div>
         <div class="ob-demo-b" style="color:var(--green-mid)">Imagine you are <strong>thinking about buying</strong>, <strong>have just bought</strong>, or <strong>are done with</strong> this t-shirt. React to what you see as if it were real.</div>
       </div>
-      <div class="tg-tasks" id="tg-preview"></div>
+      <div class="ob-tip"><strong>Important:</strong> <strong>Some tasks will ask you to note specific things in the app. We will ask you questions about those things in the survey after.</strong> Pay attention to what each task asks you to notice.</div>
     </div>
     <div class="ob-nav">
       <button class="ob-back" onclick="obBack()">Back</button>
@@ -860,7 +860,7 @@ const sysChecks = {
   brandCommitmentExpanded: false, // task 7
   fibreExpanded:           false, // task 8
   dyesExpanded:            false, // task 9
-  journeyExpanded:         false, // task 10 — fires only on Cut, Make and Trim
+  journeyExpanded:         false, // task 10, fires only on Cut, Make and Trim
   tabImpact:               false, // task 11
   recycleExpanded:         false, // task 12
   logPillSelected:         false, // task 13
@@ -875,7 +875,7 @@ function sc(key) {
   if (!sysChecks.hasOwnProperty(key)) return;
   sysChecks[key] = true;
   renderBanner();
-  // Auto-advance task 3 (appEntered) — the intent tile tap already moves the screen forward
+  // Auto-advance task 3 (appEntered): the intent tile tap already moves the screen forward
   if (currentTask === 2 && key === 'appEntered') {
     currentTask++;
     renderBanner();
@@ -884,31 +884,31 @@ function sc(key) {
 
 // ── Task data (16 tasks, each with one system check key or a function) ──
 const TASKS = [
-  {tab:'Home screen',     desc:'<strong>On the Home screen:</strong> Read the product name at the top. Look for the <strong>green "Verified product" badge</strong> and note what it means.',
+  {tab:'Home screen',     desc:'<strong>On the Home screen:</strong> Read the product name at the top. Look for the <strong>green "Verified product" badge</strong> and <strong>note what it means</strong>.',
    check:'scanViewed'},
-  {tab:'Home screen',     desc:'<strong>Still on the Home screen:</strong> Tap the <strong>"What is a Digital Product Passport?"</strong> card above to read it. Note one thing it tells you.',
+  {tab:'Home screen',     desc:'<strong>Still on the Home screen:</strong> Tap the <strong>"What is a Digital Product Passport?"</strong> card above to read it. <strong>Note one thing it tells you</strong>.',
    check:'dppExplainerRead'},
   {tab:'Home screen',     desc:'<strong>Still on the Home screen:</strong> Tap the option that best describes why you are here, or tap <strong>"View full passport"</strong> to continue.',
    check:'appEntered'},
-  {tab:'Overview',        desc:'Tap <strong>Overview</strong> at the bottom of the screen. Look at the <strong>score and grade</strong> at the top right. Note the number and the letter.',
+  {tab:'Overview',        desc:'Tap <strong>Overview</strong> at the bottom of the screen. Look at the <strong>score and grade</strong> at the top right. <strong>Note the number and the letter</strong>.',
    check:'tabOverview'},
-  {tab:'Overview',        desc:'Still on <strong>Overview</strong>, tap any <strong>care instruction card</strong>. Note the wash temperature and the one thing you must not do.',
+  {tab:'Overview',        desc:'Still on <strong>Overview</strong>, tap any <strong>care instruction card</strong>. <strong>Note the wash temperature and the one thing you must not do</strong>.',
    check:'careViewed'},
-  {tab:'Overview',        desc:'Still on <strong>Overview</strong>, <strong>swipe the Certifications strip left</strong> to see all the badges. Count how many certifications are shown and note what each one covers.',
+  {tab:'Overview',        desc:'Still on <strong>Overview</strong>, <strong>swipe the Certifications strip left</strong> to see all the badges. Count how many certifications are shown and <strong>note what each one is about (the text in brackets next to each certification name)</strong>.',
    check:'certStripSwiped'},
-  {tab:'Overview',        desc:'Still on <strong>Overview</strong>, tap <strong>"Brand commitment"</strong> to expand it. Note the goal and the progress percentage shown.',
+  {tab:'Overview',        desc:'Still on <strong>Overview</strong>, tap <strong>"Brand commitment"</strong> to expand it. <strong>Note the goal and the progress percentage shown</strong>.',
    check:'brandCommitmentExpanded'},
-  {tab:'Made',            desc:'Tap <strong>Made</strong> at the bottom of the screen, then tap <strong>"Organic Cotton"</strong> to expand it. Note where it comes from and its certification.',
+  {tab:'Made',            desc:'Tap <strong>Made</strong> at the bottom of the screen, then tap <strong>"Organic Cotton"</strong> to expand it. <strong>Note where it comes from and its certification</strong>.',
    check:'fibreExpanded'},
-  {tab:'Made',            desc:'Still on <strong>Made</strong>, tap <strong>"Dyes and treatments"</strong> to expand it. Check whether <strong>PFAS or PFOS</strong> is present.',
+  {tab:'Made',            desc:'Still on <strong>Made</strong>, tap <strong>"Dyes and treatments"</strong> to expand it. <strong>Check whether PFAS or PFOS is present</strong>.',
    check:'dyesExpanded'},
-  {tab:'Made',            desc:'Still on <strong>Made</strong>, tap <strong>"Cut, Make and Trim"</strong> in the production journey. Note the percentage of workers at that stage who are women.',
+  {tab:'Made',            desc:'Still on <strong>Made</strong>, tap <strong>"Cut, Make and Trim"</strong> in the production journey. <strong>Note the percentage of workers at that stage who are women</strong>.',
    check:'journeyExpanded'},
-  {tab:'Impact',          desc:'Tap <strong>Impact</strong> at the bottom of the screen. Read the <strong>carbon footprint number</strong> and the note below it.',
+  {tab:'Impact',          desc:'Tap <strong>Impact</strong> at the bottom of the screen. <strong>Read the carbon footprint number and the note below it</strong>.',
    check:'tabImpact'},
-  {tab:'Done With It',    desc:'Tap <strong>Done With It</strong> at the bottom of the screen, then tap <strong>"Recycle"</strong> to expand it. Read the guidance.',
+  {tab:'Done With It',    desc:'Tap <strong>Done With It</strong> at the bottom of the screen, then tap <strong>"Recycle"</strong> to expand it. <strong>Read the guidance provided</strong>.',
    check:'recycleExpanded'},
-  {tab:'Done With It',    desc:'Still on <strong>Done With It</strong>, in <strong>"Record your action"</strong> select the option you would most likely choose. Note the CO\u2082 result shown.',
+  {tab:'Done With It',    desc:'Still on <strong>Done With It</strong>, in <strong>"Record your action"</strong> select the option you would most likely choose. <strong>Note the CO\u2082 result shown</strong>.',
    check:'logPillSelected'},
   {tab:'Done With It',    desc:'Still on <strong>Done With It</strong>, rate the product on <strong>Overall Quality</strong> and <strong>Claims Accuracy</strong> using the stars that appear.',
    check: () => sysChecks.qualityRated && sysChecks.claimsRated},
@@ -1019,7 +1019,7 @@ function fallbackCopyBanner(btn) {
 }
 function flashCopyBanner(btn, success) {
   if (!btn) return;
-  btn.textContent = success ? 'Copied!' : 'Copy failed — select and copy the code manually';
+  btn.textContent = success ? 'Copied!' : 'Copy failed. Please select and copy the code manually';
   setTimeout(() => { btn.textContent = 'Copy code'; }, 3000);
 }
 
@@ -1086,7 +1086,7 @@ function syncNav(p) {
   document.querySelectorAll('.nb').forEach(b => b.classList.toggle('on', b.dataset.p === p));
 }
 
-// ── Accordion toggle — reads data-sc attribute for targeted check ──
+// Accordion toggle: reads data-sc attribute for targeted check
 function toggleAcc(row) {
   const b = row.nextElementSibling;
   const c = row.querySelector('.acc-ch');
@@ -1330,7 +1330,6 @@ function toggleFlw(btn, ctId, base) {
 }
 
 // ── Init ──
-buildPreview();
 renderBanner();
 </script>
 </body>
