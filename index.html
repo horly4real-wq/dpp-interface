@@ -860,7 +860,7 @@ const sysChecks = {
   brandCommitmentExpanded: false, // task 7
   fibreExpanded:           false, // task 8
   dyesExpanded:            false, // task 9
-  journeyExpanded:         false, // task 10
+  journeyExpanded:         false, // task 10 — fires only on Cut, Make and Trim
   tabImpact:               false, // task 11
   recycleExpanded:         false, // task 12
   logPillSelected:         false, // task 13
@@ -902,7 +902,7 @@ const TASKS = [
    check:'fibreExpanded'},
   {tab:'Made',            desc:'Still on <strong>Made</strong>, tap <strong>"Dyes and treatments"</strong> to expand it. Check whether <strong>PFAS or PFOS</strong> is present.',
    check:'dyesExpanded'},
-  {tab:'Made',            desc:'Still on <strong>Made</strong>, tap <strong>"Dyeing and Finishing"</strong> in the production journey. Note the company name and certification shown.',
+  {tab:'Made',            desc:'Still on <strong>Made</strong>, tap <strong>"Cut, Make and Trim"</strong> in the production journey. Note the percentage of workers at that stage who are women.',
    check:'journeyExpanded'},
   {tab:'Impact',          desc:'Tap <strong>Impact</strong> at the bottom of the screen. Read the <strong>carbon footprint number</strong> and the note below it.',
    check:'tabImpact'},
@@ -1167,7 +1167,8 @@ journey.forEach((j, i) => {
   document.getElementById('jlist').appendChild(it);
 });
 function tJ(el) {
-  sc('journeyExpanded');
+  const stage = el.querySelector('.j-stage');
+  if (stage && stage.textContent.trim() === 'Cut, Make and Trim') sc('journeyExpanded');
   el.querySelector('.j-detail').classList.toggle('open');
   el.querySelector('.j-ch').classList.toggle('open');
 }
